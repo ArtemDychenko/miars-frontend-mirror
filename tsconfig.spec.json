@@ -9,7 +9,7 @@
     ]
   },
   "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "../miars-frontend/src/**/*.spec.ts",
+    "../miars-frontend/src/**/*.d.ts"
   ]
 }
