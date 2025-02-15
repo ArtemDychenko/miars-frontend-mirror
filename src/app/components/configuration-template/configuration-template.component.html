@@ -1,0 +1,22 @@
+<div class="configuration-section">
+  <div class="configuration-section__title">MAC address</div>
+  <div class="configuration-section__card">
+    <ng-content select="[mac-source]" />
+    <mat-divider />
+    <ng-content select="[mac-destination]" />
+  </div>
+</div>
+
+<div class="configuration-section">
+  <div class="configuration-section__title">Frame sizes</div>
+  <div class="configuration-section__card">
+    <ng-content select="[frames]" />
+  </div>
+</div>
+
+<div class="configuration-section">
+  <div class="configuration-section__title">Protocols</div>
+  <div class="configuration-section__card">
+    <ng-content select="[protocols]" />
+  </div>
+</div>

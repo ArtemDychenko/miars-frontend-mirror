@@ -1,5 +1,8 @@
 <div class="page-header">
-  <ng-content select="[header]"></ng-content>
+  <div class="page-header__title">
+    <ng-content select="[title]"></ng-content>
+  </div>
+  <ng-content select="[actions]"></ng-content>
 </div>
 <mat-divider />
 <div class="page-body">

@@ -1,0 +1,11 @@
+@use '../../../vars';
+@use 'sass:map';
+
+.pill {
+  display: flex;
+  flex-direction: row;
+  gap: map.get(vars.$spacing, 'sm');
+  border-radius: map.get(vars.$radius, 'md');
+  border: 1px solid map.get(vars.$grey, 200);
+  background-color: map.get(vars.$grey, 0);
+}

@@ -1,6 +1,47 @@
 <app-page-wrapper>
-  <div header>Analyzer configuration</div>
+  <div title>Analyzer configuration</div>
 
-  Configuration content goes here
-  <p-skeleton height="10rem" width="100%" />
+  <div actions class="actions">
+    @if (isReadonly()) {
+      <app-button (click)="isReadonly.set(false)">Edit</app-button>
+    } @else {
+      <app-button secondary (click)="isReadonly.set(true)">Cancel</app-button>
+      <app-button>Save</app-button>
+    }
+  </div>
+
+  @if (configurationRes.isLoading()) {
+    Loading...
+  } @else {
+    @if (isReadonly()) {
+      @let configuration = configurationRes.value()!;
+
+      <app-configuration-template>
+        <div mac-source>
+          Source:
+          @for (mac of configuration?.mac_source; track $index) {
+            <app-pill>{{ mac }}</app-pill>
+          }
+        </div>
+        <div mac-destination>
+          Destination:
+          @for (mac of configuration?.mac_destination; track $index) {
+            <app-pill>{{ mac }}</app-pill>
+          }
+        </div>
+        <div frames>
+          @for (frame of configuration?.frame_range; track $index) {
+            <app-pill>{{ frame }}</app-pill>
+          }
+        </div>
+        <div protocols>
+          @for (protocol of configuration?.protocol; track $index) {
+            <app-pill>{{ protocol }}</app-pill>
+          }
+        </div>
+      </app-configuration-template>
+    } @else {
+      <app-configuration-form />
+    }
+  }
 </app-page-wrapper>
