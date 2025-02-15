@@ -7,9 +7,9 @@
     "types": []
   },
   "files": [
-    "./src/main.ts"
+    "src/main.ts"
   ],
   "include": [
-    "../miars-frontend/src/**/*.d.ts"
+    "src/**/*.d.ts"
   ]
 }

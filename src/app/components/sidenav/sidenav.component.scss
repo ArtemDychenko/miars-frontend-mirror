@@ -1,0 +1,88 @@
+@use '../../../vars';
+@use 'sass:map';
+
+@mixin sidenavActivePage {
+  background-color: map.get(vars.$grey, 0);
+  border-radius: map.get(vars.$radius, 'lg');
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+:host {
+  .sidenav-container {
+    height: 100%;
+    background: none;
+
+    &__sidenav {
+      width: vars.$sidenavWidth;
+      background-color: map.get(vars.$grey, 10);
+      border-radius: map.get(vars.$radius, 'none');
+      z-index: 1;
+
+      &-content {
+        position: fixed;
+        width: vars.$sidenavWidth;
+        padding: map.get(vars.$spacing, 'md');
+        height: 100%;
+
+        .footer {
+          margin-top: auto;
+          a {
+            font-size: map.get(vars.$text, 'sm');
+            text-decoration: none;
+          }
+        }
+
+        .pages {
+          display: flex;
+          flex-direction: column;
+          gap: map.get(vars.$spacing, 'xs');
+
+          .button-container {
+            display: flex;
+            align-items: center;
+            font-size: map.get(vars.$text, 'md');
+            color: vars.$textPrimary;
+            text-transform: uppercase;
+            font-weight: 500;
+            gap: map.get(vars.$spacing, 'xs');
+            padding: map.get(vars.$spacing, 'xs');
+
+            mat-icon {
+              font-size: 30px;
+              width: 30px;
+              height: 30px;
+            }
+          }
+        }
+      }
+    }
+
+    &__toggle {
+      position: fixed;
+      margin-left: -10px;
+
+      margin-top: map.get(vars.$spacing, 'lg');
+      background-color: map.get(vars.$grey, 0);
+      border-radius: map.get(vars.$radius, 'xs');
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      padding: map.get(vars.$spacing, 'xxs');
+
+      &-open {
+        border-bottom-left-radius: map.get(vars.$radius, 'none');
+        border-top-left-radius: map.get(vars.$radius, 'none');
+        padding-left: map.get(vars.$spacing, 'xl');
+      }
+
+      &-close {
+      }
+    }
+  }
+
+  .button-container:hover {
+    @include sidenavActivePage;
+  }
+
+  .button-container__active {
+    @include sidenavActivePage;
+  }
+}

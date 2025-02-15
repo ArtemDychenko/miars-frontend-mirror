@@ -1,0 +1,25 @@
+@use '../../../vars';
+@use 'sass:map';
+
+:host {
+  display: block;
+  min-height: calc(100% - 2 * map.get(vars.$spacing, 'lg'));
+
+  margin: map.get(vars.$spacing, 'lg');
+  background-color: map.get(vars.$grey, 0);
+  border-radius: map.get(vars.$radius, 'xs');
+
+  .page {
+    &-header {
+      padding: map.get(vars.$spacing, 'lg') map.get(vars.$spacing, 'lg')
+        map.get(vars.$spacing, 'xs');
+      font-family: Monoton, cursive;
+      font-size: map.get(vars.$text, 'xxl');
+    }
+
+    &-body {
+      padding: map.get(vars.$spacing, 'xl') map.get(vars.$spacing, 'lg')
+        map.get(vars.$spacing, 'lg');
+    }
+  }
+}

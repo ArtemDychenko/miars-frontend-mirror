@@ -1,0 +1,35 @@
+import { afterNextRender, Component, inject, signal } from '@angular/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { Button } from 'primeng/button';
+import { NgClass } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+
+@Component({
+  selector: 'app-sidenav',
+  imports: [
+    MatSidenavModule,
+    MatButtonModule,
+    RouterLink,
+    Button,
+    NgClass,
+    MatIcon,
+  ],
+  templateUrl: './sidenav.component.html',
+  styleUrl: './sidenav.component.scss',
+})
+export class SidenavComponent {
+  router = inject(Router);
+  currentPage = signal<string>('');
+
+  constructor() {
+    afterNextRender(() => {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.currentPage.set(event.url);
+        }
+      });
+    });
+  }
+}
