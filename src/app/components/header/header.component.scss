@@ -1,0 +1,52 @@
+@use '../../../vars';
+@use 'sass:map';
+
+:host {
+  height: vars.$headerHeight;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: map.get(vars.$grey, 0);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  padding: map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'md');
+
+  .header {
+    &-logo {
+      display: flex;
+      gap: map.get(vars.$spacing, 'md');
+
+      & > span {
+        display: flex;
+        align-items: center;
+        font-family: Kodchasan, sans-serif;
+        font-size: map.get(vars.$text, 'xxl');
+        font-weight: bold;
+        color: vars.$textPrimary;
+      }
+    }
+
+    &-menu {
+      display: flex;
+      gap: map.get(vars.$spacing, 'xs');
+    }
+  }
+
+  .button-container {
+    button {
+      font-size: map.get(vars.$text, 'md');
+
+      & mat-icon {
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    & > * {
+      color: vars.$textPrimary;
+    }
+  }
+}

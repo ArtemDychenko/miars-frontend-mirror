@@ -1,0 +1,40 @@
+@use '../../../vars';
+@use 'sass:map';
+
+:host {
+  .sidenav-container {
+    height: 100%;
+    background: none;
+
+    &__sidenav {
+      width: vars.$sidenavWidth;
+      background-color: map.get(vars.$grey, 10);
+      border-radius: map.get(vars.$radius, 'none');
+      z-index: 1;
+
+      &-content {
+        position: fixed;
+      }
+    }
+
+    &__toggle {
+      position: fixed;
+      margin-left: -10px;
+
+      margin-top: map.get(vars.$spacing, 'lg');
+      background-color: map.get(vars.$grey, 0);
+      border-radius: map.get(vars.$radius, 'xs');
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      padding: map.get(vars.$spacing, 'xxs');
+
+      &-open {
+        border-bottom-left-radius: map.get(vars.$radius, 'none');
+        border-top-left-radius: map.get(vars.$radius, 'none');
+        padding-left: map.get(vars.$spacing, 'md');
+      }
+
+      &-close {
+      }
+    }
+  }
+}

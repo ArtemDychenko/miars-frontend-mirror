@@ -1,1 +1,22 @@
-<p>sidenav works!</p>
+<mat-drawer-container class="sidenav-container" autosize>
+  <mat-drawer #drawer class="sidenav-container__sidenav" mode="side">
+    <div class="sidenav-container__sidenav-content">
+      <p routerLink="configuration">Configuration</p>
+      <p routerLink="dashboard">Dashboard</p>
+    </div>
+  </mat-drawer>
+
+  <div
+    class="sidenav-container__toggle"
+    [ngClass]="
+      drawer.opened
+        ? 'sidenav-container__toggle-close'
+        : 'sidenav-container__toggle-open'
+    ">
+    @if (drawer.opened) {
+      <p-button icon="pi pi-chevron-left" (click)="drawer.toggle()" />
+    } @else {
+      <p-button icon="pi pi-chevron-right" (click)="drawer.toggle()" />
+    }
+  </div>
+</mat-drawer-container>
