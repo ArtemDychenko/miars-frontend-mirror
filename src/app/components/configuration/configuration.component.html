@@ -12,10 +12,11 @@
 
   @if (configurationRes.isLoading()) {
     Loading...
+    <!-- @todo: ??? it's empty for some reason -->
+    <p-skeleton height="10rem" />
   } @else {
+    @let configuration = configurationRes.value()!;
     @if (isReadonly()) {
-      @let configuration = configurationRes.value()!;
-
       <app-configuration-template>
         <div mac-source>
           Source:
@@ -41,7 +42,7 @@
         </div>
       </app-configuration-template>
     } @else {
-      <app-configuration-form />
+      <app-configuration-form [configuration]="configuration" />
     }
   }
 </app-page-wrapper>

@@ -7,6 +7,7 @@ import { ConfigurationApi } from '../../api/configuration.api';
 import { firstValueFrom } from 'rxjs';
 import { PillComponent } from '../pill/pill.component';
 import { Skeleton } from 'primeng/skeleton';
+import { Configuration } from '../../models/configuration';
 
 @Component({
   selector: 'app-configuration',

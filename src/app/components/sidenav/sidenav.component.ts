@@ -1,5 +1,11 @@
-import { afterNextRender, Component, inject, signal } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import {
+  afterNextRender,
+  Component,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Button } from 'primeng/button';
@@ -23,6 +29,8 @@ export class SidenavComponent {
   router = inject(Router);
   currentPage = signal<string>('');
 
+  drawer = viewChild<MatDrawer>('drawer');
+
   constructor() {
     afterNextRender(() => {
       this.router.events.subscribe(event => {
@@ -30,6 +38,7 @@ export class SidenavComponent {
           this.currentPage.set(event.url);
         }
       });
+      this.drawer()?.open();
     });
   }
 }
