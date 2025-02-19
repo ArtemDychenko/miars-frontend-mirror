@@ -10,6 +10,12 @@
     gap: map.get(vars.$spacing, 'md');
   }
 
+  p-select {
+    border-radius: map.get(vars.$radius, 'xs');
+    background-color: map.get(vars.$grey, 30);
+    padding: map.get(vars.$spacing, 'md') map.get(vars.$spacing, 'xl');
+  }
+
   ngx-skeleton-loader {
     display: flex;
     flex-direction: row;

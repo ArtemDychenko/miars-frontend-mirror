@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": "2def",
+    "name": "Everything",
+    "is_applied": true,
+    "mac_source": [],
+    "mac_destination": [],
+    "frame_range": [],
+    "protocol": []
+  }
+}

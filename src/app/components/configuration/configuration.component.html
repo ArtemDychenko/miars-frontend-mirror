@@ -10,7 +10,7 @@
     }
   </div>
 
-  @if (configurationRes.isLoading()) {
+  @if (configuration.isLoading()) {
     <app-configuration-template>
       <div mac-source>
         <ngx-skeleton-loader count="5" />
@@ -26,38 +26,53 @@
       </div>
     </app-configuration-template>
   } @else {
-    @let configuration = configurationRes.value()!;
     @if (isReadonly()) {
       <app-configuration-template>
+        <p-select
+          [disabled]="configurationOptions.isLoading()"
+          [options]="configurationOptions.value()!"
+          [optionValue]="chosenConfiguration()?.name"
+          (onChange)="onChangeConfiguration($event)"
+          optionLabel="name"
+          placeholder="Configuration" />
+
         <div mac-source class="configuration__mac">
           <div class="configuration__mac-title">Source:</div>
           <div class="configuration__mac-content">
-            @for (mac of configuration?.mac_source; track $index) {
+            @for (mac of configuration.value()?.mac_source; track $index) {
               <app-pill>{{ mac }}</app-pill>
+            } @empty {
+              <app-pill>All addresses</app-pill>
             }
           </div>
         </div>
         <div mac-destination class="configuration__mac">
           <div class="configuration__mac-title">Destination:</div>
           <div class="configuration__mac-content">
-            @for (mac of configuration?.mac_destination; track $index) {
+            @for (mac of configuration.value()?.mac_destination; track $index) {
               <app-pill>{{ mac }}</app-pill>
+            } @empty {
+              <app-pill>All addresses</app-pill>
             }
           </div>
         </div>
         <div frames>
-          @for (frame of configuration?.frame_range; track $index) {
+          @for (frame of configuration.value()?.frame_range; track $index) {
             <app-pill>{{ frame[0] }} — {{ frame[1] }}</app-pill>
+          } @empty {
+            <app-pill>All sizes</app-pill>
           }
         </div>
         <div protocols>
-          @for (protocol of configuration?.protocol; track $index) {
+          @for (protocol of configuration.value()?.protocol; track $index) {
             <app-pill>{{ protocol }}</app-pill>
+          } @empty {
+            <app-pill>None</app-pill>
           }
         </div>
       </app-configuration-template>
     } @else {
-      <app-configuration-form [configuration]="configuration" />
+      <app-configuration-form [configuration]="configuration.value()!" />
     }
   }
 </app-page-wrapper>
