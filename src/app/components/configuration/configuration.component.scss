@@ -9,4 +9,30 @@
     display: flex;
     gap: map.get(vars.$spacing, 'md');
   }
+
+  ngx-skeleton-loader {
+    display: flex;
+    flex-direction: row;
+    gap: map.get(vars.$spacing, 'md');
+
+    ::ng-deep * {
+      height: 50px;
+    }
+  }
+
+  .configuration {
+    &__mac {
+      display: flex;
+      justify-content: space-between;
+
+      &-title {
+        color: map.get(vars.$grey, 100);
+        font-size: map.get(vars.$text, 'lg');
+      }
+
+      &-content {
+        width: calc(100% - 200px);
+      }
+    }
+  }
 }

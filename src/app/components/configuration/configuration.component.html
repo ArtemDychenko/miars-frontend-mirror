@@ -11,28 +11,43 @@
   </div>
 
   @if (configurationRes.isLoading()) {
-    Loading...
-    <!-- @todo: ??? it's empty for some reason -->
-    <p-skeleton height="10rem" />
+    <app-configuration-template>
+      <div mac-source>
+        <ngx-skeleton-loader count="5" />
+      </div>
+      <div mac-destination>
+        <ngx-skeleton-loader count="5" />
+      </div>
+      <div frames>
+        <ngx-skeleton-loader count="5" />
+      </div>
+      <div protocols>
+        <ngx-skeleton-loader count="5" />
+      </div>
+    </app-configuration-template>
   } @else {
     @let configuration = configurationRes.value()!;
     @if (isReadonly()) {
       <app-configuration-template>
-        <div mac-source>
-          Source:
-          @for (mac of configuration?.mac_source; track $index) {
-            <app-pill>{{ mac }}</app-pill>
-          }
+        <div mac-source class="configuration__mac">
+          <div class="configuration__mac-title">Source:</div>
+          <div class="configuration__mac-content">
+            @for (mac of configuration?.mac_source; track $index) {
+              <app-pill>{{ mac }}</app-pill>
+            }
+          </div>
         </div>
-        <div mac-destination>
-          Destination:
-          @for (mac of configuration?.mac_destination; track $index) {
-            <app-pill>{{ mac }}</app-pill>
-          }
+        <div mac-destination class="configuration__mac">
+          <div class="configuration__mac-title">Destination:</div>
+          <div class="configuration__mac-content">
+            @for (mac of configuration?.mac_destination; track $index) {
+              <app-pill>{{ mac }}</app-pill>
+            }
+          </div>
         </div>
         <div frames>
           @for (frame of configuration?.frame_range; track $index) {
-            <app-pill>{{ frame }}</app-pill>
+            <app-pill>{{ frame[0] }} — {{ frame[1] }}</app-pill>
           }
         </div>
         <div protocols>

@@ -2,10 +2,14 @@
 @use 'sass:map';
 
 .pill {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
+  justify-content: center;
   gap: map.get(vars.$spacing, 'sm');
   border-radius: map.get(vars.$radius, 'md');
-  border: 1px solid map.get(vars.$grey, 200);
+  border: 1px solid map.get(vars.$grey, 50);
   background-color: map.get(vars.$grey, 0);
+  color: map.get(vars.$grey, 100);
+  padding: map.get(vars.$spacing, 'xs') map.get(vars.$spacing, 'lg');
+  margin: map.get(vars.$spacing, 'xs');
 }

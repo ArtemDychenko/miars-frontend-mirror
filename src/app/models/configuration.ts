@@ -19,7 +19,16 @@ export function configurationToDto(
 
 // @todo: delete
 export const configurationMock: Configuration = {
-  mac_source: ['01:23:45:67:89:ab'],
+  mac_source: [
+    '01:23:45:67:89:ab',
+    '01:23:45:67:89:ab',
+    '01:23:45:67:89:ab',
+    '01:23:45:67:89:ab',
+    '01:23:45:67:89:ab',
+    '01:23:45:67:89:ab',
+    '01:23:45:67:89:ab',
+    '01:23:45:67:89:ab',
+  ],
   mac_destination: ['fe:dc:ba:98:76:54'],
   frame_range: [
     [0, 63],

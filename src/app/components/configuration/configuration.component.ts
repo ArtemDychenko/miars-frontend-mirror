@@ -6,8 +6,8 @@ import { ButtonComponent } from '../button/button.component';
 import { ConfigurationApi } from '../../api/configuration.api';
 import { firstValueFrom } from 'rxjs';
 import { PillComponent } from '../pill/pill.component';
-import { Skeleton } from 'primeng/skeleton';
-import { Configuration } from '../../models/configuration';
+import { SkeletonModule } from 'primeng/skeleton';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-configuration',
@@ -17,7 +17,8 @@ import { Configuration } from '../../models/configuration';
     ConfigurationFormComponent,
     ButtonComponent,
     PillComponent,
-    Skeleton,
+    SkeletonModule,
+    NgxSkeletonLoaderModule,
   ],
   templateUrl: './configuration.component.html',
   styleUrl: './configuration.component.scss',
