@@ -1,0 +1,20 @@
+@use '../../../vars';
+@use 'sass:map';
+
+:host {
+  .configuration {
+    &__mac {
+      display: flex;
+      justify-content: space-between;
+
+      &-title {
+        color: map.get(vars.$grey, 100);
+        font-size: map.get(vars.$text, 'lg');
+      }
+
+      &-content {
+        width: calc(100% - 200px);
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
@@ -8,5 +8,6 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './pill.component.scss',
 })
 export class PillComponent {
-  removable = input<string | null>(null);
+  removable = input<boolean | null>(null);
+  clickRemove = output<void>();
 }

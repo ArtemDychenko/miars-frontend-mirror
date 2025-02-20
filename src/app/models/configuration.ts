@@ -6,8 +6,8 @@ export interface ConfigurationDto {
   is_applied: boolean;
   mac_source: string[];
   mac_destination: string[];
-  frame_range: [number, number][];
-  protocol: string[];
+  frame_ranges: [number, number][];
+  protocols: string[];
 }
 
 export function dtoToConfiguration(dto: ConfigurationDto): Configuration {

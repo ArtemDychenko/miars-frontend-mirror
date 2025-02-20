@@ -5,7 +5,7 @@
     "is_applied": true,
     "mac_source": [],
     "mac_destination": [],
-    "frame_range": [],
-    "protocol": []
+    "frame_ranges": [],
+    "protocols": []
   }
 }

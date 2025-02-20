@@ -1,6 +1,95 @@
 <app-configuration-template>
-  <div mac-source>editable Mac source</div>
-  <div mac-destination>editable Mac destination</div>
-  <div frames>editable Frames</div>
-  <div protocols>editable Protocols</div>
+  <mat-form-field>
+    <mat-label>Configuration name</mat-label>
+    <input matInput [formControl]="form.controls.name" />
+  </mat-form-field>
+
+  <div mac-source class="configuration__mac">
+    <div class="configuration__mac-title">
+      <mat-form-field>
+        <mat-label>Source</mat-label>
+        <input
+          matInput
+          #sourceInput
+          (keydown.enter)="addSourceMac(sourceInput.value)" />
+      </mat-form-field>
+    </div>
+    <div class="configuration__mac-content">
+      @for (mac of form.controls.source_mac.value; track $index) {
+        <app-pill [removable]="true" (click)="removeSourceMac($index)">{{
+          mac
+        }}</app-pill>
+      } @empty {
+        <app-pill>All addresses</app-pill>
+      }
+    </div>
+  </div>
+  <div mac-destination class="configuration__mac">
+    <div class="configuration__mac-title">
+      <mat-form-field>
+        <mat-label>Destination</mat-label>
+        <input
+          matInput
+          #destInput
+          (keydown.enter)="addDestMac(destInput.value)" />
+      </mat-form-field>
+    </div>
+    <div class="configuration__mac-content">
+      @for (mac of form.controls.dest_mac.value; track $index) {
+        <app-pill [removable]="true" (click)="removeDestMac($index)">{{
+          mac
+        }}</app-pill>
+      } @empty {
+        <app-pill>All addresses</app-pill>
+      }
+    </div>
+  </div>
+  <div frames>
+    @if (sizeRangeOptions().length) {
+      <mat-form-field>
+        <mat-label>Add size range</mat-label>
+        <mat-select
+          (selectionChange)="
+            addFrameRange($event.value); selectRange.value = undefined
+          "
+          #selectRange>
+          @for (range of sizeRangeOptions(); track $index) {
+            <mat-option [value]="range"
+              >{{ range[0] }} — {{ range[1] }}</mat-option
+            >
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+    @for (range of form.controls.frame_ranges.value; track $index) {
+      <app-pill [removable]="true" (click)="removeFrameRange($index)"
+        >{{ range[0] }} — {{ range[1] }}</app-pill
+      >
+    } @empty {
+      <app-pill>All sizes</app-pill>
+    }
+  </div>
+  <div protocols>
+    @if (protocolOptions().length) {
+      <mat-form-field>
+        <mat-label>Add protocol</mat-label>
+        <mat-select
+          (selectionChange)="
+            addProtocol($event.value); selectProtocol.value = undefined
+          "
+          #selectProtocol>
+          @for (protocol of protocolOptions(); track $index) {
+            <mat-option [value]="protocol">{{ protocol }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+    @for (protocol of form.controls.protocols.value; track $index) {
+      <app-pill [removable]="true" (click)="removeProtocol($index)">{{
+        protocol
+      }}</app-pill>
+    } @empty {
+      <app-pill>None</app-pill>
+    }
+  </div>
 </app-configuration-template>

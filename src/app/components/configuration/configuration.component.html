@@ -70,14 +70,14 @@
           </div>
         </div>
         <div frames>
-          @for (frame of configuration.value()?.frame_range; track $index) {
+          @for (frame of configuration.value()?.frame_ranges; track $index) {
             <app-pill>{{ frame[0] }} — {{ frame[1] }}</app-pill>
           } @empty {
             <app-pill>All sizes</app-pill>
           }
         </div>
         <div protocols>
-          @for (protocol of configuration.value()?.protocol; track $index) {
+          @for (protocol of configuration.value()?.protocols; track $index) {
             <app-pill>{{ protocol }}</app-pill>
           } @empty {
             <app-pill>None</app-pill>
