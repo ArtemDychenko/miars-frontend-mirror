@@ -14,7 +14,12 @@ import {
   SizeRanges,
   Protocols,
 } from './configuration-form.builder';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import {
+  MatError,
+  MatFormField,
+  MatHint,
+  MatLabel,
+} from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +36,8 @@ import { PillComponent } from '../pill/pill.component';
     MatOption,
     ReactiveFormsModule,
     PillComponent,
+    MatError,
+    MatHint,
   ],
   templateUrl: './configuration-form.component.html',
   styleUrl: './configuration-form.component.scss',
@@ -48,7 +55,9 @@ export class ConfigurationFormComponent implements OnInit {
   }
 
   addSourceMac(sourceMac: string) {
-    this.form.controls.source_mac.value?.push(sourceMac);
+    if (!this.form.controls.source_mac_control.errors) {
+      this.form.controls.source_mac.value?.push(sourceMac);
+    }
   }
 
   removeSourceMac(index: number) {
@@ -56,7 +65,9 @@ export class ConfigurationFormComponent implements OnInit {
   }
 
   addDestMac(destMac: string) {
-    this.form.controls.dest_mac.value?.push(destMac);
+    if (!this.form.controls.dest_mac_control.errors) {
+      this.form.controls.dest_mac.value?.push(destMac);
+    }
   }
 
   removeDestMac(index: number) {

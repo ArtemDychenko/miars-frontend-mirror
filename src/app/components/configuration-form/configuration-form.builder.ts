@@ -32,6 +32,9 @@ export type ConfigurationForm = FormGroup<{
   dest_mac: FormControl<string[] | undefined>;
   frame_ranges: FormControl<[number, number][] | undefined>;
   protocols: FormControl<string[] | undefined>;
+
+  source_mac_control: FormControl<string>;
+  dest_mac_control: FormControl<string>;
 }>;
 
 @Injectable({
@@ -59,6 +62,17 @@ export class ConfigurationFormBuilder {
       protocols: fb.control<string[] | undefined>(
         configuration?.protocols || undefined
       ),
+
+      source_mac_control: fb.control<string>('', {
+        validators: [
+          Validators.pattern(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/),
+        ],
+      }),
+      dest_mac_control: fb.control<string>('', {
+        validators: [
+          Validators.pattern(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/),
+        ],
+      }),
     });
   }
 

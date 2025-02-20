@@ -9,9 +9,14 @@
       <mat-form-field>
         <mat-label>Source</mat-label>
         <input
+          [formControl]="form.controls.source_mac_control"
           matInput
           #sourceInput
           (keydown.enter)="addSourceMac(sourceInput.value)" />
+        <mat-hint>Press Enter to add</mat-hint>
+        @if (form.controls.source_mac_control.hasError('pattern')) {
+          <mat-error>Mac address is incorrect!</mat-error>
+        }
       </mat-form-field>
     </div>
     <div class="configuration__mac-content">
@@ -29,9 +34,14 @@
       <mat-form-field>
         <mat-label>Destination</mat-label>
         <input
+          [formControl]="form.controls.dest_mac_control"
           matInput
           #destInput
           (keydown.enter)="addDestMac(destInput.value)" />
+        <mat-hint>Press Enter to add</mat-hint>
+        @if (form.controls.dest_mac_control.hasError('pattern')) {
+          <mat-error>Mac address is incorrect!</mat-error>
+        }
       </mat-form-field>
     </div>
     <div class="configuration__mac-content">
