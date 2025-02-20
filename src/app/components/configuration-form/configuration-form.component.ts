@@ -57,6 +57,8 @@ export class ConfigurationFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.configurationFormBuilder.create(this.configuration());
+    this.updateSizeRangeOptions();
+    this.updateProtocolOptions();
   }
 
   onSubmit() {
@@ -108,17 +110,16 @@ export class ConfigurationFormComponent implements OnInit {
   }
 
   updateSizeRangeOptions() {
-    const chosenRanges = this.form.controls.frame_ranges.value;
-    if (!chosenRanges) return;
+    const chosenRanges = this.form.controls.frame_ranges.value ?? [];
     const sizeRanges = SizeRanges.filter(
-      range => !chosenRanges.includes(range)
+      range =>
+        !chosenRanges.some(cr => cr[0] === range[0] && cr[1] === range[1])
     );
     this.sizeRangeOptions.set(sizeRanges);
   }
 
   updateProtocolOptions() {
-    const chosenProtocols = this.form.controls.protocols.value;
-    if (!chosenProtocols) return;
+    const chosenProtocols = this.form.controls.protocols.value ?? [];
     const protocols = Protocols.filter(
       protocol => !chosenProtocols.includes(protocol)
     );
