@@ -28,10 +28,10 @@ export const Protocols: string[] = [
 
 export type ConfigurationForm = FormGroup<{
   name: FormControl<string>;
-  source_mac: FormControl<string[] | undefined>;
-  dest_mac: FormControl<string[] | undefined>;
-  frame_ranges: FormControl<[number, number][] | undefined>;
-  protocols: FormControl<string[] | undefined>;
+  source_mac: FormControl<string[]>;
+  dest_mac: FormControl<string[]>;
+  frame_ranges: FormControl<[number, number][]>;
+  protocols: FormControl<string[]>;
 
   source_mac_control: FormControl<string>;
   dest_mac_control: FormControl<string>;
@@ -50,18 +50,12 @@ export class ConfigurationFormBuilder {
       name: fb.control<string>(configuration?.name || '', {
         validators: [Validators.required],
       }),
-      source_mac: fb.control<string[] | undefined>(
-        configuration?.mac_source || undefined
+      source_mac: fb.control<string[]>(configuration?.mac_source || []),
+      dest_mac: fb.control<string[]>(configuration?.mac_destination || []),
+      frame_ranges: fb.control<[number, number][]>(
+        configuration?.frame_ranges || []
       ),
-      dest_mac: fb.control<string[] | undefined>(
-        configuration?.mac_destination || undefined
-      ),
-      frame_ranges: fb.control<[number, number][] | undefined>(
-        configuration?.frame_ranges || undefined
-      ),
-      protocols: fb.control<string[] | undefined>(
-        configuration?.protocols || undefined
-      ),
+      protocols: fb.control<string[]>(configuration?.protocols || []),
 
       source_mac_control: fb.control<string>('', {
         validators: [

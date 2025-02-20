@@ -13,6 +13,12 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { NgTemplateOutlet } from '@angular/common';
 
+enum ConfigurationPageMode {
+  READ,
+  EDIT,
+  CREATE,
+}
+
 @Component({
   selector: 'app-configuration',
   imports: [
@@ -36,7 +42,7 @@ import { NgTemplateOutlet } from '@angular/common';
 export class ConfigurationComponent {
   configurationApi = inject(ConfigurationApi);
 
-  isReadonly = signal<boolean>(true);
+  pageMode = signal<ConfigurationPageMode>(ConfigurationPageMode.READ);
 
   configurationOptions = resource({
     loader: async () => {
@@ -74,4 +80,6 @@ export class ConfigurationComponent {
   onChangeConfiguration(configId: string) {
     this.chosenConfiguration.set(configId);
   }
+
+  protected readonly ConfigurationPageMode = ConfigurationPageMode;
 }

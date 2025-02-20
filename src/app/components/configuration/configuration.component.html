@@ -2,11 +2,18 @@
   <div title>Analyzer configuration</div>
 
   <div actions class="actions">
-    @if (isReadonly()) {
-      <app-button (click)="isReadonly.set(false)">Edit</app-button>
-    } @else {
-      <app-button secondary (click)="isReadonly.set(true)">Cancel</app-button>
-      <app-button>Save</app-button>
+    @switch (pageMode()) {
+      @case (ConfigurationPageMode.READ) {
+        <app-button (click)="pageMode.set(ConfigurationPageMode.CREATE)"
+          >Create</app-button
+        >
+      }
+      @default {
+        <app-button secondary (click)="pageMode.set(ConfigurationPageMode.READ)"
+          >Cancel</app-button
+        >
+        <app-button>Save</app-button>
+      }
     }
   </div>
 
@@ -46,46 +53,60 @@
       </div>
     </app-configuration-template>
   } @else {
-    @if (isReadonly()) {
-      <app-configuration-template>
-        <ng-container *ngTemplateOutlet="configurationSelect" />
-        <div mac-source class="configuration__mac">
-          <div class="configuration__mac-title">Source:</div>
-          <div class="configuration__mac-content">
-            @for (mac of configuration.value()?.mac_source; track $index) {
-              <app-pill>{{ mac }}</app-pill>
+    @switch (pageMode()) {
+      @case (ConfigurationPageMode.CREATE) {
+        <app-configuration-form />
+      }
+      @case (ConfigurationPageMode.EDIT) {
+        <app-configuration-form [configuration]="configuration.value()!" />
+      }
+      @default {
+        <app-configuration-template>
+          <div style="display: flex; justify-content: space-between">
+            <ng-container *ngTemplateOutlet="configurationSelect" />
+            <app-button (click)="pageMode.set(ConfigurationPageMode.EDIT)">
+              Edit
+            </app-button>
+          </div>
+          <div mac-source class="configuration__mac">
+            <div class="configuration__mac-title">Source:</div>
+            <div class="configuration__mac-content">
+              @for (mac of configuration.value()?.mac_source; track $index) {
+                <app-pill>{{ mac }}</app-pill>
+              } @empty {
+                <app-pill>All addresses</app-pill>
+              }
+            </div>
+          </div>
+          <div mac-destination class="configuration__mac">
+            <div class="configuration__mac-title">Destination:</div>
+            <div class="configuration__mac-content">
+              @for (
+                mac of configuration.value()?.mac_destination;
+                track $index
+              ) {
+                <app-pill>{{ mac }}</app-pill>
+              } @empty {
+                <app-pill>All addresses</app-pill>
+              }
+            </div>
+          </div>
+          <div frames>
+            @for (frame of configuration.value()?.frame_ranges; track $index) {
+              <app-pill>{{ frame[0] }} — {{ frame[1] }}</app-pill>
             } @empty {
-              <app-pill>All addresses</app-pill>
+              <app-pill>All sizes</app-pill>
             }
           </div>
-        </div>
-        <div mac-destination class="configuration__mac">
-          <div class="configuration__mac-title">Destination:</div>
-          <div class="configuration__mac-content">
-            @for (mac of configuration.value()?.mac_destination; track $index) {
-              <app-pill>{{ mac }}</app-pill>
+          <div protocols>
+            @for (protocol of configuration.value()?.protocols; track $index) {
+              <app-pill>{{ protocol }}</app-pill>
             } @empty {
-              <app-pill>All addresses</app-pill>
+              <app-pill>None</app-pill>
             }
           </div>
-        </div>
-        <div frames>
-          @for (frame of configuration.value()?.frame_ranges; track $index) {
-            <app-pill>{{ frame[0] }} — {{ frame[1] }}</app-pill>
-          } @empty {
-            <app-pill>All sizes</app-pill>
-          }
-        </div>
-        <div protocols>
-          @for (protocol of configuration.value()?.protocols; track $index) {
-            <app-pill>{{ protocol }}</app-pill>
-          } @empty {
-            <app-pill>None</app-pill>
-          }
-        </div>
-      </app-configuration-template>
-    } @else {
-      <app-configuration-form [configuration]="configuration.value()!" />
+        </app-configuration-template>
+      }
     }
   }
 </app-page-wrapper>
