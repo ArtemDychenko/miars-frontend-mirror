@@ -8,9 +8,10 @@ import { firstValueFrom, map, tap } from 'rxjs';
 import { PillComponent } from '../pill/pill.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { Select, SelectChangeEvent } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
-import { Configuration } from '../../models/configuration';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-configuration',
@@ -22,8 +23,12 @@ import { Configuration } from '../../models/configuration';
     PillComponent,
     SkeletonModule,
     NgxSkeletonLoaderModule,
-    Select,
     FormsModule,
+    MatFormField,
+    MatSelect,
+    MatOption,
+    MatLabel,
+    NgTemplateOutlet,
   ],
   templateUrl: './configuration.component.html',
   styleUrl: './configuration.component.scss',
@@ -40,7 +45,7 @@ export class ConfigurationComponent {
           tap(configurations => {
             const appliedConfiguration = configurations.find(c => c.is_applied);
             if (appliedConfiguration) {
-              this.chosenConfiguration.set(appliedConfiguration);
+              this.chosenConfiguration.set(appliedConfiguration.id);
             }
           }),
           map(configurations =>
@@ -57,17 +62,16 @@ export class ConfigurationComponent {
     },
   });
 
-  chosenConfiguration = signal<Partial<Configuration> | undefined>(undefined);
+  chosenConfiguration = signal<string | undefined>(undefined);
 
   configuration = resource({
     request: () => this.chosenConfiguration(),
     loader: async ({ request }) => {
-      return await firstValueFrom(this.configurationApi.find(request?.id!));
+      return await firstValueFrom(this.configurationApi.find(request));
     },
   });
 
-  onChangeConfiguration(event: SelectChangeEvent) {
-    // @todo: fix
-    this.chosenConfiguration.set(event.value);
+  onChangeConfiguration(configId: string) {
+    this.chosenConfiguration.set(configId);
   }
 }

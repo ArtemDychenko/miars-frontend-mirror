@@ -7,10 +7,6 @@
   gap: map.get(vars.$spacing, 'lg');
 
   .configuration {
-    &-header {
-      margin-bottom: map.get(vars.$spacing, 'xl');
-    }
-
     &-section {
       display: flex;
       flex-direction: column;

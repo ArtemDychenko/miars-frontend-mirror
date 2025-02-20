@@ -41,4 +41,10 @@
       }
     }
   }
+
+  // Configuration select
+  ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: map.get(vars.$grey, 10);
+    border-radius: map.get(vars.$radius, 'xs');
+  }
 }

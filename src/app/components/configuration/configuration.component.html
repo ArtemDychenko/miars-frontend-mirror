@@ -10,32 +10,45 @@
     }
   </div>
 
+  <ng-template #configurationSelect>
+    <mat-form-field>
+      <mat-label>Configuration</mat-label>
+      <mat-select
+        [value]="chosenConfiguration()"
+        (valueChange)="onChangeConfiguration($event)">
+        @for (config of configurationOptions.value()!; track $index) {
+          <mat-option [value]="config.id">{{ config.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </ng-template>
+
   @if (configuration.isLoading()) {
     <app-configuration-template>
-      <div mac-source>
-        <ngx-skeleton-loader count="5" />
+      <ng-container *ngTemplateOutlet="configurationSelect" />
+      <div mac-source class="configuration__mac">
+        <div class="configuration__mac-title">Source:</div>
+        <div class="configuration__mac-content">
+          <ngx-skeleton-loader count="7" />
+        </div>
       </div>
-      <div mac-destination>
-        <ngx-skeleton-loader count="5" />
+      <div mac-destination class="configuration__mac">
+        <div class="configuration__mac-title">Destination:</div>
+        <div class="configuration__mac-content">
+          <ngx-skeleton-loader count="7" />
+        </div>
       </div>
       <div frames>
-        <ngx-skeleton-loader count="5" />
+        <ngx-skeleton-loader count="10" />
       </div>
       <div protocols>
-        <ngx-skeleton-loader count="5" />
+        <ngx-skeleton-loader count="10" />
       </div>
     </app-configuration-template>
   } @else {
     @if (isReadonly()) {
       <app-configuration-template>
-        <p-select
-          [disabled]="configurationOptions.isLoading()"
-          [options]="configurationOptions.value()!"
-          [optionValue]="chosenConfiguration()?.name"
-          (onChange)="onChangeConfiguration($event)"
-          optionLabel="name"
-          placeholder="Configuration" />
-
+        <ng-container *ngTemplateOutlet="configurationSelect" />
         <div mac-source class="configuration__mac">
           <div class="configuration__mac-title">Source:</div>
           <div class="configuration__mac-content">
