@@ -38,4 +38,18 @@ export class ConfigurationApi {
       >(CONFIGURATION_API_URL, configurationToDto(configuration))
       .pipe(map(dto => dtoToConfiguration(dto.data)));
   }
+
+  apply(configurationId: string): Observable<Configuration> {
+    return this.httpClient
+      .put<
+        ApiResponse<ConfigurationDto>
+      >(`${CONFIGURATION_API_URL}/${configurationId}/apply`, {})
+      .pipe(map(dto => dtoToConfiguration(dto.data)));
+  }
+
+  delete(configurationId: string): Observable<void> {
+    return this.httpClient.delete<void>(
+      `${CONFIGURATION_API_URL}/${configurationId}`
+    );
+  }
 }

@@ -5,7 +5,7 @@
     @switch (pageMode()) {
       @case (ConfigurationPageMode.READ) {
         <app-button (click)="pageMode.set(ConfigurationPageMode.CREATE)"
-          >Create</app-button
+          >New profile</app-button
         >
       }
     }
@@ -17,16 +17,21 @@
       <mat-select
         [value]="chosenConfiguration()"
         (valueChange)="onChangeConfiguration($event)">
-        @for (config of configurationOptions.value()!; track $index) {
+        @for (config of configurationOptions(); track $index) {
           <mat-option [value]="config.id">{{ config.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
   </ng-template>
 
-  @if (configuration.isLoading()) {
+  @if (isLoading()) {
     <app-configuration-template>
-      <ng-container *ngTemplateOutlet="configurationSelect" />
+      <div class="configuration__header">
+        <ng-container *ngTemplateOutlet="configurationSelect" />
+        <div class="configuration__header-actions">
+          <ngx-skeleton-loader count="3" />
+        </div>
+      </div>
       <div mac-source class="configuration__mac">
         <div class="configuration__mac-title">Source:</div>
         <div class="configuration__mac-content">
@@ -55,22 +60,39 @@
       }
       @case (ConfigurationPageMode.EDIT) {
         <app-configuration-form
-          [configuration]="configuration.value()!"
+          [configuration]="configuration()!"
           (cancel)="pageMode.set(ConfigurationPageMode.READ)"
           (submit)="onSubmitConfiguration($event)" />
       }
       @default {
         <app-configuration-template>
-          <div style="display: flex; justify-content: space-between">
+          <div class="configuration__header">
             <ng-container *ngTemplateOutlet="configurationSelect" />
-            <app-button (click)="pageMode.set(ConfigurationPageMode.EDIT)">
-              Edit
-            </app-button>
+
+            <div class="configuration__header-actions">
+              <button mat-fab extended (click)="onDeleteConfiguration()">
+                <mat-icon>delete</mat-icon>
+                Delete
+              </button>
+              @if (!configuration()?.is_applied) {
+                <button mat-fab extended (click)="onApplyConfiguration()">
+                  <mat-icon>save</mat-icon>
+                  Apply
+                </button>
+              }
+              <button
+                mat-fab
+                extended
+                (click)="pageMode.set(ConfigurationPageMode.EDIT)">
+                <mat-icon>edit_square</mat-icon>
+                Edit
+              </button>
+            </div>
           </div>
           <div mac-source class="configuration__mac">
             <div class="configuration__mac-title">Source:</div>
             <div class="configuration__mac-content">
-              @for (mac of configuration.value()?.mac_source; track $index) {
+              @for (mac of configuration()?.mac_source; track $index) {
                 <app-pill>{{ mac }}</app-pill>
               } @empty {
                 <app-pill>All addresses</app-pill>
@@ -80,10 +102,7 @@
           <div mac-destination class="configuration__mac">
             <div class="configuration__mac-title">Destination:</div>
             <div class="configuration__mac-content">
-              @for (
-                mac of configuration.value()?.mac_destination;
-                track $index
-              ) {
+              @for (mac of configuration()?.mac_destination; track $index) {
                 <app-pill>{{ mac }}</app-pill>
               } @empty {
                 <app-pill>All addresses</app-pill>
@@ -91,14 +110,14 @@
             </div>
           </div>
           <div frames>
-            @for (frame of configuration.value()?.frame_ranges; track $index) {
+            @for (frame of configuration()?.frame_ranges; track $index) {
               <app-pill>{{ frame[0] }} — {{ frame[1] }}</app-pill>
             } @empty {
               <app-pill>All sizes</app-pill>
             }
           </div>
           <div protocols>
-            @for (protocol of configuration.value()?.protocols; track $index) {
+            @for (protocol of configuration()?.protocols; track $index) {
               <app-pill>{{ protocol }}</app-pill>
             } @empty {
               <app-pill>None</app-pill>

@@ -27,6 +27,20 @@
   }
 
   .configuration {
+    &__header {
+      display: flex;
+      justify-content: space-between;
+
+      &-actions {
+        display: flex;
+        gap: map.get(vars.$spacing, 'xs');
+
+        & > button {
+          box-shadow: none;
+        }
+      }
+    }
+
     &__mac {
       display: flex;
       justify-content: space-between;
