@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { NgTemplateOutlet } from '@angular/common';
+import { Configuration } from '../../models/configuration';
 
 enum ConfigurationPageMode {
   READ,
@@ -79,6 +80,12 @@ export class ConfigurationComponent {
 
   onChangeConfiguration(configId: string) {
     this.chosenConfiguration.set(configId);
+  }
+
+  onSubmitConfiguration(configuration: Configuration) {
+    console.log('Submitting configuration', configuration);
+    this.configurationApi.save(configuration);
+    this.pageMode.set(ConfigurationPageMode.READ);
   }
 
   protected readonly ConfigurationPageMode = ConfigurationPageMode;

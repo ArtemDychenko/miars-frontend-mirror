@@ -27,6 +27,7 @@ export const Protocols: string[] = [
 ];
 
 export type ConfigurationForm = FormGroup<{
+  id: FormControl<string | undefined>;
   name: FormControl<string>;
   source_mac: FormControl<string[]>;
   dest_mac: FormControl<string[]>;
@@ -47,6 +48,7 @@ export class ConfigurationFormBuilder {
     const fb = this.formBuilder.nonNullable;
 
     return fb.group({
+      id: fb.control<string | undefined>(configuration?.id),
       name: fb.control<string>(configuration?.name || '', {
         validators: [Validators.required],
       }),
@@ -73,7 +75,7 @@ export class ConfigurationFormBuilder {
   toValue(form: ConfigurationForm): Configuration {
     const data = form.value;
     return <Configuration>{
-      id: '',
+      id: data.id,
       name: data.name,
       is_applied: false,
       mac_source: data.source_mac || [],

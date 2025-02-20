@@ -1,8 +1,17 @@
 <app-configuration-template>
-  <mat-form-field>
-    <mat-label>Configuration name</mat-label>
-    <input matInput [formControl]="form.controls.name" />
-  </mat-form-field>
+  <div class="configuration-form__header">
+    <mat-form-field>
+      <mat-label>Configuration name</mat-label>
+      <input matInput [formControl]="form.controls.name" />
+      @if (form.controls.name.hasError('required')) {
+        <mat-error>Name is required!</mat-error>
+      }
+    </mat-form-field>
+    <div class="configuration-form__header-actions">
+      <app-button secondary (click)="cancel.emit()">Cancel</app-button>
+      <app-button (click)="onSubmit()">Save</app-button>
+    </div>
+  </div>
 
   <div mac-source class="configuration__mac">
     <div class="configuration__mac-title">

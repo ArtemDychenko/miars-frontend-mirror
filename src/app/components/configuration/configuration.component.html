@@ -8,12 +8,6 @@
           >Create</app-button
         >
       }
-      @default {
-        <app-button secondary (click)="pageMode.set(ConfigurationPageMode.READ)"
-          >Cancel</app-button
-        >
-        <app-button>Save</app-button>
-      }
     }
   </div>
 
@@ -55,10 +49,15 @@
   } @else {
     @switch (pageMode()) {
       @case (ConfigurationPageMode.CREATE) {
-        <app-configuration-form />
+        <app-configuration-form
+          (cancel)="pageMode.set(ConfigurationPageMode.READ)"
+          (submit)="onSubmitConfiguration($event)" />
       }
       @case (ConfigurationPageMode.EDIT) {
-        <app-configuration-form [configuration]="configuration.value()!" />
+        <app-configuration-form
+          [configuration]="configuration.value()!"
+          (cancel)="pageMode.set(ConfigurationPageMode.READ)"
+          (submit)="onSubmitConfiguration($event)" />
       }
       @default {
         <app-configuration-template>

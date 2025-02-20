@@ -3,6 +3,17 @@
 
 :host {
   .configuration {
+    &-form {
+      &__header {
+        display: flex;
+        justify-content: space-between;
+
+        &-actions {
+          display: flex;
+          gap: map.get(vars.$spacing, 'md');
+        }
+      }
+    }
     &__mac {
       display: flex;
       justify-content: space-between;

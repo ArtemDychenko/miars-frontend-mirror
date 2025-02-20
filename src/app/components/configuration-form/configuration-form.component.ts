@@ -1,9 +1,9 @@
 import {
   Component,
-  computed,
   inject,
   input,
   OnInit,
+  output,
   signal,
 } from '@angular/core';
 import { ConfigurationTemplateComponent } from '../configuration-template/configuration-template.component';
@@ -11,8 +11,8 @@ import { Configuration } from '../../models/configuration';
 import {
   ConfigurationForm,
   ConfigurationFormBuilder,
-  SizeRanges,
   Protocols,
+  SizeRanges,
 } from './configuration-form.builder';
 import {
   MatError,
@@ -24,6 +24,7 @@ import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PillComponent } from '../pill/pill.component';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-configuration-form',
@@ -38,6 +39,7 @@ import { PillComponent } from '../pill/pill.component';
     PillComponent,
     MatError,
     MatHint,
+    ButtonComponent,
   ],
   templateUrl: './configuration-form.component.html',
   styleUrl: './configuration-form.component.scss',
@@ -47,11 +49,22 @@ export class ConfigurationFormComponent implements OnInit {
   configuration = input<Configuration>();
   form!: ConfigurationForm;
 
+  submit = output<Configuration>();
+  cancel = output<void>();
+
   sizeRangeOptions = signal<[number, number][]>(SizeRanges);
   protocolOptions = signal<string[]>(Protocols);
 
   ngOnInit() {
     this.form = this.configurationFormBuilder.create(this.configuration());
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      this.submit.emit(this.configurationFormBuilder.toValue(this.form));
+    } else {
+      this.form.markAsDirty();
+    }
   }
 
   addSourceMac(sourceMac: string) {
