@@ -1,6 +1,18 @@
 <app-page-wrapper>
   <div header>Monitoring and Analysis</div>
-
-  Dashboard content goes here
+  <mat-accordion class="accordion__header" multi>
+    <mat-expansion-panel class="accordion__panel">
+      <mat-expansion-panel-header class="accordion__panel-header">
+        <mat-panel-title class="accordion__panel-title"> Statistics </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>Statistics info</p>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="accordion__panel">
+      <mat-expansion-panel-header class="accordion__panel-header">
+        <mat-panel-title class="accordion__panel-title"> Charts </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>Charts info</p>
+    </mat-expansion-panel>
+  </mat-accordion>
   <p-skeleton height="10rem" width="100%" />
 </app-page-wrapper>
