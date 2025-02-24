@@ -3,7 +3,7 @@
 
 .content {
   display: flex;
-  height: calc(100vh - vars.$headerHeight);
+  min-height: calc(100vh - vars.$headerHeight);
   background-color: map.get(vars.$grey, 30);
   margin-top: vars.$headerHeight;
 }

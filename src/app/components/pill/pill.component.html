@@ -1,0 +1,6 @@
+<div class="pill">
+  <ng-content />
+  @if (removable()) {
+    <mat-icon (click)="clickRemove.emit()">close</mat-icon>
+  }
+</div>
