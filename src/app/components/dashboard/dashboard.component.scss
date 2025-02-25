@@ -8,7 +8,25 @@
   .actions {
     display: flex;
     gap: map.get(vars.$spacing, 'md');
+
+    .settings-button {
+      border-radius: map.get(vars.$radius, 'xs');
+      padding: map.get(vars.$spacing, 'xs') map.get(vars.$spacing, 'xs');
+
+      mat-icon {
+        font-size: 1.5rem;
+        color: white;
+      }
+    }
+
+    * {
+      background-color: vars.$textPrimary;
+    }
   }
+
+
+
+
 
   .accordion__panel {
     border-radius: map.get(vars.$radius, 'xs');

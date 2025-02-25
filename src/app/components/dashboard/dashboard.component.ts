@@ -1,24 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { PageWrapperComponent } from '../page-wrapper/page-wrapper.component';
 import { Skeleton } from 'primeng/skeleton';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   MatExpansionPanel,
-  MatExpansionPanelDescription,
   MatExpansionPanelTitle,
 } from '@angular/material/expansion';
+import { MatIcon } from '@angular/material/icon';
+import { MatFabButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
-    PageWrapperComponent,
     Skeleton,
     MatExpansionPanel,
     MatExpansionPanelTitle,
-    MatExpansionPanelDescription,
     MatExpansionModule,
+    MatIcon,
+    PageWrapperComponent,
+    MatFabButton,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+  doNothing() {}
+}

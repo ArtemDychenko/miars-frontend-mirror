@@ -5,21 +5,26 @@
   display: block;
   min-height: calc(100% - 2 * map.get(vars.$spacing, 'lg'));
 
-  margin: map.get(vars.$spacing, 'lg');
+  margin: map.get(vars.$spacing, 'xl');
   background-color: map.get(vars.$grey, 0);
   border-radius: map.get(vars.$radius, 'xs');
 
   .page {
     &-header {
-      padding: map.get(vars.$spacing, 'lg') map.get(vars.$spacing, 'lg')
-        map.get(vars.$spacing, 'xs');
-      font-family: Monoton, cursive;
-      font-size: map.get(vars.$text, 'xxl');
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: map.get(vars.$spacing, 'lg') map.get(vars.$spacing, 'xxl')
+      map.get(vars.$spacing, 'xs');
+
+      &__title {
+        font-family: Monoton, cursive;
+        font-size: map.get(vars.$text, 'xxl');
+      }
     }
 
     &-body {
-      padding: map.get(vars.$spacing, 'xl') map.get(vars.$spacing, 'lg')
-        map.get(vars.$spacing, 'lg');
+      padding: map.get(vars.$spacing, 'xxl');
     }
   }
 }

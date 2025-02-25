@@ -1,5 +1,12 @@
 <app-page-wrapper>
-  <div header>Monitoring and Analysis</div>
+  <div title>Monitoring and Analysis</div>
+
+  <div actions class="actions">
+    <button mat-fab class="settings-button" (click)="doNothing()">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
+
   <mat-accordion class="accordion__header" multi>
     <mat-expansion-panel class="accordion__panel">
       <mat-expansion-panel-header class="accordion__panel-header">
