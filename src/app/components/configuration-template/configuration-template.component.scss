@@ -1,0 +1,31 @@
+@use '../../../vars';
+@use 'sass:map';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: map.get(vars.$spacing, 'lg');
+
+  .configuration {
+    &-section {
+      display: flex;
+      flex-direction: column;
+      gap: map.get(vars.$spacing, 'xs');
+
+      &__title {
+        font-weight: bold;
+        color: map.get(vars.$grey, 100);
+        font-size: map.get(vars.$text, 'lg');
+      }
+
+      &__card {
+        display: flex;
+        flex-direction: column;
+        gap: map.get(vars.$spacing, 'md');
+        padding: map.get(vars.$spacing, 'lg');
+        border-radius: map.get(vars.$radius, 'sm');
+        background-color: map.get(vars.$grey, 10);
+      }
+    }
+  }
+}
