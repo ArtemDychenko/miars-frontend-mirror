@@ -1,0 +1,19 @@
+@use '../../../vars';
+@use 'sass:map';
+
+:host {
+  button {
+    text-transform: uppercase;
+    font-size: map.get(vars.$text, 'md');
+    padding: map.get(vars.$spacing, 'xl') map.get(vars.$spacing, 'xxxl');
+  }
+
+  * {
+    background-color: vars.$textPrimary;
+  }
+
+  .button-secondary {
+    color: vars.$textPrimary;
+    background-color: map.get(vars.$grey, 20);
+  }
+}

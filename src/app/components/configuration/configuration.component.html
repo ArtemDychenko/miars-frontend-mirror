@@ -1,6 +1,130 @@
 <app-page-wrapper>
-  <div header>Analyzer configuration</div>
+  <div title>Analyzer configuration</div>
 
-  Configuration content goes here
-  <p-skeleton height="10rem" width="100%" />
+  <div actions class="actions">
+    @switch (pageMode()) {
+      @case (ConfigurationPageMode.READ) {
+        <app-button (click)="pageMode.set(ConfigurationPageMode.CREATE)"
+          >New profile</app-button
+        >
+      }
+    }
+  </div>
+
+  <ng-template #configurationSelect>
+    <mat-form-field>
+      <mat-label>Configuration</mat-label>
+      <mat-select
+        [value]="chosenConfiguration()"
+        (valueChange)="onChangeConfiguration($event)">
+        @for (config of configurationOptions(); track $index) {
+          <mat-option [value]="config.id">{{ config.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </ng-template>
+
+  @if (isLoading()) {
+    <app-configuration-template>
+      <div class="configuration__header">
+        <ng-container *ngTemplateOutlet="configurationSelect" />
+        <div class="configuration__header-actions">
+          <ngx-skeleton-loader count="3" />
+        </div>
+      </div>
+      <div mac-source class="configuration__mac">
+        <div class="configuration__mac-title">Source:</div>
+        <div class="configuration__mac-content">
+          <ngx-skeleton-loader count="7" />
+        </div>
+      </div>
+      <div mac-destination class="configuration__mac">
+        <div class="configuration__mac-title">Destination:</div>
+        <div class="configuration__mac-content">
+          <ngx-skeleton-loader count="7" />
+        </div>
+      </div>
+      <div frames>
+        <ngx-skeleton-loader count="10" />
+      </div>
+      <div protocols>
+        <ngx-skeleton-loader count="10" />
+      </div>
+    </app-configuration-template>
+  } @else {
+    @switch (pageMode()) {
+      @case (ConfigurationPageMode.CREATE) {
+        <app-configuration-form
+          (cancel)="pageMode.set(ConfigurationPageMode.READ)"
+          (submit)="onSubmitConfiguration($event)" />
+      }
+      @case (ConfigurationPageMode.EDIT) {
+        <app-configuration-form
+          [configuration]="configuration()!"
+          (cancel)="pageMode.set(ConfigurationPageMode.READ)"
+          (submit)="onSubmitConfiguration($event)" />
+      }
+      @default {
+        <app-configuration-template>
+          <div class="configuration__header">
+            <ng-container *ngTemplateOutlet="configurationSelect" />
+
+            <div class="configuration__header-actions">
+              <button mat-fab extended (click)="onDeleteConfiguration()">
+                <mat-icon>delete</mat-icon>
+                Delete
+              </button>
+              @if (!configuration()?.is_applied) {
+                <button mat-fab extended (click)="onApplyConfiguration()">
+                  <mat-icon>save</mat-icon>
+                  Apply
+                </button>
+              }
+              <button
+                mat-fab
+                extended
+                (click)="pageMode.set(ConfigurationPageMode.EDIT)">
+                <mat-icon>edit_square</mat-icon>
+                Edit
+              </button>
+            </div>
+          </div>
+          <div mac-source class="configuration__mac">
+            <div class="configuration__mac-title">Source:</div>
+            <div class="configuration__mac-content">
+              @for (mac of configuration()?.mac_source; track $index) {
+                <app-pill>{{ mac }}</app-pill>
+              } @empty {
+                <app-pill>All addresses</app-pill>
+              }
+            </div>
+          </div>
+          <div mac-destination class="configuration__mac">
+            <div class="configuration__mac-title">Destination:</div>
+            <div class="configuration__mac-content">
+              @for (mac of configuration()?.mac_destination; track $index) {
+                <app-pill>{{ mac }}</app-pill>
+              } @empty {
+                <app-pill>All addresses</app-pill>
+              }
+            </div>
+          </div>
+          <div frames>
+            @for (frame of configuration()?.frame_ranges; track $index) {
+              <app-pill>{{ frame[0] }} — {{ frame[1] }}</app-pill>
+            } @empty {
+              <app-pill>All sizes</app-pill>
+            }
+          </div>
+          <div protocols>
+            @for (protocol of configuration()?.protocols; track $index) {
+              <app-pill>{{ protocol }}</app-pill>
+            } @empty {
+              <app-pill>None</app-pill>
+            }
+          </div>
+        </app-configuration-template>
+      }
+    }
+  }
 </app-page-wrapper>
