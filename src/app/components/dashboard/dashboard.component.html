@@ -1,7 +1,28 @@
 <app-page-wrapper>
   <div title>Monitoring and Analysis</div>
-  <div actions>actions</div>
 
-  Dashboard content goes here
-  <p-skeleton height="10rem" width="100%" />
+  <div actions class="actions">
+    <button mat-fab class="settings-button" (click)="openSettings()">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
+
+  <mat-accordion class="accordion__header" multi>
+    <mat-expansion-panel class="accordion__panel">
+      <mat-expansion-panel-header class="accordion__panel-header">
+        <mat-panel-title class="accordion__panel-title">
+          Statistics
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-dashboard-statistics />
+    </mat-expansion-panel>
+    <mat-expansion-panel class="accordion__panel">
+      <mat-expansion-panel-header class="accordion__panel-header">
+        <mat-panel-title class="accordion__panel-title">
+          Charts
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-dashboard-charts />
+    </mat-expansion-panel>
+  </mat-accordion>
 </app-page-wrapper>

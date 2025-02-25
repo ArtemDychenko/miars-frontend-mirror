@@ -1,4 +1,36 @@
+@use '../../../vars';
+@use 'sass:map';
+
 :host {
   height: 100%;
   width: 100%;
+
+  .actions {
+    display: flex;
+    gap: map.get(vars.$spacing, 'md');
+
+    .settings-button {
+      box-shadow: none;
+
+      mat-icon {
+        font-size: map.get(vars.$text, 'xl');
+        color: map.get(vars.$grey, 0);
+      }
+    }
+
+    * {
+      background-color: vars.$textPrimary;
+    }
+  }
+
+  .accordion__panel {
+    background-color: map.get(vars.$grey, 10);
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid map.get(vars.$grey, 30);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 }

@@ -12,7 +12,6 @@ import { ButtonComponent } from '../button/button.component';
 import { ConfigurationApi } from '../../api/configuration.api';
 import { map, Observable, tap } from 'rxjs';
 import { PillComponent } from '../pill/pill.component';
-import { SkeletonModule } from 'primeng/skeleton';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -36,7 +35,6 @@ enum ConfigurationPageMode {
     ConfigurationFormComponent,
     ButtonComponent,
     PillComponent,
-    SkeletonModule,
     NgxSkeletonLoaderModule,
     FormsModule,
     MatFormField,

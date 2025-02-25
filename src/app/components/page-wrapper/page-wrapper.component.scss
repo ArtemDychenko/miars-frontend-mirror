@@ -3,7 +3,7 @@
 
 :host {
   display: block;
-  min-height: calc(100% - 2 * map.get(vars.$spacing, 'lg'));
+  min-height: calc(100vh - 2 * vars.$headerHeight);
 
   margin: map.get(vars.$spacing, 'xl');
   background-color: map.get(vars.$grey, 0);
