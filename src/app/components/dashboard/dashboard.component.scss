@@ -10,12 +10,11 @@
     gap: map.get(vars.$spacing, 'md');
 
     .settings-button {
-      border-radius: map.get(vars.$radius, 'xs');
-      padding: map.get(vars.$spacing, 'xs') map.get(vars.$spacing, 'xs');
+      box-shadow: none;
 
       mat-icon {
-        font-size: 1.5rem;
-        color: white;
+        font-size: map.get(vars.$text, 'xl');
+        color: map.get(vars.$grey, 0);
       }
     }
 
@@ -24,35 +23,14 @@
     }
   }
 
-
-
-
-
   .accordion__panel {
-    border-radius: map.get(vars.$radius, 'xs');
     background-color: map.get(vars.$grey, 10);
-    padding: map.get(vars.$spacing, 'xs') map.get(vars.$spacing, 'xs');
 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-
     border-bottom: 1px solid map.get(vars.$grey, 30);
 
     &:last-child {
       border-bottom: none;
     }
-
-    &-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background-color 0.3s ease-in-out;
-
-      &:hover {
-        background-color: map.get(vars.$grey, 30);
-      }
-    }
   }
-
 }
-
-
