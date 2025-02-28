@@ -1,6 +1,7 @@
 import * as configurationList from './mocks/configurations.json';
 import * as configuration1 from './mocks/configuration-1.json';
 import * as configuration2 from './mocks/configuration-2.json';
+import * as dashboardStats from './mocks/dashboard-statistics.json';
 
 export const urls = [
   {
@@ -14,5 +15,9 @@ export const urls = [
   {
     url: '/api/v1/configuration',
     json: configurationList,
+  },
+  {
+    url: '/api/v1/dashboard/statistics',
+    json: dashboardStats,
   },
 ];
