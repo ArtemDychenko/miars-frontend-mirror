@@ -1,5 +1,42 @@
-
-
-
-
-<ngx-skeleton-loader count="10" />
+<div class="statistics">
+  @if (isLoading()) {
+    <div class="statistics__loader">
+      <div eth class="statistics__eth">
+        <div class="statistics__eth-content">
+          <ngx-skeleton-loader count="7" />
+        </div>
+      </div>
+      <div protocols class="statistics__prot">
+        <div class="statistics__prot-content">
+          <ngx-skeleton-loader count="7" />
+        </div>
+      </div>
+      <div ir>
+        <ngx-skeleton-loader count="10" />
+      </div>
+    </div>
+  }
+  @else {
+    <div class="statistics__content">
+      <p>Total time {{ dashboardStatistic()?.total_time }} </p>
+<!--      @for (mac of configuration()?.mac_source; track $index) {-->
+<!--        <app-pill>{{ mac }}</app-pill>-->
+<!--      } @empty {-->
+<!--        <app-pill>All addresses</app-pill>-->
+<!--      }-->
+      <div eth class="statistics__eth">
+        <div class="statistics__eth-content">
+<!--          <p>ETH Price: {{ statistics.ethPrice }} USD</p>-->
+        </div>
+      </div>
+      <div protocols class="statistics__prot">
+        <div class="statistics__prot-content">
+<!--          <p>Number of active protocols: {{ statistics.protocols }}</p>-->
+        </div>
+      </div>
+      <div ir>
+<!--        <p>Other data: {{ statistics.otherData }}</p>-->
+      </div>
+    </div>
+  }
+</div>
