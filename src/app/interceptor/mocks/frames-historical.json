@@ -1,0 +1,64 @@
+{
+  "frames": [
+    {
+      "valid": 1000,
+      "invalid": 15
+    },
+    {
+      "valid": 1500,
+      "invalid": 0
+    },
+    {
+      "valid": 100,
+      "invalid": 99
+    },
+    {
+      "valid": 1234,
+      "invalid": 123
+    },
+    {
+      "valid": 1555,
+      "invalid": 25
+    },
+    {
+      "valid": 1000,
+      "invalid": 15
+    },
+    {
+      "valid": 1500,
+      "invalid": 0
+    },
+    {
+      "valid": 100,
+      "invalid": 99
+    },
+    {
+      "valid": 1234,
+      "invalid": 123
+    },
+    {
+      "valid": 1555,
+      "invalid": 25
+    },
+    {
+      "valid": 1000,
+      "invalid": 15
+    },
+    {
+      "valid": 1500,
+      "invalid": 0
+    },
+    {
+      "valid": 100,
+      "invalid": 99
+    },
+    {
+      "valid": 1234,
+      "invalid": 123
+    },
+    {
+      "valid": 1555,
+      "invalid": 25
+    }
+  ]
+}
