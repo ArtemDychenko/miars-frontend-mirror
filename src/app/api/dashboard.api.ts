@@ -17,7 +17,7 @@ export const DASHBOARD_API_URL = '/api/v1/dashboard/statistics';
 export class DashboardApi {
   private readonly httpClient = inject(HttpClient);
 
-  fetch(): Observable<DashboardStatistics> {
+  fetchStatistics(): Observable<DashboardStatistics> {
     return this.httpClient
       .get<ApiResponse<DashboardStatisticsDto>>(DASHBOARD_API_URL)
       .pipe(map(dto => dtoToDashboardStatistics(dto.data)));

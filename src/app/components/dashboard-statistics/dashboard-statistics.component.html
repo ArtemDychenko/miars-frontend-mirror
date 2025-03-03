@@ -1,5 +1,6 @@
 <div class="statistics">
-  @if (isLoading()) {
+  @let statistics = dashboardStatistics | async;
+  @if (!statistics) {
     <div class="statistics__loader">
       <div time class="statistics__total-time">
           <ngx-skeleton-loader count="7" />
@@ -24,21 +25,47 @@
   @else {
     <div class="statistics__content">
       <div time class="statistics__total-time">
-        <p>Total time {{ dashboardStatistic()?.total_time }} </p>
+        <p>Total time: {{ statistics.total_time | time }} </p>
       </div>
       <div eth class="statistics__eth">
         <div class="statistics__eth-content">
-<!--          <p>ETH Price: {{ statistics.ethPrice }} USD</p>-->
+          <ng-container *ngIf="getProtocolETH() | async as protocol">
+            {{ protocol.name }}
+            {{ protocol.total_packets }}
+            <ng-container *ngIf="getPacketsPerSecond(protocol.name) | async as packetsPerSecond">
+              {{ packetsPerSecond }}
+            </ng-container>
+            {{protocol.total_bytes}}
+            <ng-container *ngIf="getBytesPerSecond(protocol.name) | async as bytesPerSecond">
+              {{ bytesPerSecond }}
+            </ng-container>
+          </ng-container>
         </div>
       </div>
       <div protocols class="statistics__prot">
         <div class="statistics__prot-content">
-<!--          <p>Number of active protocols: {{ statistics.protocols }}</p>-->
+          <div *ngFor="let protocol of getProtocolOthers() | async">
+            {{ protocol.name }}
+            {{ protocol.total_packets }}
+            <ng-container *ngIf="getPacketsPerSecond(protocol.name) | async as packetsPerSecond">
+              {{ packetsPerSecond }}
+            </ng-container>
+            {{protocol.total_bytes}}
+            <ng-container *ngIf="getBytesPerSecond(protocol.name) | async as bytesPerSecond">
+              {{ bytesPerSecond }}
+            </ng-container>
+          </div>
         </div>
       </div>
       <div ir class="statistics__ir">
         <div class="statistics__ir-content">
-<!--        <p>Other data: {{ statistics.otherData }}</p>-->
+          <ng-container *ngIf="getIR() | async as information_rate">
+            Information Rate
+            {{information_rate.min}}
+            {{information_rate.max}}
+            {{information_rate.current}}
+            MB/s
+          </ng-container>
         </div>
       </div>
     </div>

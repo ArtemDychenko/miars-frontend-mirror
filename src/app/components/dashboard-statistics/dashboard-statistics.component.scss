@@ -1,0 +1,34 @@
+@use '../../../vars';
+@use 'sass:map';
+
+:host {
+  height: 100%;
+  width: 100%;
+
+  .statistics {
+      &content {
+        display: flex;
+        gap: map.get(vars.$spacing, 'xs');
+    }
+
+    &__eth {
+      display: flex;
+      justify-content: space-between;
+
+      &-title {
+        color: map.get(vars.$grey, 100);
+        font-size: map.get(vars.$text, 'lg');
+      }
+
+      &-content {
+        width: calc(100% - 200px);
+      }
+    }
+  }
+
+  // Configuration select
+  ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: map.get(vars.$grey, 10);
+    border-radius: map.get(vars.$radius, 'xs');
+  }
+}

@@ -13,7 +13,7 @@ export interface InformationRate {
 }
 
 export interface DashboardStatisticsDto {
-  total_time: string;
+  total_time: number;
   protocols: ProtocolStatistics[];
   information_rate: InformationRate;
 }
