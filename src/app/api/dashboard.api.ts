@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../models/api-response';
 import { ChartFrames } from '../models/chart-frames';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { ChartInformationRate } from '../models/chart-information-rate';
 import { ChartProtocol } from '../models/chart-protocol';
 
@@ -15,9 +15,13 @@ export class DashboardApi {
   private readonly httpClient = inject(HttpClient);
 
   fetchFramesHistory(): Observable<ChartFrames[]> {
+    console.log('fetchFramesHistory');
     return this.httpClient
       .get<ApiResponse<ChartFrames[]>>(`${DASHBOARD_API_URL}/frames/historical`)
-      .pipe(map(response => response.data));
+      .pipe(
+        map(response => response.data),
+        tap(console.log)
+      );
   }
 
   fetchFrames(): Observable<ChartFrames> {

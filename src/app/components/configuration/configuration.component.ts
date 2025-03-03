@@ -1,5 +1,6 @@
 import {
   afterNextRender,
+  ChangeDetectionStrategy,
   Component,
   effect,
   inject,
@@ -47,6 +48,7 @@ enum ConfigurationPageMode {
   ],
   templateUrl: './configuration.component.html',
   styleUrl: './configuration.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigurationComponent {
   configurationApi = inject(ConfigurationApi);

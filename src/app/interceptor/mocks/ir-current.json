@@ -1,4 +1,6 @@
 {
-  "current": 123.45,
-  "average": 123.4
+  "data": {
+    "current": 123.45,
+    "average": 123.4
+  }
 }

@@ -1,4 +1,6 @@
 {
-  "bytes": 3000,
-  "packets": 58
+  "data": {
+    "bytes": 3000,
+    "packets": 58
+  }
 }

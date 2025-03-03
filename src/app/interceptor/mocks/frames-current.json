@@ -1,4 +1,6 @@
 {
-  "valid": 2345,
-  "invalid": 234
+  "data": {
+    "valid": 2345,
+    "invalid": 234
+  }
 }
