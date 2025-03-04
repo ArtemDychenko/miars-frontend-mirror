@@ -15,7 +15,6 @@
     }
   }
 
-
   .statistics {
     display: flex;
     flex-direction: column;
@@ -58,7 +57,6 @@
 
         margin-top: map.get(vars.$text, 'lg');
         width: 100%;
-
 
         th, td {
           width: 20%;

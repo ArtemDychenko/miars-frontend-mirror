@@ -4,7 +4,6 @@ import { map, Observable, tap } from 'rxjs';
 import {
   DashboardStatistics,
   DashboardStatisticsDto,
-  dashboardStatisticsToDto,
   dtoToDashboardStatistics,
 } from '../models/dashboard-statistics';
 import { ApiResponse } from '../models/api-response';
