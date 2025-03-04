@@ -57,6 +57,10 @@ export class DashboardStatisticsComponent {
           return 0;
         }
 
+        if (protocol.total_packets == 0) {
+          return 0;
+        }
+
         const totalPackets = protocol.total_packets;
         const totalSeconds = dashboardStatistics.total_time.getTime() / 1000;
         return totalPackets / totalSeconds;
@@ -72,6 +76,10 @@ export class DashboardStatisticsComponent {
         );
 
         if (!protocol) {
+          return 0;
+        }
+
+        if (protocol.total_bytes == 0) {
           return 0;
         }
 

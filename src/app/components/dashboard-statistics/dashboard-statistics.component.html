@@ -2,72 +2,84 @@
   @let statistics = dashboardStatistics | async;
   @if (!statistics) {
     <div class="statistics__loader">
-      <div time class="statistics__total-time">
-          <ngx-skeleton-loader count="7" />
+      <div class="statistics__loader-time">
+        <ngx-skeleton-loader count="7" />
       </div>
-      <div eth class="statistics__eth">
-        <div class="statistics__eth-content">
-          <ngx-skeleton-loader count="7" />
-        </div>
+      <div class="statistics__loader-eth">
+        <ngx-skeleton-loader count="7" />
       </div>
-      <div protocols class="statistics__prot">
-        <div class="statistics__prot-content">
-          <ngx-skeleton-loader count="7" />
-        </div>
+      <div class="statistics__loader-protocol">
+        <ngx-skeleton-loader count="7" />
       </div>
-      <div ir class="statistics__ir">
-        <div class="statistics__ir-content">
-          <ngx-skeleton-loader count="7" />
-        </div>
+      <div class="statistics__loader-ir">
+        <ngx-skeleton-loader count="7" />
       </div>
     </div>
   }
   @else {
-    <div class="statistics__content">
-      <div time class="statistics__total-time">
+    <div class="statistics__table">
+      <div class="statistics__table__time">
         <p>Total time: {{ statistics.total_time | time }} </p>
       </div>
-      <div eth class="statistics__eth">
-        <div class="statistics__eth-content">
-          <ng-container *ngIf="getProtocolETH() | async as protocol">
-            {{ protocol.name }}
-            {{ protocol.total_packets }}
-            <ng-container *ngIf="getPacketsPerSecond(protocol.name) | async as packetsPerSecond">
-              {{ packetsPerSecond }}
-            </ng-container>
-            {{protocol.total_bytes}}
-            <ng-container *ngIf="getBytesPerSecond(protocol.name) | async as bytesPerSecond">
-              {{ bytesPerSecond }}
-            </ng-container>
+      <table class="statistics__table__header">
+        <thead class="statistics__table__header-title">
+          <tr>
+            <th></th>
+            <th>Total packets</th>
+            <th>Packets per second</th>
+            <th>Total bytes</th>
+            <th>Bytes per second</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="getProtocolETH() | async as protocol" class="statistics__table__header-eth">
+            <td>{{ protocol.name }}</td>
+            <td>{{ protocol.total_packets }}</td>
+            <td>
+              {{ (getPacketsPerSecond(protocol.name) | async) === 0 ? 0 : (getPacketsPerSecond(protocol.name) | async) }}
+            </td>
+            <td>{{ protocol.total_bytes }}</td>
+            <td>
+              {{ (getBytesPerSecond(protocol.name) | async) === 0 ? 0 : (getBytesPerSecond(protocol.name) | async) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="statistics__table__protocols">
+        <tbody>
+          <ng-container *ngFor="let protocol of getProtocolOthers() | async">
+            <tr>
+              <td>{{ protocol.name }}</td>
+              <td>{{ protocol.total_packets }}</td>
+              <td>
+                {{ (getPacketsPerSecond(protocol.name) | async) === 0 ? 0 : (getPacketsPerSecond(protocol.name) | async) }}
+              </td>
+              <td>{{ protocol.total_bytes }}</td>
+              <td>
+                {{ (getBytesPerSecond(protocol.name) | async) === 0 ? 0 : (getBytesPerSecond(protocol.name) | async) }}
+              </td>
+            </tr>
           </ng-container>
-        </div>
-      </div>
-      <div protocols class="statistics__prot">
-        <div class="statistics__prot-content">
-          <div *ngFor="let protocol of getProtocolOthers() | async">
-            {{ protocol.name }}
-            {{ protocol.total_packets }}
-            <ng-container *ngIf="getPacketsPerSecond(protocol.name) | async as packetsPerSecond">
-              {{ packetsPerSecond }}
-            </ng-container>
-            {{protocol.total_bytes}}
-            <ng-container *ngIf="getBytesPerSecond(protocol.name) | async as bytesPerSecond">
-              {{ bytesPerSecond }}
-            </ng-container>
-          </div>
-        </div>
-      </div>
-      <div ir class="statistics__ir">
-        <div class="statistics__ir-content">
-          <ng-container *ngIf="getIR() | async as information_rate">
-            Information Rate
-            {{information_rate.min}}
-            {{information_rate.max}}
-            {{information_rate.current}}
-            MB/s
-          </ng-container>
-        </div>
-      </div>
+        </tbody>
+      </table>
+      <table class="statistics__table__ir">
+        <thead class="statistics__table__ir-header">
+        <tr>
+          <th></th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Current</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="getIR() | async as information_rate" class="statistics__table_ir-content">
+            <td>Information Rate</td>
+            <td>{{ information_rate.min }}</td>
+            <td>{{ information_rate.max }}</td>
+            <td>{{ information_rate.current }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   }
 </div>

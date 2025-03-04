@@ -25,9 +25,9 @@
         }
       ],
     "information-rate": {
-        "min": 1.23,
-        "max": 123456,
-        "current": 123.45
+        "min": 0,
+        "max": 0,
+        "current": 0
       }
   }
 }

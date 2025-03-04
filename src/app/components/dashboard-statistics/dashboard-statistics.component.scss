@@ -5,30 +5,90 @@
   height: 100%;
   width: 100%;
 
-  .statistics {
-      &content {
-        display: flex;
-        gap: map.get(vars.$spacing, 'xs');
-    }
+  ngx-skeleton-loader {
+    display: flex;
+    flex-direction: row;
+    gap: map.get(vars.$spacing, 'md');
 
-    &__eth {
-      display: flex;
-      justify-content: space-between;
-
-      &-title {
-        color: map.get(vars.$grey, 100);
-        font-size: map.get(vars.$text, 'lg');
-      }
-
-      &-content {
-        width: calc(100% - 200px);
-      }
+    ::ng-deep * {
+      height: 50px;
     }
   }
 
-  // Configuration select
-  ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background-color: map.get(vars.$grey, 10);
-    border-radius: map.get(vars.$radius, 'xs');
+
+  .statistics {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-weight: bold;
+
+    &__table {
+      &__time {
+        font-size: map.get(vars.$text, 'md');
+      }
+
+      &__header {
+        width: 100%;
+        border-radius: map.get(vars.$radius, 'xs');
+        background-color: map.get(vars.$grey, 0);
+        padding: map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'xl');
+
+        &-title {
+          border-radius: map.get(vars.$radius, 'xs');
+          background-color: map.get(vars.$grey, 0);
+          padding: map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'xl');
+        }
+
+        &-eth td {
+          border-top: 1px solid map.get(vars.$grey, 30);
+        }
+
+        th, td {
+          width: 20%;
+          padding: map.get(vars.$spacing, 'sm');
+          text-align: left;
+        }
+
+      }
+
+      &__protocols {
+        border-radius: map.get(vars.$radius, 'xs');
+        background-color: map.get(vars.$grey, 0);
+        padding: map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'xl');
+
+        margin-top: map.get(vars.$text, 'lg');
+        width: 100%;
+
+
+        th, td {
+          width: 20%;
+          padding: map.get(vars.$spacing, 'sm');
+          text-align: left;
+        }
+
+        tr:not(:last-child) td {
+          border-bottom: 1px solid map.get(vars.$grey, 30);
+        }
+      }
+
+      &__ir {
+        border-radius: map.get(vars.$radius, 'xs');
+        background-color: map.get(vars.$grey, 0);
+        padding: map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'xl');
+
+        margin-top: map.get(vars.$spacing, 'lg');
+        width: 100%;
+
+        tbody td {
+          border-top: 1px solid map.get(vars.$grey, 30);
+        }
+
+        th, td {
+          width: 25%;
+          padding: map.get(vars.$spacing, 'sm');
+          text-align: left;
+        }
+      }
+    }
   }
 }
