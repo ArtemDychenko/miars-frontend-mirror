@@ -14,10 +14,16 @@ export const DASHBOARD_API_URL = '/statistics';
 export class DashboardApi {
   private readonly httpClient = inject(HttpClient);
 
-  fetchFramesHistory(): Observable<ChartFrames[]> {
-    console.log('fetchFramesHistory');
+  fetchFramesHistory(interval: number): Observable<ChartFrames[]> {
     return this.httpClient
-      .get<ApiResponse<ChartFrames[]>>(`${DASHBOARD_API_URL}/frames/historical`)
+      .get<ApiResponse<ChartFrames[]>>(
+        `${DASHBOARD_API_URL}/frames/historical`,
+        {
+          params: {
+            interval: interval.toString(),
+          },
+        }
+      )
       .pipe(
         map(response => response.data),
         tap(console.log)

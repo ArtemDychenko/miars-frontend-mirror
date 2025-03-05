@@ -1,28 +1,28 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   computed,
+  effect,
   inject,
-  OnInit,
+  input,
   signal,
 } from '@angular/core';
 import { DashboardApi } from '../../api/dashboard.api';
 import { ChartFrames } from '../../models/chart-frames';
 import { UIChart } from 'primeng/chart';
-import { interval, shareReplay, switchMap } from 'rxjs';
-import { Skeleton } from 'primeng/skeleton';
+import { interval, shareReplay, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-chart-frames',
-  imports: [UIChart, Skeleton],
+  imports: [UIChart],
   templateUrl: './dashboard-chart-frames.component.html',
   styleUrl: './dashboard-chart-frames.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardChartFramesComponent implements OnInit {
+export class DashboardChartFramesComponent {
   readonly #dashboardApi = inject(DashboardApi);
-  readonly #cdr = inject(ChangeDetectorRef);
+  recordsInterval = input<number>(1);
+  recordsLimit = input<number>(20);
   framesHistory = signal<ChartFrames[]>([]);
   data = computed(() => {
     const frames = this.framesHistory();
@@ -56,19 +56,29 @@ export class DashboardChartFramesComponent implements OnInit {
     },
   };
 
-  ngOnInit() {
-    this.#dashboardApi
-      .fetchFramesHistory()
-      .subscribe(response => this.framesHistory.set(response));
+  private stopFetching = new Subject();
 
-    interval(1000)
-      .pipe(
-        switchMap(() => this.#dashboardApi.fetchFrames()),
-        shareReplay(1)
-      )
-      .subscribe(frame => {
-        this.framesHistory.update(frames => [...frames.splice(1), frame]);
-      });
+  constructor() {
+    effect(() => {
+      this.stopFetching.next(undefined);
+
+      this.#dashboardApi
+        .fetchFramesHistory(this.recordsInterval())
+        .subscribe(response => this.framesHistory.set(response));
+
+      interval(this.recordsInterval() * 1000)
+        .pipe(
+          takeUntil(this.stopFetching),
+          switchMap(() => this.#dashboardApi.fetchFrames()),
+          shareReplay(1)
+        )
+        .subscribe(frame => {
+          this.framesHistory.update(frames => {
+            if (frames.length < this.recordsLimit()) return [...frames, frame];
+            return [...frames.splice(1), frame];
+          });
+        });
+    });
   }
 
   private getFrameLabels(): Date[] {
@@ -76,7 +86,8 @@ export class DashboardChartFramesComponent implements OnInit {
     const now = new Date().getTime();
     return Array.from(
       { length: labelsNumber },
-      (_, index) => new Date(now - (labelsNumber - index) * 1000)
+      (_, index) =>
+        new Date(now - (labelsNumber - index) * 1000 * this.recordsInterval())
     );
   }
 }
