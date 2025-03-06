@@ -1,9 +1,13 @@
-export type DashboardStatistics = DashboardStatisticsDto;
-
 export interface ProtocolStatistics {
   name: string;
   total_packets: number;
   total_bytes: number;
+}
+
+export interface ProtocolStatisticsDto {
+  name: string;
+  'total-packets': number;
+  'total-bytes': number;
 }
 
 export interface InformationRate {
@@ -13,15 +17,23 @@ export interface InformationRate {
 }
 
 export interface DashboardStatisticsDto {
-  total_time: number;
+  'total-time': number;
+  protocols: ProtocolStatisticsDto[];
+  'information-rate': InformationRate;
+}
+
+export interface DashboardStatistics {
+  total_time: Date;
   protocols: ProtocolStatistics[];
   information_rate: InformationRate;
 }
 
-export function dtoToDashboardStatistics(dto: any): DashboardStatistics {
+export function dtoToDashboardStatistics(
+  dto: DashboardStatisticsDto
+): DashboardStatistics {
   return {
-    total_time: dto['total-time'],
-    protocols: dto.protocols.map((protocol: any) => ({
+    total_time: new Date(dto['total-time'] * 1000),
+    protocols: dto.protocols.map((protocol: ProtocolStatisticsDto) => ({
       name: protocol.name,
       total_packets: protocol['total-packets'],
       total_bytes: protocol['total-bytes'],
@@ -30,24 +42,6 @@ export function dtoToDashboardStatistics(dto: any): DashboardStatistics {
       min: dto['information-rate'].min,
       max: dto['information-rate'].max,
       current: dto['information-rate'].current,
-    },
-  };
-}
-
-export function dashboardStatisticsToDto(
-  dashboardStatistics: DashboardStatistics
-): any {
-  return {
-    'total-time': dashboardStatistics.total_time,
-    protocols: dashboardStatistics.protocols.map(protocol => ({
-      name: protocol.name,
-      'total-packets': protocol.total_packets,
-      'total-bytes': protocol.total_bytes,
-    })),
-    'information-rate': {
-      min: dashboardStatistics.information_rate.min,
-      max: dashboardStatistics.information_rate.max,
-      current: dashboardStatistics.information_rate.current,
     },
   };
 }

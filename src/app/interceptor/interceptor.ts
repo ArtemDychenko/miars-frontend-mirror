@@ -17,7 +17,7 @@ export const urls = [
     json: configurationList,
   },
   {
-    url: '/api/v1/dashboard/statistics',
+    url: '/api/statistics',
     json: dashboardStats,
   },
 ];

@@ -2,14 +2,10 @@
 @use 'sass:map';
 
 :host {
-  height: 100%;
-  width: 100%;
-
   ngx-skeleton-loader {
     display: flex;
     flex-direction: row;
     gap: map.get(vars.$spacing, 'md');
-
     ::ng-deep * {
       height: 50px;
     }
@@ -19,7 +15,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-weight: bold;
+    font-weight: 500;
+    font-size: map.get(vars.$text, 'lg');
 
     &__table {
       &__time {

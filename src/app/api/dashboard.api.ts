@@ -8,7 +8,7 @@ import {
 } from '../models/dashboard-statistics';
 import { ApiResponse } from '../models/api-response';
 
-export const DASHBOARD_API_URL = '/api/v1/dashboard/statistics';
+export const DASHBOARD_API_URL = '/api/statistics';
 
 @Injectable({
   providedIn: 'root',

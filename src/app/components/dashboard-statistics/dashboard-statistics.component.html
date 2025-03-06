@@ -2,18 +2,9 @@
   @let statistics = dashboardStatistics | async;
   @if (!statistics) {
     <div class="statistics__loader">
-      <div class="statistics__loader-time">
+      @for (_ of [].constructor(4); track $index) {
         <ngx-skeleton-loader count="7" />
-      </div>
-      <div class="statistics__loader-eth">
-        <ngx-skeleton-loader count="7" />
-      </div>
-      <div class="statistics__loader-protocol">
-        <ngx-skeleton-loader count="7" />
-      </div>
-      <div class="statistics__loader-ir">
-        <ngx-skeleton-loader count="7" />
-      </div>
+      }
     </div>
   }
   @else {
@@ -32,34 +23,35 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngIf="getProtocolETH() | async as protocol" class="statistics__table__header-eth">
-            <td>{{ protocol.name }}</td>
-            <td>{{ protocol.total_packets }}</td>
+          @let protocolEth = getETHStatistics(statistics.protocols);
+          <tr class="statistics__table__header-eth">
+            <td>{{ protocolEth.name }}</td>
+            <td>{{ protocolEth.total_packets | decimal }}</td>
             <td>
-              {{ (getPacketsPerSecond(protocol.name) | async) === 0 ? 0 : (getPacketsPerSecond(protocol.name) | async) }}
+              {{ getPerSecond(protocolEth.total_packets, statistics.total_time) | decimal }}
             </td>
-            <td>{{ protocol.total_bytes }}</td>
+            <td>{{ protocolEth.total_bytes | decimal }}</td>
             <td>
-              {{ (getBytesPerSecond(protocol.name) | async) === 0 ? 0 : (getBytesPerSecond(protocol.name) | async) }}
+              {{ getPerSecond(protocolEth.total_bytes, statistics.total_time) | decimal }}
             </td>
           </tr>
         </tbody>
       </table>
       <table class="statistics__table__protocols">
         <tbody>
-          <ng-container *ngFor="let protocol of getProtocolOthers() | async">
+        @for (protocol of getProtocols(statistics.protocols); track protocol.name) {
             <tr>
               <td>{{ protocol.name }}</td>
-              <td>{{ protocol.total_packets }}</td>
+              <td>{{ protocol.total_packets | decimal }}</td>
               <td>
-                {{ (getPacketsPerSecond(protocol.name) | async) === 0 ? 0 : (getPacketsPerSecond(protocol.name) | async) }}
+                {{ getPerSecond(protocol.total_packets, statistics.total_time) | decimal }}
               </td>
-              <td>{{ protocol.total_bytes }}</td>
+              <td>{{ protocol.total_bytes | decimal }}</td>
               <td>
-                {{ (getBytesPerSecond(protocol.name) | async) === 0 ? 0 : (getBytesPerSecond(protocol.name) | async) }}
+                {{ getPerSecond(protocol.total_bytes, statistics.total_time) | decimal }}
               </td>
             </tr>
-          </ng-container>
+        }
         </tbody>
       </table>
       <table class="statistics__table__ir">
@@ -72,11 +64,11 @@
         </tr>
         </thead>
         <tbody>
-          <tr *ngIf="getIR() | async as information_rate" class="statistics__table_ir-content">
+          <tr class="statistics__table_ir-content">
             <td>Information Rate</td>
-            <td>{{ information_rate.min }}</td>
-            <td>{{ information_rate.max }}</td>
-            <td>{{ information_rate.current }}</td>
+            <td>{{ statistics.information_rate.min | decimal }}</td>
+            <td>{{ statistics.information_rate.max | decimal }}</td>
+            <td>{{ statistics.information_rate.current | decimal }}</td>
           </tr>
         </tbody>
       </table>
