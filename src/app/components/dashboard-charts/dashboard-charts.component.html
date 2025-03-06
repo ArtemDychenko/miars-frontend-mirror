@@ -1,33 +1,16 @@
 <mat-tab-group>
   <mat-tab label="Frames">
-    <ng-container *ngTemplateOutlet="selectInterval" />
-    <app-dashboard-chart-frames [recordsInterval]="interval" />
+    <app-dashboard-chart-frames />
   </mat-tab>
   <mat-tab label="Information Rate">
-    <ng-container *ngTemplateOutlet="selectInterval" />
     <app-dashboard-chart-information-rate />
   </mat-tab>
   @for (protocol of protocols(); track $index) {
     <mat-tab [label]="protocol">
-      <ng-container *ngTemplateOutlet="selectInterval" />
       <app-dashboard-chart-protocol [protocol]="protocol" />
     </mat-tab>
   }
 </mat-tab-group>
-
-<ng-template #selectInterval>
-  <div class="dashboard-charts__interval">
-    <mat-form-field>
-      <mat-label>Interval</mat-label>
-      <input matInput type="number" [(ngModel)]="interval" />
-    </mat-form-field>
-    <div class="dashboard-charts__interval-slider">
-      <mat-slider [max]="100" [min]="1" [discrete]="true">
-        <input matSliderThumb [(ngModel)]="interval" />
-      </mat-slider>
-    </div>
-  </div>
-</ng-template>
 
 <!--@todo: find other way to fix scrolling to the top of the page-->
 <p-skeleton height="300px" />

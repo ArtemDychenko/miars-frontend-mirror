@@ -35,10 +35,7 @@ export class DashboardApi {
           },
         }
       )
-      .pipe(
-        map(response => response.data),
-        tap(console.log)
-      );
+      .pipe(map(response => response.data));
   }
 
   fetchFrames(): Observable<ChartFrames> {
@@ -47,11 +44,18 @@ export class DashboardApi {
       .pipe(map(response => response.data));
   }
 
-  fetchInformationRateHistory(): Observable<ChartInformationRate[]> {
+  fetchInformationRateHistory(
+    interval: number
+  ): Observable<ChartInformationRate[]> {
     return this.httpClient
-      .get<
-        ApiResponse<ChartInformationRate[]>
-      >(`${DASHBOARD_API_URL}/information-rate/historical`)
+      .get<ApiResponse<ChartInformationRate[]>>(
+        `${DASHBOARD_API_URL}/information-rate/historical`,
+        {
+          params: {
+            interval: interval.toString(),
+          },
+        }
+      )
       .pipe(map(response => response.data));
   }
 
@@ -63,11 +67,16 @@ export class DashboardApi {
       .pipe(map(response => response.data));
   }
 
-  fetchProtocolHistory(): Observable<ChartProtocol[]> {
+  fetchProtocolHistory(interval: number): Observable<ChartProtocol[]> {
     return this.httpClient
-      .get<
-        ApiResponse<ChartProtocol[]>
-      >(`${DASHBOARD_API_URL}/protocols/historical`)
+      .get<ApiResponse<ChartProtocol[]>>(
+        `${DASHBOARD_API_URL}/protocols/historical`,
+        {
+          params: {
+            interval: interval.toString(),
+          },
+        }
+      )
       .pipe(map(response => response.data));
   }
 

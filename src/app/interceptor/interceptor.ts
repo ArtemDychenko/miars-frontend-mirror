@@ -32,11 +32,11 @@ export const urls = [
     json: () => framesHistorical,
   },
   {
-    url: '/api/statistics/ir/current',
+    url: '/api/statistics/information-rate/current',
     json: () => irCurrent,
   },
   {
-    url: '/api/statistics/ir/historical',
+    url: '/api/statistics/information-rate/historical',
     json: () => irHistorical,
   },
   {
