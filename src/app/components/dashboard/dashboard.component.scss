@@ -29,6 +29,10 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     border-bottom: 1px solid map.get(vars.$grey, 30);
 
+    &-title {
+      font-size: map.get(vars.$text, 'lg');
+    }
+
     &:last-child {
       border-bottom: none;
     }

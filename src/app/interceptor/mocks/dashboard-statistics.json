@@ -1,0 +1,33 @@
+{
+  "data": {
+    "id": "statistics",
+    "total-time": 160401,
+    "protocols": [
+        {
+          "name": "ETH",
+          "total-packets": 1234567,
+          "total-bytes": 123456789
+        },
+        {
+          "name": "TCP",
+          "total-packets": 321312,
+          "total-bytes": 32143245
+        },
+        {
+          "name": "IPv4",
+          "total-packets": 3333,
+          "total-bytes": 777
+        },
+        {
+          "name": "IPv6",
+          "total-packets": 0,
+          "total-bytes": 0
+        }
+      ],
+    "information-rate": {
+        "min": 0,
+        "max": 0,
+        "current": 0
+      }
+  }
+}

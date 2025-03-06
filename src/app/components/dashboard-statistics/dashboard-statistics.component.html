@@ -1,1 +1,77 @@
-<ngx-skeleton-loader count="10" />
+<div class="statistics">
+  @let statistics = dashboardStatistics | async;
+  @if (!statistics) {
+    <div class="statistics__loader">
+      @for (_ of [].constructor(4); track $index) {
+        <ngx-skeleton-loader count="7" />
+      }
+    </div>
+  }
+  @else {
+    <div class="statistics__table">
+      <div class="statistics__table__time">
+        <p>Total time: {{ statistics.total_time | time }} </p>
+      </div>
+      <table class="statistics__table__header">
+        <thead class="statistics__table__header-title">
+          <tr>
+            <th></th>
+            <th>Total packets</th>
+            <th>Packets per second</th>
+            <th>Total bytes</th>
+            <th>Bytes per second</th>
+          </tr>
+        </thead>
+        <tbody>
+          @let protocolEth = getETHStatistics(statistics.protocols);
+          <tr class="statistics__table__header-eth">
+            <td>{{ protocolEth.name }}</td>
+            <td>{{ protocolEth.total_packets | decimal }}</td>
+            <td>
+              {{ getPerSecond(protocolEth.total_packets, statistics.total_time) | decimal }}
+            </td>
+            <td>{{ protocolEth.total_bytes | decimal }}</td>
+            <td>
+              {{ getPerSecond(protocolEth.total_bytes, statistics.total_time) | decimal }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="statistics__table__protocols">
+        <tbody>
+        @for (protocol of getProtocols(statistics.protocols); track protocol.name) {
+            <tr>
+              <td>{{ protocol.name }}</td>
+              <td>{{ protocol.total_packets | decimal }}</td>
+              <td>
+                {{ getPerSecond(protocol.total_packets, statistics.total_time) | decimal }}
+              </td>
+              <td>{{ protocol.total_bytes | decimal }}</td>
+              <td>
+                {{ getPerSecond(protocol.total_bytes, statistics.total_time) | decimal }}
+              </td>
+            </tr>
+        }
+        </tbody>
+      </table>
+      <table class="statistics__table__ir">
+        <thead class="statistics__table__ir-header">
+        <tr>
+          <th></th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Current</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr class="statistics__table_ir-content">
+            <td>Information Rate</td>
+            <td>{{ statistics.information_rate.min | decimal }}</td>
+            <td>{{ statistics.information_rate.max | decimal }}</td>
+            <td>{{ statistics.information_rate.current | decimal }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
