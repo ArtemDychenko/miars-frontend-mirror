@@ -7,42 +7,48 @@ import * as irCurrent from './mocks/ir-current.json';
 import * as irHistorical from './mocks/ir-historical.json';
 import * as ipv4Current from './mocks/ipv4-current.json';
 import * as ipv4Historical from './mocks/ipv4-historical.json';
+import * as dashboardStats from './mocks/dashboard-statistics.json';
+import * as dashboardStats2 from './mocks/dashboard-statistics-2.json';
 
 export const urls = [
   {
-    url: '/configurations/1abc',
-    json: configuration1,
+    url: '/api/configuration/1abc',
+    json: () => configuration1,
   },
   {
-    url: '/configurations/2def',
-    json: configuration2,
+    url: '/api/configuration/2def',
+    json: () => configuration2,
   },
   {
-    url: '/configurations',
-    json: configurationList,
+    url: '/api/configuration',
+    json: () => configurationList,
   },
   {
-    url: '/statistics/frames/current',
-    json: framesCurrent,
+    url: '/api/statistics/frames/current',
+    json: () => framesCurrent,
   },
   {
-    url: '/statistics/frames/historical',
-    json: framesHistorical,
+    url: '/api/statistics/frames/historical',
+    json: () => framesHistorical,
   },
   {
-    url: '/statistics/ir/current',
-    json: irCurrent,
+    url: '/api/statistics/ir/current',
+    json: () => irCurrent,
   },
   {
-    url: '/statistics/ir/historical',
-    json: irHistorical,
+    url: '/api/statistics/ir/historical',
+    json: () => irHistorical,
   },
   {
-    url: '/statistics/ipv4/current',
-    json: ipv4Current,
+    url: '/api/statistics/ipv4/current',
+    json: () => ipv4Current,
   },
   {
-    url: '/statistics/ipv4/historical',
-    json: ipv4Historical,
+    url: '/api/statistics/ipv4/historical',
+    json: () => ipv4Historical,
+  },
+  {
+    url: '/api/statistics',
+    json: () => (Math.random() < 0.5 ? dashboardStats2 : dashboardStats),
   },
 ];

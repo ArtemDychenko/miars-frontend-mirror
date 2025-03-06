@@ -1,18 +1,29 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../models/api-response';
 import { ChartFrames } from '../models/chart-frames';
 import { map, Observable, tap } from 'rxjs';
 import { ChartInformationRate } from '../models/chart-information-rate';
 import { ChartProtocol } from '../models/chart-protocol';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+  DashboardStatistics,
+  DashboardStatisticsDto,
+  dtoToDashboardStatistics,
+} from '../models/dashboard-statistics';
 
-export const DASHBOARD_API_URL = '/statistics';
+export const DASHBOARD_API_URL = '/api/statistics';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardApi {
   private readonly httpClient = inject(HttpClient);
+
+  fetchStatistics(): Observable<DashboardStatistics> {
+    return this.httpClient
+      .get<ApiResponse<DashboardStatisticsDto>>(DASHBOARD_API_URL)
+      .pipe(map(dto => dtoToDashboardStatistics(dto.data)));
+  }
 
   fetchFramesHistory(interval: number): Observable<ChartFrames[]> {
     return this.httpClient

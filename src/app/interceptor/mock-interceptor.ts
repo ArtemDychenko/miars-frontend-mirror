@@ -8,12 +8,12 @@ export const MockInterceptor: HttpInterceptorFn = (req, next) => {
   const { url, method } = req;
 
   for (const element of urls) {
-    let body = (element.json as any).default;
+    let body = (element.json() as any).default;
     if (url === DASHBOARD_API_URL + '/frames/current') {
       body = getRandomFrameRecord();
     }
     if (url.includes(element.url)) {
-      console.log('Loaded from json for url: ' + url, element.json, body);
+      console.log('Loaded from json for url: ' + url, element.json(), body);
       return of(new HttpResponse({ status: 200, body: body })).pipe(delay(300));
     }
   }
