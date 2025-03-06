@@ -7,7 +7,7 @@
   </mat-tab>
   @for (protocol of protocols(); track $index) {
     <mat-tab [label]="protocol">
-      <app-dashboard-chart-protocol [protocol]="protocol" />
+      <app-dashboard-chart-protocol [protocolName]="protocol" />
     </mat-tab>
   }
 </mat-tab-group>

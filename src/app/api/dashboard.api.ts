@@ -67,10 +67,13 @@ export class DashboardApi {
       .pipe(map(response => response.data));
   }
 
-  fetchProtocolHistory(interval: number): Observable<ChartProtocol[]> {
+  fetchProtocolHistory(
+    protocolName: string,
+    interval: number
+  ): Observable<ChartProtocol[]> {
     return this.httpClient
       .get<ApiResponse<ChartProtocol[]>>(
-        `${DASHBOARD_API_URL}/protocols/historical`,
+        `${DASHBOARD_API_URL}/${protocolName}/historical`,
         {
           params: {
             interval: interval.toString(),
@@ -80,9 +83,11 @@ export class DashboardApi {
       .pipe(map(response => response.data));
   }
 
-  fetchProtocol(): Observable<ChartProtocol> {
+  fetchProtocol(protocolName: string): Observable<ChartProtocol> {
     return this.httpClient
-      .get<ApiResponse<ChartProtocol>>(`${DASHBOARD_API_URL}/protocols/current`)
+      .get<
+        ApiResponse<ChartProtocol>
+      >(`${DASHBOARD_API_URL}/${protocolName}/current`)
       .pipe(map(response => response.data));
   }
 }

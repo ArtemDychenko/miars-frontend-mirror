@@ -4,6 +4,7 @@ import { urls } from './interceptor';
 import { ChartFrames } from '../models/chart-frames';
 import { DASHBOARD_API_URL } from '../api/dashboard.api';
 import { ChartInformationRate } from '../models/chart-information-rate';
+import { ChartProtocol } from '../models/chart-protocol';
 
 export const MockInterceptor: HttpInterceptorFn = (req, next) => {
   const { url, method } = req;
@@ -15,6 +16,8 @@ export const MockInterceptor: HttpInterceptorFn = (req, next) => {
       body = getRandomFrameRecord();
     } else if (url === DASHBOARD_API_URL + '/information-rate/current') {
       body = getRandomInformationRateRecord();
+    } else if (url === DASHBOARD_API_URL + '/ipv4/current') {
+      body = getRandomProtocolRecord();
     }
 
     if (url.includes(element.url)) {
@@ -40,6 +43,16 @@ function getRandomInformationRateRecord(): { data: ChartInformationRate } {
     data: {
       current: current,
       average: Math.floor(Math.random() * current * 0.3),
+    },
+  };
+}
+
+function getRandomProtocolRecord(): { data: ChartProtocol } {
+  const packets = Math.floor(Math.random() * 1000) + 30;
+  return {
+    data: {
+      packets: packets,
+      bytes: packets * Math.floor(Math.random() * 512),
     },
   };
 }
