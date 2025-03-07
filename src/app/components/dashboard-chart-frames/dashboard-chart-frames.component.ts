@@ -15,6 +15,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSlider, MatSliderThumb } from '@angular/material/slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChartService } from '../../service/chart.service';
 
 @Component({
   selector: 'app-dashboard-chart-frames',
@@ -34,40 +35,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class DashboardChartFramesComponent {
   readonly #dashboardApi = inject(DashboardApi);
-  recordsLimit = input<number>(20);
+  readonly #chartService = inject(ChartService);
+  recordsLimit = input<number>(60);
   recordsInterval = signal<number>(1);
   framesHistory = signal<ChartFrames[]>([]);
   data = computed(() => {
     const frames = this.framesHistory();
     if (!frames) return;
-    return {
-      labels: this.getFrameLabels().map(date => date.toLocaleTimeString()),
-      datasets: [
-        {
-          label: 'Valid Frames',
-          data: frames.map(frame => frame.valid),
-          fill: true,
-          backgroundColor: 'rgb(76, 175, 80, 0.2)',
-          tension: 0.4,
-          borderColor: '#4CAF50',
-        },
-        {
-          label: 'Invalid Frames',
-          data: frames.map(frame => frame.invalid),
-          fill: true,
-          tension: 0.4,
-          borderColor: '#f34d52',
-          backgroundColor: 'rgb(243, 77, 82, 0.2)',
-        },
-      ],
-    };
+    return this.#chartService.getFramesChartDataConfig(
+      frames,
+      this.recordsInterval()
+    );
   });
 
-  options = {
-    animation: {
-      duration: 0,
-    },
-  };
+  readonly options = this.#chartService.getDefaultChartOptions();
 
   private stopFetching = new Subject();
 
@@ -92,15 +73,5 @@ export class DashboardChartFramesComponent {
           });
         });
     });
-  }
-
-  private getFrameLabels(): Date[] {
-    const labelsNumber = this.framesHistory().length;
-    const now = new Date().getTime();
-    return Array.from(
-      { length: labelsNumber },
-      (_, index) =>
-        new Date(now - (labelsNumber - index) * 1000 * this.recordsInterval())
-    );
   }
 }

@@ -9,13 +9,13 @@ import {
 } from '@angular/core';
 import { UIChart } from 'primeng/chart';
 import { DashboardApi } from '../../api/dashboard.api';
-import { ChartFrames } from '../../models/chart-frames';
 import { interval, shareReplay, Subject, switchMap, takeUntil } from 'rxjs';
 import { ChartInformationRate } from '../../models/chart-information-rate';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSlider, MatSliderThumb } from '@angular/material/slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChartService } from '../../service/chart.service';
 
 @Component({
   selector: 'app-dashboard-chart-information-rate',
@@ -35,38 +35,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class DashboardChartInformationRateComponent {
   readonly #dashboardApi = inject(DashboardApi);
-  recordsLimit = input<number>(20);
+  readonly #chartService = inject(ChartService);
+  recordsLimit = input<number>(60);
   recordsInterval = signal<number>(1);
   irHistory = signal<ChartInformationRate[]>([]);
   data = computed(() => {
     const informationRates = this.irHistory();
     if (!informationRates) return;
-    return {
-      labels: this.getFrameLabels().map(date => date.toLocaleTimeString()),
-      datasets: [
-        {
-          label: 'Current IR',
-          data: informationRates.map(ir => ir.current),
-          fill: true,
-          backgroundColor: 'rgba(144,147,239,0.32)',
-          tension: 0.4,
-          borderColor: '#5b70f8',
-        },
-        {
-          label: 'Average IR',
-          data: informationRates.map(ir => ir.average),
-          tension: 0.4,
-          borderColor: '#535353',
-        },
-      ],
-    };
+    return this.#chartService.getIRChartDataConfig(
+      informationRates,
+      this.recordsInterval()
+    );
   });
 
-  options = {
-    animation: {
-      duration: 0,
-    },
-  };
+  readonly options = this.#chartService.getDefaultChartOptions();
 
   private stopFetching = new Subject();
 
@@ -92,15 +74,5 @@ export class DashboardChartInformationRateComponent {
           });
         });
     });
-  }
-
-  private getFrameLabels(): Date[] {
-    const labelsNumber = this.irHistory().length;
-    const now = new Date().getTime();
-    return Array.from(
-      { length: labelsNumber },
-      (_, index) =>
-        new Date(now - (labelsNumber - index) * 1000 * this.recordsInterval())
-    );
   }
 }

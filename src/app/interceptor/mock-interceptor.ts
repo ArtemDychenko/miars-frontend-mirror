@@ -7,7 +7,7 @@ import { ChartInformationRate } from '../models/chart-information-rate';
 import { ChartProtocol } from '../models/chart-protocol';
 
 export const MockInterceptor: HttpInterceptorFn = (req, next) => {
-  const { url, method } = req;
+  const { url } = req;
 
   for (const element of urls) {
     let body = (element.json() as any).default;
@@ -52,7 +52,7 @@ function getRandomProtocolRecord(): { data: ChartProtocol } {
   return {
     data: {
       packets: packets,
-      bytes: packets * Math.floor(Math.random() * 512),
+      bytes: packets * Math.floor(Math.random() * Math.sqrt(packets) * 16),
     },
   };
 }

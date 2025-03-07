@@ -13,9 +13,9 @@ import { MatInput } from '@angular/material/input';
 import { MatSlider, MatSliderThumb } from '@angular/material/slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardApi } from '../../api/dashboard.api';
-import { ChartInformationRate } from '../../models/chart-information-rate';
-import { interval, shareReplay, Subject, switchMap, takeUntil } from 'rxjs';
 import { ChartProtocol } from '../../models/chart-protocol';
+import { interval, shareReplay, Subject, switchMap, takeUntil } from 'rxjs';
+import { ChartService } from '../../service/chart.service';
 
 @Component({
   selector: 'app-dashboard-chart-protocol',
@@ -35,57 +35,21 @@ import { ChartProtocol } from '../../models/chart-protocol';
 })
 export class DashboardChartProtocolComponent {
   readonly #dashboardApi = inject(DashboardApi);
+  readonly #chartService = inject(ChartService);
   protocolName = input.required<string>();
-  recordsLimit = input<number>(20);
+  recordsLimit = input<number>(60);
   recordsInterval = signal<number>(1);
   protocolHistory = signal<ChartProtocol[]>([]);
   data = computed(() => {
     const protocols = this.protocolHistory();
     if (!protocols) return;
-    console.log(protocols);
-    return {
-      labels: this.getFrameLabels().map(date => date.toLocaleTimeString()),
-      datasets: [
-        {
-          label: 'Bytes',
-          data: protocols.map(protocol => protocol.bytes),
-          yAxisId: 'y',
-          tension: 0.4,
-          borderColor: '#4464e3',
-        },
-        // @todo: fix Y1 axis
-        {
-          label: 'Packets',
-          data: protocols.map(protocol => protocol.packets),
-          yAxisId: 'y1',
-          tension: 0.4,
-          borderColor: '#61aa48',
-        },
-      ],
-    };
+    return this.#chartService.getProtocolChartDataConfig(
+      protocols,
+      this.recordsInterval()
+    );
   });
 
-  options = {
-    animation: {
-      duration: 0,
-    },
-    stacked: false,
-    scales: {
-      y: {
-        type: 'linear',
-        display: true,
-        position: 'left',
-      },
-      y1: {
-        type: 'linear',
-        display: true,
-        position: 'right',
-        grid: {
-          drawOnChartArea: false,
-        },
-      },
-    },
-  };
+  readonly options = this.#chartService.getMultipleYAxesChartOptions();
 
   private stopFetching = new Subject();
 
@@ -113,15 +77,5 @@ export class DashboardChartProtocolComponent {
           });
         });
     });
-  }
-
-  private getFrameLabels(): Date[] {
-    const labelsNumber = this.protocolHistory().length;
-    const now = new Date().getTime();
-    return Array.from(
-      { length: labelsNumber },
-      (_, index) =>
-        new Date(now - (labelsNumber - index) * 1000 * this.recordsInterval())
-    );
   }
 }
