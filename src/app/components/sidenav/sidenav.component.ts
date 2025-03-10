@@ -1,5 +1,6 @@
 import {
   afterNextRender,
+  ChangeDetectionStrategy,
   Component,
   inject,
   signal,
@@ -24,6 +25,7 @@ import { MatIcon } from '@angular/material/icon';
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavComponent {
   router = inject(Router);

@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   inject,
   input,
@@ -43,6 +44,7 @@ import { ButtonComponent } from '../button/button.component';
   ],
   templateUrl: './configuration-form.component.html',
   styleUrl: './configuration-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigurationFormComponent implements OnInit {
   configurationFormBuilder = inject(ConfigurationFormBuilder);

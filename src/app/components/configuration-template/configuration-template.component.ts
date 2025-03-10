@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
 
 @Component({
@@ -6,5 +6,6 @@ import { MatDivider } from '@angular/material/divider';
   imports: [MatDivider],
   templateUrl: './configuration-template.component.html',
   styleUrl: './configuration-template.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigurationTemplateComponent {}

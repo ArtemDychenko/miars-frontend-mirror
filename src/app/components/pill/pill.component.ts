@@ -1,4 +1,9 @@
-import { Component, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
@@ -6,6 +11,7 @@ import { MatIcon } from '@angular/material/icon';
   imports: [MatIcon],
   templateUrl: './pill.component.html',
   styleUrl: './pill.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PillComponent {
   removable = input<boolean | null>(null);

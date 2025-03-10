@@ -1,0 +1,20 @@
+<div class="dashboard-charts__interval">
+  <mat-form-field>
+    <mat-label>Interval</mat-label>
+    <input
+      matInput
+      type="number"
+      [ngModel]="recordsInterval()"
+      (ngModelChange)="recordsInterval.set($event)" />
+  </mat-form-field>
+  <div class="dashboard-charts__interval-slider">
+    <mat-slider [max]="100" [min]="1" [discrete]="true">
+      <input
+        matSliderThumb
+        [ngModel]="recordsInterval()"
+        (ngModelChange)="recordsInterval.set($event)" />
+    </mat-slider>
+  </div>
+</div>
+
+<p-chart type="line" [data]="data()" [options]="options" />

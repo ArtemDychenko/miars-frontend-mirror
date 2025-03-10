@@ -9,7 +9,7 @@ import {
 } from '../models/configuration';
 import { ApiResponse } from '../models/api-response';
 
-export const CONFIGURATION_API_URL = '/api/v1/configuration';
+export const CONFIGURATION_API_URL = '/api/configurations';
 
 @Injectable({
   providedIn: 'root',

@@ -1,19 +1,9 @@
-import {
-  afterNextRender,
-  Component,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
-import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { DashboardApi } from '../../api/dashboard.api';
-import { interval, map, Observable, shareReplay, switchMap, tap } from 'rxjs';
-import {
-  DashboardStatistics,
-  ProtocolStatistics,
-} from '../../models/dashboard-statistics';
-import { PillComponent } from '../pill/pill.component';
+import { interval, shareReplay, switchMap } from 'rxjs';
+import { ProtocolStatistics } from '../../models/dashboard-statistics';
 import { TimePipe } from '../../pipes/time.pipe';
 import { DecimalPipe } from '../../pipes/decimal.pipe';
 
@@ -22,6 +12,7 @@ import { DecimalPipe } from '../../pipes/decimal.pipe';
   imports: [NgxSkeletonLoaderComponent, AsyncPipe, TimePipe, DecimalPipe],
   templateUrl: './dashboard-statistics.component.html',
   styleUrl: './dashboard-statistics.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardStatisticsComponent {
   dashboardApi = inject(DashboardApi);

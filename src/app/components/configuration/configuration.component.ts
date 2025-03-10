@@ -1,8 +1,9 @@
 import {
-  afterNextRender,
+  ChangeDetectionStrategy,
   Component,
   effect,
   inject,
+  OnInit,
   signal,
 } from '@angular/core';
 import { PageWrapperComponent } from '../page-wrapper/page-wrapper.component';
@@ -47,8 +48,9 @@ enum ConfigurationPageMode {
   ],
   templateUrl: './configuration.component.html',
   styleUrl: './configuration.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConfigurationComponent {
+export class ConfigurationComponent implements OnInit {
   configurationApi = inject(ConfigurationApi);
 
   pageMode = signal<ConfigurationPageMode>(ConfigurationPageMode.READ);
@@ -68,27 +70,15 @@ export class ConfigurationComponent {
         });
       }
     });
+  }
 
-    afterNextRender(() => {
-      this.fetchConfigurationOptions().subscribe(configurations => {
-        const appliedConfiguration = configurations.find(c => c.is_applied);
-        if (appliedConfiguration) {
-          this.chosenConfiguration.set(appliedConfiguration.id);
-        }
-        this.configurationOptions.set(configurations);
-      });
-    });
+  ngOnInit() {
+    this.updateConfigurationOptions();
   }
 
   onDeleteConfiguration() {
     this.configurationApi.delete(this.chosenConfiguration()!).subscribe(() => {
-      this.fetchConfigurationOptions().subscribe(configurations => {
-        const appliedConfiguration = configurations.find(c => c.is_applied);
-        if (appliedConfiguration) {
-          this.chosenConfiguration.set(appliedConfiguration.id);
-        }
-        this.configurationOptions.set(configurations);
-      });
+      this.updateConfigurationOptions();
     });
   }
 
@@ -124,6 +114,16 @@ export class ConfigurationComponent {
       ),
       tap(() => this.isLoading.set(false))
     );
+  }
+
+  private updateConfigurationOptions() {
+    this.fetchConfigurationOptions().subscribe(configurations => {
+      const appliedConfiguration = configurations.find(c => c.is_applied);
+      if (appliedConfiguration) {
+        this.chosenConfiguration.set(appliedConfiguration.id);
+      }
+      this.configurationOptions.set(configurations);
+    });
   }
 
   protected readonly ConfigurationPageMode = ConfigurationPageMode;

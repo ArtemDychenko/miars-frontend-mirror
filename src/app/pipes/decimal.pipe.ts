@@ -9,8 +9,8 @@ export class DecimalPipe implements PipeTransform {
       return '';
     }
 
-    let num = Number(value).toFixed(decimalPlaces);
-
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return Number(value).toLocaleString('pl-PL', {
+      maximumFractionDigits: decimalPlaces,
+    });
   }
 }
