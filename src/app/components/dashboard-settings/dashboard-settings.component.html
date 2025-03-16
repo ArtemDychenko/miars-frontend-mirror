@@ -1,0 +1,42 @@
+<div class="dialog">
+  <h2 mat-dialog-title class="dialog__header">Settings</h2>
+  <mat-dialog-content class="dialog__content">
+    <div class="dialog__content__statistics__columns">
+      <div class="dialog__content__statistics__columns-title">
+        Statistics columns
+      </div>
+      <div class="dialog__content__statistics__columns-content">
+        <mat-slide-toggle [(ngModel)]="isChecked">Total packets</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isChecked">Packets per seconds</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isChecked">Total bytes</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isChecked">Bytes per second</mat-slide-toggle>
+      </div>
+    </div>
+    <div class="dialog__content__statistics__rows">
+      <div class="dialog__content__statistics__rows-title">
+        Statistics rows & charts
+      </div>
+      <div class="dialog__content__statistics__rows-content">
+        <mat-slide-toggle [(ngModel)]="isChecked">ETH</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isChecked">IPv4</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isChecked">IPv6</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isChecked">TCP</mat-slide-toggle>
+      </div>
+    </div>
+    <div class="dialog__content__statistics__ir">
+      <div class="dialog__content__statistics__ir-title">
+        Information Rate
+      </div>
+      <div class="dialog__content__statistics__ir-content">
+        <mat-slide-toggle [(ngModel)]="isChecked">Min value</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isChecked">Max value</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isChecked">Current value</mat-slide-toggle>
+
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="dialog__actions">
+    <button mat-flat-button mat-dialog-close>Cancel</button>
+    <button mat-flat-button mat-dialog-close>Basic</button>
+  </mat-dialog-actions>
+</div>
