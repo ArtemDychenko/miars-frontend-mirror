@@ -1,13 +1,6 @@
 @use '../../../vars';
 @use 'sass:map';
 
-
-.custom-dialog-container .mat-dialog-container  {
-
-
-
-}
-
 .dialog {
   background-color: map.get(vars.$grey, 0);
   &__header {
@@ -15,72 +8,39 @@
     font-family: Monoton, cursive;
 
     font-size: map.get(vars.$text, 'xxl');
-    padding: map.get(vars.$spacing, 'lg') map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'lg') map.get(vars.$spacing, 'xl');
+    padding: map.get(vars.$spacing, 'lg') 0 map.get(vars.$spacing, 'lg') map.get(vars.$spacing, 'xl');
   }
 
   &__content {
     font-weight: 500;
+
     &__statistics {
-      &__columns {
-        &-title {
-          font-size: map.get(vars.$text, 'xl');
-          padding: map.get(vars.$spacing, 'xxl') map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'none');
-        }
-        &-content {
-          border-radius: map.get(vars.$radius, 'xs');
-          background-color: map.get(vars.$grey, 10);
-          padding: map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'lg');
-          mat-slide-toggle {
-            width: 25%;
-          }
-        }
-      }
-      &__rows {
-        &-title {
-          font-size: map.get(vars.$text, 'xl');
-          padding: map.get(vars.$spacing, 'xxl') map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'none');
-        }
-        &-content {
-          border-radius: map.get(vars.$radius, 'xs');
-          background-color: map.get(vars.$grey, 10);
-          padding: map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'lg');
-          mat-slide-toggle {
-            width: 25%;
-          }
-        }
-      }
+      &__columns,
+      &__rows,
       &__ir {
         &-title {
           font-size: map.get(vars.$text, 'xl');
-          padding: map.get(vars.$spacing, 'xxl') map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'none');
+          padding: map.get(vars.$spacing, 'xxl') 0 map.get(vars.$spacing, 'sm') 0;
         }
         &-content {
           border-radius: map.get(vars.$radius, 'xs');
           background-color: map.get(vars.$grey, 10);
-          padding: map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'lg');
-          mat-slide-toggle {
-            width: 25%;
-          }
+          padding: map.get(vars.$spacing, 'sm') 0 map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'xxl');
         }
       }
     }
-  }
-  &__actions {
-    margin-top: map.get(vars.$spacing, 'sm');
-    border-radius: map.get(vars.$radius, 'xs');
-    background-color: map.get(vars.$grey, 30);
-    //padding: map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'none') map.get(vars.$spacing, 'xxxl') map.get(vars.$spacing, 'none');
-    button {
-      width: 33%;
-      border-radius: map.get(vars.$radius, 'sm');
+    mat-slide-toggle {
+      width: 25%;
     }
   }
-}
+  &__actions {
+    border-radius: map.get(vars.$radius, 'xs');
+    padding: map.get(vars.$spacing, 'xxl') 0 map.get(vars.$spacing, 'xl') 0;
+    button {
+      width: 40%;
+      border-radius: map.get(vars.$radius, 'sm');
+      margin: map.get(vars.$spacing, 'xs') map.get(vars.$spacing, 'xxxl') 0 map.get(vars.$radius, 'xl');
 
-
-
-
-::ng-deep .p-toggleswitch-input {
-  width:300px;
-  height:300px;
+    }
+  }
 }
