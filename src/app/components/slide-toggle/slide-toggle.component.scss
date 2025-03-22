@@ -1,0 +1,19 @@
+@use '../../../vars';
+@use 'sass:map';
+
+::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mdc-switch__shadow {
+  background-color: map.get(vars.$grey, 10);
+}
+
+::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mdc-switch__track::after {
+  background-color: vars.$textPrimary !important;
+}
+
+::ng-deep .mdc-switch__track::before {
+  background-color: map.get(vars.$grey, 30) !important;
+}
+
+//.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb:before {
+//  content: "" !important;
+//  font: normal normal normal 14px/1 FontAwesome !important;
+//}

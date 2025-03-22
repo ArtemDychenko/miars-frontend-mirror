@@ -6,10 +6,10 @@
         Statistics columns
       </div>
       <div class="dialog__content__statistics__columns-content">
-        <mat-slide-toggle [(ngModel)]="isChecked">Total packets</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isChecked">Packets per seconds</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isChecked">Total bytes</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isChecked">Bytes per second</mat-slide-toggle>
+        <app-slide-toggle>Total packets</app-slide-toggle>
+        <app-slide-toggle>Packets per seconds</app-slide-toggle>
+        <app-slide-toggle>Total bytes</app-slide-toggle>
+        <app-slide-toggle>Bytes per second</app-slide-toggle>
       </div>
     </div>
     <div class="dialog__content__statistics__rows">
@@ -17,10 +17,10 @@
         Statistics rows & charts
       </div>
       <div class="dialog__content__statistics__rows-content">
-        <mat-slide-toggle [(ngModel)]="isChecked">ETH</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isChecked">IPv4</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isChecked">IPv6</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isChecked">TCP</mat-slide-toggle>
+        <app-slide-toggle>ETH</app-slide-toggle>
+        <app-slide-toggle>IPv4</app-slide-toggle>
+        <app-slide-toggle >IPv6</app-slide-toggle>
+        <app-slide-toggle >TCP</app-slide-toggle>
       </div>
     </div>
     <div class="dialog__content__statistics__ir">
@@ -28,15 +28,15 @@
         Information Rate
       </div>
       <div class="dialog__content__statistics__ir-content">
-        <mat-slide-toggle [(ngModel)]="isChecked">Min value</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isChecked">Max value</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isChecked">Current value</mat-slide-toggle>
+        <app-slide-toggle class="custom" >Min value</app-slide-toggle>
+        <app-slide-toggle >Max value</app-slide-toggle>
+        <app-slide-toggle >Current value</app-slide-toggle>
 
       </div>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions class="dialog__actions">
-    <button mat-flat-button mat-dialog-close>CANCEL</button>
-    <button mat-flat-button mat-dialog-close>SAVE</button>
+    <app-button secondary class="cancel-button">CANCEL</app-button>
+    <app-button class="save-button">SAVE</app-button>
   </mat-dialog-actions>
 </div>

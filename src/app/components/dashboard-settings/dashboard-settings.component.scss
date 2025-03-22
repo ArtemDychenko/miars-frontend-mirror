@@ -29,18 +29,30 @@
         }
       }
     }
-    mat-slide-toggle {
-      width: 25%;
+    ::ng-deep app-slide-toggle {
+      mat-slide-toggle {
+        width: 25% !important;
+      }
     }
   }
   &__actions {
     border-radius: map.get(vars.$radius, 'xs');
     padding: map.get(vars.$spacing, 'xxl') 0 map.get(vars.$spacing, 'xl') 0;
-    button {
-      width: 40%;
-      border-radius: map.get(vars.$radius, 'sm');
-      margin: map.get(vars.$spacing, 'xs') map.get(vars.$spacing, 'xxxl') 0 map.get(vars.$radius, 'xl');
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+
+    ::ng-deep app-button {
+      button {
+        width: 450px;
+      }
+      margin: map.get(vars.$spacing, 'md') 0 0 0;
 
     }
   }
 }
+
+
+
+
+
