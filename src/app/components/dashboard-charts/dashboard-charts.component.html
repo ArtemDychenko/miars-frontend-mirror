@@ -1,11 +1,14 @@
 <mat-tab-group>
+  @if (settings?.statisticsRowsAndCharts?.showETH) {
   <mat-tab label="Frames">
     <app-dashboard-chart-frames />
   </mat-tab>
+  }
   <mat-tab label="Information Rate">
     <app-dashboard-chart-information-rate />
   </mat-tab>
   @for (protocol of protocols(); track $index) {
+
     <mat-tab [label]="protocol">
       <app-dashboard-chart-protocol [protocolName]="protocol" />
     </mat-tab>

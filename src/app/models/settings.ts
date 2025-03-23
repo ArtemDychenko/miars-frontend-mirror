@@ -2,28 +2,20 @@ export type Settings = SettingsDto;
 
 export interface SettingsDto {
   statisticsColumns: {
-    showTotalPackets: true;
-    showPacketsPerSec: true;
-    showTotalBytes: true;
-    showBytesPerSec: true;
+    showTotalPackets: boolean;
+    showPacketsPerSec: boolean;
+    showTotalBytes: boolean;
+    showBytesPerSec: boolean;
   };
   statisticsRowsAndCharts: {
-    showETH: true;
-    showIPv4: true;
-    showIPv6: true;
-    showTCP: true;
+    showETH: boolean;
+    showIPv4: boolean;
+    showIPv6: boolean;
+    showTCP: boolean;
   };
   statisticsIR: {
-    showMinValue: true;
-    showMaxValue: true;
-    showCurrentValue: true;
+    showMinValue: boolean;
+    showMaxValue: boolean;
+    showCurrentValue: boolean;
   };
-}
-
-export function dtoToSettings(dto: SettingsDto): Settings {
-  return dto;
-}
-
-export function settingsToDto(settings: Settings): SettingsDto {
-  return settings;
 }

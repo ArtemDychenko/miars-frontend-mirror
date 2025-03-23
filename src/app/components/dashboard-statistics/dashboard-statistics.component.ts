@@ -15,6 +15,7 @@ import { TimePipe } from '../../pipes/time.pipe';
 import { DecimalPipe } from '../../pipes/decimal.pipe';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from '../../service/settings.service';
+import { Settings } from '../../models/settings';
 
 @Component({
   selector: 'app-dashboard-statistics',
@@ -24,7 +25,6 @@ import { SettingsService } from '../../service/settings.service';
     TimePipe,
     DecimalPipe,
     ReactiveFormsModule,
-    NgIf,
   ],
   templateUrl: './dashboard-statistics.component.html',
   styleUrl: './dashboard-statistics.component.scss',
@@ -32,7 +32,7 @@ import { SettingsService } from '../../service/settings.service';
 })
 export class DashboardStatisticsComponent implements OnInit {
   dashboardApi = inject(DashboardApi);
-  settings: any;
+  settings!: Settings;
 
   private settingsService = inject(SettingsService);
 
@@ -47,10 +47,6 @@ export class DashboardStatisticsComponent implements OnInit {
     switchMap(() => this.dashboardApi.fetchStatistics()),
     shareReplay(1)
   );
-
-  get showETHSetting() {
-    return this.settings.value.statisticsRowsAndCharts.showETH;
-  }
 
   getPerSecond(value: number, time: Date): number {
     const totalSeconds = time.getTime() / 1000;

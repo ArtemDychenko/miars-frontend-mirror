@@ -5,13 +5,14 @@ import {
   input,
   OnInit,
 } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ButtonComponent } from '../button/button.component';
 import { SettingsService } from '../../service/settings.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { Settings, SettingsDto } from '../../models/settings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,41 +30,44 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
   templateUrl: './dashboard-settings.component.html',
 })
 export class DashboardSettingsComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
+  private formBuilder = inject(FormBuilder).nonNullable;
 
-  settingsForm = this.formBuilder.group({
-    statisticsColumns: this.formBuilder.group({
-      showTotalPackets: [true],
-      showPacketsPerSec: [true],
-      showTotalBytes: [true],
-      showBytesPerSec: [true],
-    }),
-    statisticsRowsAndCharts: this.formBuilder.group({
-      showETH: [true],
-      showIPv4: [true],
-      showIPv6: [true],
-      showTCP: [true],
-    }),
-    statisticsIR: this.formBuilder.group({
-      showMinValue: [true],
-      showMaxValue: [true],
-      showCurrentValue: [true],
-    }),
-  });
+  private dialogRef = inject(MatDialogRef<DashboardSettingsComponent>);
 
   private settingsService = inject(SettingsService);
 
+  settingsForm = this.formBuilder.group({
+    statisticsColumns: this.formBuilder.group({
+      showTotalPackets: [false],
+      showPacketsPerSec: [false],
+      showTotalBytes: [false],
+      showBytesPerSec: [false],
+    }),
+    statisticsRowsAndCharts: this.formBuilder.group({
+      showETH: [false],
+      showIPv4: [false],
+      showIPv6: [false],
+      showTCP: [false],
+    }),
+    statisticsIR: this.formBuilder.group({
+      showMinValue: [false],
+      showMaxValue: [false],
+      showCurrentValue: [false],
+    }),
+  });
+
   ngOnInit() {
-    const currentSettings = this.settingsForm.value;
+    const currentSettings = this.settingsService.getSettings();
     this.settingsForm.patchValue(currentSettings);
   }
 
   onSubmit() {
-    this.settingsService.updateSettings(this.settingsForm.value);
+    const settings: Settings = this.settingsForm.getRawValue();
+    this.settingsService.updateSettings(settings);
+    this.dialogRef.close();
   }
 
   onCancel() {
-    const currentSettings = this.settingsService.getSettings();
-    this.settingsForm.patchValue(currentSettings);
+    this.dialogRef.close();
   }
 }

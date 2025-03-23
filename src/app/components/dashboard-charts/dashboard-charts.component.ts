@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { DashboardChartFramesComponent } from '../dashboard-chart-frames/dashboard-chart-frames.component';
 import { DashboardChartInformationRateComponent } from '../dashboard-chart-information-rate/dashboard-chart-information-rate.component';
@@ -6,6 +11,8 @@ import { DashboardChartProtocolComponent } from '../dashboard-chart-protocol/das
 import { SliderModule } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
 import { Skeleton } from 'primeng/skeleton';
+import { Settings } from '../../models/settings';
+import { SettingsService } from '../../service/settings.service';
 
 @Component({
   selector: 'app-dashboard-charts',
@@ -25,4 +32,14 @@ import { Skeleton } from 'primeng/skeleton';
 })
 export class DashboardChartsComponent {
   protocols = input.required<string[]>();
+  settings!: Settings;
+
+  private settingsService = inject(SettingsService);
+
+  constructor() {
+    this.settingsService.settings$.subscribe(settings => {
+      this.settings = settings;
+      console.log('Settings received in Dashboard:', this.settings);
+    });
+  }
 }
