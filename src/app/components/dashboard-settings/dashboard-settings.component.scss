@@ -29,10 +29,8 @@
         }
       }
     }
-    ::ng-deep app-slide-toggle {
-      mat-slide-toggle {
+    ::ng-deep mat-slide-toggle {
         width: 25% !important;
-      }
     }
   }
   &__actions {
@@ -47,12 +45,22 @@
         width: 450px;
       }
       margin: map.get(vars.$spacing, 'md') 0 0 0;
-
     }
   }
 }
 
 
+::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mdc-switch__shadow {
+  background-color: map.get(vars.$grey, 10);
+}
+
+::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mdc-switch__track::after {
+  background-color: vars.$textPrimary !important;
+}
+
+::ng-deep .mdc-switch__track::before {
+  background-color: map.get(vars.$grey, 30) !important;
+}
 
 
 

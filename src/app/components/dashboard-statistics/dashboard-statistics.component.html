@@ -6,70 +6,111 @@
         <ngx-skeleton-loader count="7" />
       }
     </div>
-  }
-  @else {
+  } @else {
     <div class="statistics__table">
       <div class="statistics__table__time">
         <p>Total time: {{ statistics.total_time | time }} </p>
       </div>
-      <table class="statistics__table__header">
-        <thead class="statistics__table__header-title">
+      @if (settings?.statisticsRowsAndCharts?.showETH) {
+        <table class="statistics__table__header">
+          <thead class="statistics__table__header-title">
           <tr>
             <th></th>
-            <th>Total packets</th>
-            <th>Packets per second</th>
-            <th>Total bytes</th>
-            <th>Bytes per second</th>
+            @if (settings?.statisticsColumns?.showTotalPackets) {
+              <th>Total packets</th>
+            }
+            @if (settings?.statisticsColumns?.showPacketsPerSec) {
+              <th>Packets per second</th>
+            }
+            @if (settings?.statisticsColumns?.showTotalBytes) {
+              <th>Total bytes</th>
+            }
+            @if (settings?.statisticsColumns?.showBytesPerSec) {
+              <th>Bytes per second</th>
+            }
           </tr>
-        </thead>
-        <tbody>
-          @let protocolEth = getETHStatistics(statistics.protocols);
+          </thead>
+          <tbody>
+            @let protocolEth = getETHStatistics(statistics.protocols);
           <tr class="statistics__table__header-eth">
             <td>{{ protocolEth.name }}</td>
-            <td>{{ protocolEth.total_packets | decimal }}</td>
-            <td>
-              {{ getPerSecond(protocolEth.total_packets, statistics.total_time) | decimal }}
-            </td>
-            <td>{{ protocolEth.total_bytes | decimal }}</td>
-            <td>
-              {{ getPerSecond(protocolEth.total_bytes, statistics.total_time) | decimal }}
-            </td>
+            @if (settings?.statisticsColumns?.showTotalPackets) {
+              <td>{{ protocolEth.total_packets | decimal }}</td>
+            }
+            @if (settings?.statisticsColumns?.showPacketsPerSec) {
+              <td>
+                {{ getPerSecond(protocolEth.total_packets, statistics.total_time) | decimal }}
+              </td>
+            }
+            @if (settings?.statisticsColumns?.showTotalBytes) {
+              <td>{{ protocolEth.total_bytes | decimal }}</td>
+            }
+            @if (settings?.statisticsColumns?.showBytesPerSec) {
+              <td>
+                {{ getPerSecond(protocolEth.total_bytes, statistics.total_time) | decimal }}
+              </td>
+            }
           </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      }
       <table class="statistics__table__protocols">
         <tbody>
-        @for (protocol of getProtocols(statistics.protocols); track protocol.name) {
-            <tr>
-              <td>{{ protocol.name }}</td>
-              <td>{{ protocol.total_packets | decimal }}</td>
-              <td>
-                {{ getPerSecond(protocol.total_packets, statistics.total_time) | decimal }}
-              </td>
-              <td>{{ protocol.total_bytes | decimal }}</td>
-              <td>
-                {{ getPerSecond(protocol.total_bytes, statistics.total_time) | decimal }}
-              </td>
-            </tr>
-        }
+          @for (protocol of getProtocols(statistics.protocols); track protocol.name) {
+            @if (settings?.statisticsRowsAndCharts?.showIPv4 && protocol.name === 'IPv4' ||
+            settings?.statisticsRowsAndCharts?.showIPv6 && protocol.name === 'IPv6' ||
+            settings?.statisticsRowsAndCharts?.showTCP && protocol.name === 'TCP') {
+              <tr>
+                <td>{{ protocol.name }}</td>
+                @if (settings?.statisticsColumns?.showTotalPackets) {
+                  <td>{{ protocol.total_packets | decimal }}</td>
+                }
+                @if (settings?.statisticsColumns?.showPacketsPerSec) {
+                  <td>
+                    {{ getPerSecond(protocol.total_packets, statistics.total_time) | decimal }}
+                  </td>
+                }
+                @if (settings?.statisticsColumns?.showTotalBytes) {
+                  <td>{{ protocol.total_bytes | decimal }}</td>
+                }
+                @if (settings?.statisticsColumns?.showBytesPerSec) {
+                  <td>
+                    {{ getPerSecond(protocol.total_bytes, statistics.total_time) | decimal }}
+                  </td>
+                }
+              </tr>
+            }
+          }
         </tbody>
       </table>
       <table class="statistics__table__ir">
         <thead class="statistics__table__ir-header">
         <tr>
           <th></th>
-          <th>Min</th>
-          <th>Max</th>
-          <th>Current</th>
+          @if (settings?.statisticsIR?.showMinValue) {
+            <th>Min</th>
+          }
+          @if (settings?.statisticsIR?.showMaxValue) {
+            <th>Max</th>
+          }
+          @if (settings?.statisticsIR?.showCurrentValue) {
+            <th>Current</th>
+          }
         </tr>
         </thead>
         <tbody>
-          <tr class="statistics__table_ir-content">
-            <td>Information Rate</td>
+        <tr class="statistics__table_ir-content">
+          <td>Information Rate</td>
+          @if (settings?.statisticsIR?.showMinValue) {
             <td>{{ statistics.information_rate.min | decimal }}</td>
+          }
+          @if (settings?.statisticsIR?.showMaxValue) {
             <td>{{ statistics.information_rate.max | decimal }}</td>
+          }
+          @if (settings?.statisticsIR?.showCurrentValue) {
             <td>{{ statistics.information_rate.current | decimal }}</td>
-          </tr>
+          }
+        </tr>
         </tbody>
       </table>
     </div>

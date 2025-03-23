@@ -7,4 +7,4 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
   templateUrl: './slide-toggle.component.html',
   styleUrl: './slide-toggle.component.scss',
 })
-export class SlideToggleComponent {}
+export class SlideToggleComponent extends MatSlideToggle {}
