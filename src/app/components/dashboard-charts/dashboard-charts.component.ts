@@ -39,7 +39,6 @@ export class DashboardChartsComponent {
   constructor() {
     this.settingsService.settingsObserver$.subscribe(settings => {
       this.settings = settings;
-      console.log('Settings received in charts:', this.settings);
     });
   }
 

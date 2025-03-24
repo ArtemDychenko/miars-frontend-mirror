@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: row;
     gap: map.get(vars.$spacing, 'md');
+
     ::ng-deep * {
       height: 50px;
     }

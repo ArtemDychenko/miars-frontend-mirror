@@ -38,7 +38,6 @@ export class DashboardStatisticsComponent implements OnInit {
   ngOnInit() {
     this.settingsService.settingsObserver$.subscribe(settings => {
       this.settings = settings;
-      console.log('Settings received in Dashboard:', this.settings);
     });
   }
 
