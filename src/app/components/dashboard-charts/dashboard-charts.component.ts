@@ -42,4 +42,13 @@ export class DashboardChartsComponent {
       console.log('Settings received in charts:', this.settings);
     });
   }
+
+  showProtocolChart(protocolName: string): boolean {
+    const rows = this.settings;
+    return (
+      (rows?.showIPv4 && protocolName === 'ipv4') ||
+      (rows?.showIPv6 && protocolName === 'ipv6') ||
+      (rows?.showTCP && protocolName === 'tcp')
+    );
+  }
 }

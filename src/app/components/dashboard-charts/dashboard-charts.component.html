@@ -1,17 +1,20 @@
 <mat-tab-group>
   @if (settings?.showETH) {
-  <mat-tab label="Frames">
-    <app-dashboard-chart-frames />
-  </mat-tab>
-  }
-  <mat-tab label="Information Rate">
-    <app-dashboard-chart-information-rate />
-  </mat-tab>
-  @for (protocol of protocols(); track $index) {
-
-    <mat-tab [label]="protocol">
-      <app-dashboard-chart-protocol [protocolName]="protocol" />
+    <mat-tab label="Frames">
+      <app-dashboard-chart-frames />
     </mat-tab>
+  }
+  @if (settings?.showCurrentValue || settings?.showMaxValue || settings?.showMinValue) {
+    <mat-tab label="Information Rate">
+      <app-dashboard-chart-information-rate />
+    </mat-tab>
+  }
+  @for (protocol of protocols(); track $index) {
+    @if (showProtocolChart(protocol)) {
+      <mat-tab [label]="protocol">
+        <app-dashboard-chart-protocol [protocolName]="protocol" />
+      </mat-tab>
+    }
   }
 </mat-tab-group>
 
