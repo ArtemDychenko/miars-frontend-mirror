@@ -1,36 +1,36 @@
-<div class="dialog" [formGroup]="settingsForm">
+<div class="dialog" [formGroup]="form">
   <h2 mat-dialog-title class="dialog__header">Settings</h2>
   <mat-dialog-content class="dialog__content">
-    <div formGroupName="statisticsColumns" class="dialog__content__statistics__columns">
+    <div class="dialog__content__statistics__columns">
       <div class="dialog__content__statistics__columns-title">
         Statistics columns
       </div>
       <div class="dialog__content__statistics__columns-content">
-        <mat-slide-toggle [hideIcon]="true" formControlName="showTotalPackets">Total packets</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" formControlName="showPacketsPerSec">Packets per seconds</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" formControlName="showTotalBytes">Total bytes</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" formControlName="showBytesPerSec">Bytes per second</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showTotalPackets">Total packets</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showPacketsPerSec">Packets per seconds</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showTotalBytes">Total bytes</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showBytesPerSec">Bytes per second</mat-slide-toggle>
       </div>
     </div>
-    <div formGroupName="statisticsRowsAndCharts" class="dialog__content__statistics__rows">
+    <div class="dialog__content__statistics__rows">
       <div class="dialog__content__statistics__rows-title">
         Statistics rows & charts
       </div>
       <div class="dialog__content__statistics__rows-content">
-        <mat-slide-toggle [hideIcon]="true" formControlName="showETH">ETH</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" formControlName="showIPv4">IPv4</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" formControlName="showIPv6">IPv6</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" formControlName="showTCP">TCP</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showETH">ETH</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showIPv4">IPv4</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showIPv6">IPv6</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showTCP">TCP</mat-slide-toggle>
       </div>
     </div>
-    <div formGroupName="statisticsIR" class="dialog__content__statistics__ir">
+    <div class="dialog__content__statistics__ir">
       <div class="dialog__content__statistics__ir-title">
         Information Rate
       </div>
       <div class="dialog__content__statistics__ir-content">
-        <mat-slide-toggle [hideIcon]="true" formControlName="showMinValue">Min value</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" formControlName="showMaxValue">Max value</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" formControlName="showCurrentValue">Current value</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showMinValue">Min value</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showMaxValue">Max value</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showCurrentValue">Current value</mat-slide-toggle>
       </div>
     </div>
   </mat-dialog-content>

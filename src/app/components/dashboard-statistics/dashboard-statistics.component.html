@@ -16,37 +16,37 @@
           <thead class="statistics__table__header-title">
           <tr>
             <th></th>
-            @if (settings?.statisticsColumns?.showTotalPackets) {
+            @if (settings?.showTotalPackets) {
               <th>Total packets</th>
             }
-            @if (settings?.statisticsColumns?.showPacketsPerSec) {
+            @if (settings?.showPacketsPerSec) {
               <th>Packets per second</th>
             }
-            @if (settings?.statisticsColumns?.showTotalBytes) {
+            @if (settings?.showTotalBytes) {
               <th>Total bytes</th>
             }
-            @if (settings?.statisticsColumns?.showBytesPerSec) {
+            @if (settings?.showBytesPerSec) {
               <th>Bytes per second</th>
             }
           </tr>
           </thead>
-          @if (settings?.statisticsRowsAndCharts?.showETH) {
+          @if (settings?.showETH) {
             <tbody>
               @let protocolEth = getETHStatistics(statistics.protocols);
             <tr class="statistics__table__header-eth">
               <td>{{ protocolEth.name }}</td>
-              @if (settings?.statisticsColumns?.showTotalPackets) {
+              @if (settings?.showTotalPackets) {
                 <td>{{ protocolEth.total_packets | decimal }}</td>
               }
-              @if (settings?.statisticsColumns?.showPacketsPerSec) {
+              @if (settings?.showPacketsPerSec) {
                 <td>
                   {{ getPerSecond(protocolEth.total_packets, statistics.total_time) | decimal }}
                 </td>
               }
-              @if (settings?.statisticsColumns?.showTotalBytes) {
+              @if (settings?.showTotalBytes) {
                 <td>{{ protocolEth.total_bytes | decimal }}</td>
               }
-              @if (settings?.statisticsColumns?.showBytesPerSec) {
+              @if (settings?.showBytesPerSec) {
                 <td>
                   {{ getPerSecond(protocolEth.total_bytes, statistics.total_time) | decimal }}
                 </td>
@@ -62,18 +62,18 @@
               @if (showProtocolRow(protocol.name)) {
                 <tr>
                   <td>{{ protocol.name }}</td>
-                  @if (settings?.statisticsColumns?.showTotalPackets) {
+                  @if (settings?.showTotalPackets) {
                     <td>{{ protocol.total_packets | decimal }}</td>
                   }
-                  @if (settings?.statisticsColumns?.showPacketsPerSec) {
+                  @if (settings?.showPacketsPerSec) {
                     <td>
                       {{ getPerSecond(protocol.total_packets, statistics.total_time) | decimal }}
                     </td>
                   }
-                  @if (settings?.statisticsColumns?.showTotalBytes) {
+                  @if (settings?.showTotalBytes) {
                     <td>{{ protocol.total_bytes | decimal }}</td>
                   }
-                  @if (settings?.statisticsColumns?.showBytesPerSec) {
+                  @if (settings?.showBytesPerSec) {
                     <td>
                       {{ getPerSecond(protocol.total_bytes, statistics.total_time) | decimal }}
                     </td>
@@ -89,13 +89,13 @@
         <thead class="statistics__table__ir-header">
         <tr>
           <th></th>
-          @if (settings?.statisticsIR?.showMinValue) {
+          @if (settings?.showMinValue) {
             <th>Min</th>
           }
-          @if (settings?.statisticsIR?.showMaxValue) {
+          @if (settings?.showMaxValue) {
             <th>Max</th>
           }
-          @if (settings?.statisticsIR?.showCurrentValue) {
+          @if (settings?.showCurrentValue) {
             <th>Current</th>
           }
         </tr>
@@ -103,13 +103,13 @@
         <tbody>
         <tr class="statistics__table_ir-content">
           <td>Information Rate</td>
-          @if (settings?.statisticsIR?.showMinValue) {
+          @if (settings?.showMinValue) {
             <td>{{ statistics.information_rate.min | decimal }}</td>
           }
-          @if (settings?.statisticsIR?.showMaxValue) {
+          @if (settings?.showMaxValue) {
             <td>{{ statistics.information_rate.max | decimal }}</td>
           }
-          @if (settings?.statisticsIR?.showCurrentValue) {
+          @if (settings?.showCurrentValue) {
             <td>{{ statistics.information_rate.current | decimal }}</td>
           }
         </tr>

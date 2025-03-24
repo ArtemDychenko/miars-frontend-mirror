@@ -33,10 +33,10 @@ export class DashboardStatisticsComponent implements OnInit {
   dashboardApi = inject(DashboardApi);
   settings!: Settings;
 
-  private settingsService = inject(SettingsService);
+  settingsService = inject(SettingsService);
 
   ngOnInit() {
-    this.settingsService.settings$.subscribe(settings => {
+    this.settingsService.settingsObserver$.subscribe(settings => {
       this.settings = settings;
       console.log('Settings received in Dashboard:', this.settings);
     });
@@ -61,7 +61,7 @@ export class DashboardStatisticsComponent implements OnInit {
   }
 
   get showAnyStatisticsColumn(): boolean {
-    const cols = this.settings?.statisticsColumns;
+    const cols = this.settings;
     return (
       cols?.showBytesPerSec ||
       cols?.showPacketsPerSec ||
@@ -71,17 +71,17 @@ export class DashboardStatisticsComponent implements OnInit {
   }
 
   get showStatisticsRowsAndCharts(): boolean {
-    const rows = this.settings?.statisticsRowsAndCharts;
+    const rows = this.settings;
     return rows?.showETH || rows?.showIPv4 || rows?.showIPv6 || rows?.showTCP;
   }
 
   get showInformationRate(): boolean {
-    const ir = this.settings?.statisticsIR;
+    const ir = this.settings;
     return ir?.showMinValue || ir?.showMaxValue || ir?.showCurrentValue;
   }
 
   showProtocolRow(protocolName: string): boolean {
-    const rows = this.settings?.statisticsRowsAndCharts;
+    const rows = this.settings;
     return (
       (rows?.showIPv4 && protocolName === 'IPv4') ||
       (rows?.showIPv6 && protocolName === 'IPv6') ||

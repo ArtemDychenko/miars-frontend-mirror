@@ -2,16 +2,21 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  input,
   OnInit,
 } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ButtonComponent } from '../button/button.component';
 import { SettingsService } from '../../service/settings.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { Settings } from '../../models/settings';
+import {
+  SettingsForm,
+  SettingsFormBuilder,
+} from './dashboard-settings.builder';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,39 +34,30 @@ import { Settings } from '../../models/settings';
   templateUrl: './dashboard-settings.component.html',
 })
 export class DashboardSettingsComponent implements OnInit {
-  private formBuilder = inject(FormBuilder).nonNullable;
+  settingsFormBuilder = inject(SettingsFormBuilder);
+  settings = input<Settings>();
+  form!: SettingsForm;
 
-  private dialogRef = inject(MatDialogRef<DashboardSettingsComponent>);
+  dialogRef = inject(MatDialogRef<DashboardSettingsComponent>);
 
-  private settingsService = inject(SettingsService);
-
-  settingsForm = this.formBuilder.group({
-    statisticsColumns: this.formBuilder.group({
-      showTotalPackets: [false],
-      showPacketsPerSec: [false],
-      showTotalBytes: [false],
-      showBytesPerSec: [false],
-    }),
-    statisticsRowsAndCharts: this.formBuilder.group({
-      showETH: [false],
-      showIPv4: [false],
-      showIPv6: [false],
-      showTCP: [false],
-    }),
-    statisticsIR: this.formBuilder.group({
-      showMinValue: [false],
-      showMaxValue: [false],
-      showCurrentValue: [false],
-    }),
-  });
+  settingsService = inject(SettingsService);
 
   ngOnInit() {
+    this.initializeForm();
+    this.loadSettings();
+  }
+
+  initializeForm() {
+    this.form = this.settingsFormBuilder.create(this.settings());
+  }
+
+  loadSettings() {
     const currentSettings = this.settingsService.getSettings();
-    this.settingsForm.patchValue(currentSettings);
+    this.form.patchValue(currentSettings);
   }
 
   onSubmit() {
-    const settings: Settings = this.settingsForm.getRawValue();
+    const settings: Settings = this.settingsFormBuilder.toValue(this.form);
     this.settingsService.updateSettings(settings);
     this.dialogRef.close();
   }

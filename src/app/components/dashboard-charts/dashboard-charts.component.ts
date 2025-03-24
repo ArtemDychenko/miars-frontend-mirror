@@ -37,9 +37,9 @@ export class DashboardChartsComponent {
   private settingsService = inject(SettingsService);
 
   constructor() {
-    this.settingsService.settings$.subscribe(settings => {
+    this.settingsService.settingsObserver$.subscribe(settings => {
       this.settings = settings;
-      console.log('Settings received in Dashboard:', this.settings);
+      console.log('Settings received in charts:', this.settings);
     });
   }
 }
