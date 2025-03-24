@@ -11,7 +11,7 @@
       <div class="statistics__table__time">
         <p>Total time: {{ statistics.total_time | time }} </p>
       </div>
-      @if (settings?.statisticsRowsAndCharts?.showETH) {
+      @if (showAnyStatisticsColumn && showStatisticsRowsAndCharts) {
         <table class="statistics__table__header">
           <thead class="statistics__table__header-title">
           <tr>
@@ -30,59 +30,61 @@
             }
           </tr>
           </thead>
+          @if (settings?.statisticsRowsAndCharts?.showETH) {
+            <tbody>
+              @let protocolEth = getETHStatistics(statistics.protocols);
+            <tr class="statistics__table__header-eth">
+              <td>{{ protocolEth.name }}</td>
+              @if (settings?.statisticsColumns?.showTotalPackets) {
+                <td>{{ protocolEth.total_packets | decimal }}</td>
+              }
+              @if (settings?.statisticsColumns?.showPacketsPerSec) {
+                <td>
+                  {{ getPerSecond(protocolEth.total_packets, statistics.total_time) | decimal }}
+                </td>
+              }
+              @if (settings?.statisticsColumns?.showTotalBytes) {
+                <td>{{ protocolEth.total_bytes | decimal }}</td>
+              }
+              @if (settings?.statisticsColumns?.showBytesPerSec) {
+                <td>
+                  {{ getPerSecond(protocolEth.total_bytes, statistics.total_time) | decimal }}
+                </td>
+              }
+            </tr>
+            </tbody>
+          }
+        </table>
+
+        <table class="statistics__table__protocols">
           <tbody>
-            @let protocolEth = getETHStatistics(statistics.protocols);
-          <tr class="statistics__table__header-eth">
-            <td>{{ protocolEth.name }}</td>
-            @if (settings?.statisticsColumns?.showTotalPackets) {
-              <td>{{ protocolEth.total_packets | decimal }}</td>
+            @for (protocol of getProtocols(statistics.protocols); track protocol.name) {
+              @if (showProtocolRow(protocol.name)) {
+                <tr>
+                  <td>{{ protocol.name }}</td>
+                  @if (settings?.statisticsColumns?.showTotalPackets) {
+                    <td>{{ protocol.total_packets | decimal }}</td>
+                  }
+                  @if (settings?.statisticsColumns?.showPacketsPerSec) {
+                    <td>
+                      {{ getPerSecond(protocol.total_packets, statistics.total_time) | decimal }}
+                    </td>
+                  }
+                  @if (settings?.statisticsColumns?.showTotalBytes) {
+                    <td>{{ protocol.total_bytes | decimal }}</td>
+                  }
+                  @if (settings?.statisticsColumns?.showBytesPerSec) {
+                    <td>
+                      {{ getPerSecond(protocol.total_bytes, statistics.total_time) | decimal }}
+                    </td>
+                  }
+                </tr>
+              }
             }
-            @if (settings?.statisticsColumns?.showPacketsPerSec) {
-              <td>
-                {{ getPerSecond(protocolEth.total_packets, statistics.total_time) | decimal }}
-              </td>
-            }
-            @if (settings?.statisticsColumns?.showTotalBytes) {
-              <td>{{ protocolEth.total_bytes | decimal }}</td>
-            }
-            @if (settings?.statisticsColumns?.showBytesPerSec) {
-              <td>
-                {{ getPerSecond(protocolEth.total_bytes, statistics.total_time) | decimal }}
-              </td>
-            }
-          </tr>
           </tbody>
         </table>
       }
-      <table class="statistics__table__protocols">
-        <tbody>
-          @for (protocol of getProtocols(statistics.protocols); track protocol.name) {
-            @if (settings?.statisticsRowsAndCharts?.showIPv4 && protocol.name === 'IPv4' ||
-            settings?.statisticsRowsAndCharts?.showIPv6 && protocol.name === 'IPv6' ||
-            settings?.statisticsRowsAndCharts?.showTCP && protocol.name === 'TCP') {
-              <tr>
-                <td>{{ protocol.name }}</td>
-                @if (settings?.statisticsColumns?.showTotalPackets) {
-                  <td>{{ protocol.total_packets | decimal }}</td>
-                }
-                @if (settings?.statisticsColumns?.showPacketsPerSec) {
-                  <td>
-                    {{ getPerSecond(protocol.total_packets, statistics.total_time) | decimal }}
-                  </td>
-                }
-                @if (settings?.statisticsColumns?.showTotalBytes) {
-                  <td>{{ protocol.total_bytes | decimal }}</td>
-                }
-                @if (settings?.statisticsColumns?.showBytesPerSec) {
-                  <td>
-                    {{ getPerSecond(protocol.total_bytes, statistics.total_time) | decimal }}
-                  </td>
-                }
-              </tr>
-            }
-          }
-        </tbody>
-      </table>
+      @if (showInformationRate) {
       <table class="statistics__table__ir">
         <thead class="statistics__table__ir-header">
         <tr>
@@ -113,6 +115,7 @@
         </tr>
         </tbody>
       </table>
+      }
     </div>
   }
 </div>

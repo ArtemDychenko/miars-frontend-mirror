@@ -2,18 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  Input,
   OnInit,
 } from '@angular/core';
 import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { DashboardApi } from '../../api/dashboard.api';
 
 import { interval, shareReplay, switchMap } from 'rxjs';
 import { ProtocolStatistics } from '../../models/dashboard-statistics';
 import { TimePipe } from '../../pipes/time.pipe';
 import { DecimalPipe } from '../../pipes/decimal.pipe';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from '../../service/settings.service';
 import { Settings } from '../../models/settings';
 
@@ -59,5 +58,34 @@ export class DashboardStatisticsComponent implements OnInit {
 
   getProtocols(protocols: ProtocolStatistics[]): ProtocolStatistics[] {
     return protocols.filter(protocol => protocol.name !== 'ETH');
+  }
+
+  get showAnyStatisticsColumn(): boolean {
+    const cols = this.settings?.statisticsColumns;
+    return (
+      cols?.showBytesPerSec ||
+      cols?.showPacketsPerSec ||
+      cols?.showTotalBytes ||
+      cols?.showTotalPackets
+    );
+  }
+
+  get showStatisticsRowsAndCharts(): boolean {
+    const rows = this.settings?.statisticsRowsAndCharts;
+    return rows?.showETH || rows?.showIPv4 || rows?.showIPv6 || rows?.showTCP;
+  }
+
+  get showInformationRate(): boolean {
+    const ir = this.settings?.statisticsIR;
+    return ir?.showMinValue || ir?.showMaxValue || ir?.showCurrentValue;
+  }
+
+  showProtocolRow(protocolName: string): boolean {
+    const rows = this.settings?.statisticsRowsAndCharts;
+    return (
+      (rows?.showIPv4 && protocolName === 'IPv4') ||
+      (rows?.showIPv6 && protocolName === 'IPv6') ||
+      (rows?.showTCP && protocolName === 'TCP')
+    );
   }
 }

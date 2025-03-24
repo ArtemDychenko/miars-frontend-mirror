@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  input,
   OnInit,
 } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -12,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ButtonComponent } from '../button/button.component';
 import { SettingsService } from '../../service/settings.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { Settings, SettingsDto } from '../../models/settings';
+import { Settings } from '../../models/settings';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
