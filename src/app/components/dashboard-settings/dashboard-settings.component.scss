@@ -18,11 +18,15 @@
       &__columns,
       &__rows,
       &__ir {
+
         &-title {
           font-size: map.get(vars.$text, 'xl');
           padding: map.get(vars.$spacing, 'xxl') 0 map.get(vars.$spacing, 'sm') 0;
         }
         &-content {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+
           border-radius: map.get(vars.$radius, 'xs');
           background-color: map.get(vars.$grey, 10);
           padding: map.get(vars.$spacing, 'sm') 0 map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'xxl');
@@ -30,9 +34,6 @@
       }
     }
 
-    ::ng-deep mat-slide-toggle {
-        width: 25% !important;
-    }
     ::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mdc-switch__shadow {
       background-color: map.get(vars.$grey, 10);
     }
