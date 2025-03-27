@@ -43,20 +43,15 @@ export class DashboardSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.settingsService.settings$.subscribe(settings => {
-      const protocols = Object.keys(settings.protocols);
-      this.form = this.settingsFormBuilder.createDefaultForm(protocols);
-
-      if (this.form) {
-        this.initializeForm();
-      }
+      this.initializeForm(settings);
     });
   }
 
-  initializeForm() {
-    const currentSettings = this.settingsService.getSettings();
-    if (this.form) {
-      this.form.patchValue(currentSettings);
-    }
+  initializeForm(settings: Settings) {
+    const protocols = Object.keys(settings.protocols);
+
+    this.form = this.settingsFormBuilder.createDefaultForm(protocols);
+    this.form.patchValue(settings);
   }
 
   onSubmit() {

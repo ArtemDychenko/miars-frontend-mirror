@@ -39,8 +39,4 @@ export class SettingsService {
   updateSettings(settings: Settings) {
     this.settingsSubject.next(settings);
   }
-
-  getSettings(): Settings {
-    return this.settingsSubject.value;
-  }
 }

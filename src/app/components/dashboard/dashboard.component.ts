@@ -42,9 +42,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.configurationApi.fetchAppliedConfiguration().subscribe(config => {
-      if (config) {
-        this.settingsService.initSettings(config.protocols);
-      }
+      this.settingsService.initSettings(config.protocols);
     });
   }
 
