@@ -1,10 +1,16 @@
-<div class="page-header">
-  <div class="page-header__title">
-    <ng-content select="[title]"></ng-content>
+<div class="page-wrapper">
+  <div class="page-header">
+    <div class="page-header__title">
+      <ng-content select="[title]"></ng-content>
+    </div>
+    <ng-content select="[actions]"></ng-content>
   </div>
-  <ng-content select="[actions]"></ng-content>
+  <mat-divider />
+  <div class="page-body">
+    <ng-content />
+  </div>
 </div>
-<mat-divider />
-<div class="page-body">
-  <ng-content />
+<div class="copyright">
+  Copyright &copy; 2025
+  <a href="https://pg.edu.pl/">Gdańsk University of Technology</a>
 </div>
