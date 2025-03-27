@@ -5,7 +5,7 @@
         <div
           class="button-container"
           [ngClass]="{
-            'button-container__active': router.url === '/configuration',
+            'button-container__active': currentPage() === '/configuration',
           }"
           routerLink="/configuration">
           <mat-icon>settings</mat-icon>
@@ -14,7 +14,7 @@
         <div
           class="button-container"
           [ngClass]="{
-            'button-container__active': router.url === '/dashboard',
+            'button-container__active': currentPage() === '/dashboard',
           }"
           routerLink="/dashboard">
           <mat-icon>trending_up</mat-icon>
