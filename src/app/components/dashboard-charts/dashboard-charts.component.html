@@ -1,22 +1,27 @@
+@let settings = settings$ | async;
+
+@if (settings) {
 <mat-tab-group>
-  @if (settings?.showETH) {
+  @if (settings.showETH) {
     <mat-tab label="Frames">
       <app-dashboard-chart-frames />
     </mat-tab>
   }
-  @if (settings?.showCurrentValue || settings?.showMaxValue || settings?.showMinValue) {
+  @if (settings.showCurrentValue) {
     <mat-tab label="Information Rate">
       <app-dashboard-chart-information-rate />
     </mat-tab>
   }
-  @for (protocol of protocols(); track $index) {
-    @if (showProtocolChart(protocol)) {
-      <mat-tab [label]="protocol">
-        <app-dashboard-chart-protocol [protocolName]="protocol" />
-      </mat-tab>
+  @if (settings.protocols) {
+    @for (protocol of protocols(); track $index) {
+      @if ((protocols$ | async)?.includes(protocol)) {
+        <mat-tab [label]="protocol">
+          <app-dashboard-chart-protocol [protocolName]="protocol" />
+        </mat-tab>
+     }
     }
   }
 </mat-tab-group>
-
+}
 <!--@todo: find other way to fix scrolling to the top of the page-->
 <p-skeleton height="300px" />

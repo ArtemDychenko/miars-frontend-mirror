@@ -48,10 +48,9 @@
   }
   &__actions {
     border-radius: map.get(vars.$radius, 'xs');
-    padding: map.get(vars.$spacing, 'xxl') 0 map.get(vars.$spacing, 'xl') 0;
+    padding: map.get(vars.$spacing, 'xxl') map.get(vars.$spacing, 'xl') map.get(vars.$spacing, 'xl') map.get(vars.$spacing, 'xl');
     display: flex;
-    justify-content: center;
-    gap: 150px;
+    justify-content: space-between;
 
     ::ng-deep app-button {
       button {
@@ -61,3 +60,4 @@
     }
   }
 }
+

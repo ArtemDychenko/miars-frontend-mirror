@@ -13,6 +13,9 @@ import { FormsModule } from '@angular/forms';
 import { Skeleton } from 'primeng/skeleton';
 import { Settings } from '../../models/settings';
 import { SettingsService } from '../../service/settings.service';
+import { map, Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { ProtocolStatistics } from '../../models/dashboard-statistics';
 
 @Component({
   selector: 'app-dashboard-charts',
@@ -25,6 +28,7 @@ import { SettingsService } from '../../service/settings.service';
     SliderModule,
     FormsModule,
     Skeleton,
+    AsyncPipe,
   ],
   templateUrl: './dashboard-charts.component.html',
   styleUrl: './dashboard-charts.component.scss',
@@ -32,22 +36,14 @@ import { SettingsService } from '../../service/settings.service';
 })
 export class DashboardChartsComponent {
   protocols = input.required<string[]>();
-  settings!: Settings;
-
   private settingsService = inject(SettingsService);
+  settings$: Observable<Settings> = this.settingsService.settings$;
 
-  constructor() {
-    this.settingsService.settingsObserver$.subscribe(settings => {
-      this.settings = settings;
-    });
-  }
-
-  showProtocolChart(protocolName: string): boolean {
-    const rows = this.settings;
-    return (
-      (rows?.showIPv4 && protocolName === 'ipv4') ||
-      (rows?.showIPv6 && protocolName === 'ipv6') ||
-      (rows?.showTCP && protocolName === 'tcp')
-    );
-  }
+  protocols$: Observable<string[]> = this.settingsService.settings$.pipe(
+    map(settings =>
+      Object.keys(settings.protocols || {})
+        .filter(key => settings.protocols[key])
+        .map(key => key.toLowerCase())
+    )
+  );
 }

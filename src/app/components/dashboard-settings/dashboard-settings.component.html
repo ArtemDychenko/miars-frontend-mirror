@@ -18,9 +18,11 @@
       </div>
       <div class="dialog__content__statistics__rows-content">
         <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showETH">ETH</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showIPv4">IPv4</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showIPv6">IPv6</mat-slide-toggle>
-        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showTCP">TCP</mat-slide-toggle>
+          @for (entry of Object.entries(form.controls.protocols.controls); track $index) {
+            <mat-slide-toggle [hideIcon]="true" [formControl]="entry[1]">{{
+                entry[0]
+              }}</mat-slide-toggle>
+          }
       </div>
     </div>
     <div class="dialog__content__statistics__ir">

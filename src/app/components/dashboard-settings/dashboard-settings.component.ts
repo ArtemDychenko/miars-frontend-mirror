@@ -35,23 +35,22 @@ import {
 })
 export class DashboardSettingsComponent implements OnInit {
   settingsFormBuilder = inject(SettingsFormBuilder);
-  settings = input<Settings>();
-  form!: SettingsForm;
 
   dialogRef = inject(MatDialogRef<DashboardSettingsComponent>);
 
   settingsService = inject(SettingsService);
+  form!: SettingsForm;
 
   ngOnInit() {
-    this.initializeForm();
-    this.loadSettings();
+    this.settingsService.settings$.subscribe(settings => {
+      const protocols = Object.keys(settings.protocols);
+      this.form = this.settingsFormBuilder.createDefaultForm(protocols);
+
+      this.initializeForm();
+    });
   }
 
   initializeForm() {
-    this.form = this.settingsFormBuilder.create(this.settings());
-  }
-
-  loadSettings() {
     const currentSettings = this.settingsService.getSettings();
     this.form.patchValue(currentSettings);
   }
@@ -65,4 +64,6 @@ export class DashboardSettingsComponent implements OnInit {
   onCancel() {
     this.dialogRef.close();
   }
+
+  protected readonly Object = Object;
 }

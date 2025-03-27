@@ -8,7 +8,7 @@ import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 import { AsyncPipe } from '@angular/common';
 import { DashboardApi } from '../../api/dashboard.api';
 
-import { interval, shareReplay, switchMap } from 'rxjs';
+import { interval, Observable, shareReplay, switchMap } from 'rxjs';
 import { ProtocolStatistics } from '../../models/dashboard-statistics';
 import { TimePipe } from '../../pipes/time.pipe';
 import { DecimalPipe } from '../../pipes/decimal.pipe';
@@ -29,17 +29,10 @@ import { Settings } from '../../models/settings';
   styleUrl: './dashboard-statistics.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardStatisticsComponent implements OnInit {
+export class DashboardStatisticsComponent {
   dashboardApi = inject(DashboardApi);
-  settings!: Settings;
-
   settingsService = inject(SettingsService);
-
-  ngOnInit() {
-    this.settingsService.settingsObserver$.subscribe(settings => {
-      this.settings = settings;
-    });
-  }
+  settings$: Observable<Settings> = this.settingsService.settings$;
 
   dashboardStatistics = interval(1000).pipe(
     switchMap(() => this.dashboardApi.fetchStatistics()),
@@ -59,32 +52,27 @@ export class DashboardStatisticsComponent implements OnInit {
     return protocols.filter(protocol => protocol.name !== 'ETH');
   }
 
-  get showAnyStatisticsColumn(): boolean {
-    const cols = this.settings;
+  showAnyStatisticsColumn(settings: Settings): boolean {
     return (
-      cols?.showBytesPerSec ||
-      cols?.showPacketsPerSec ||
-      cols?.showTotalBytes ||
-      cols?.showTotalPackets
+      settings.showBytesPerSec ||
+      settings.showPacketsPerSec ||
+      settings.showTotalBytes ||
+      settings.showTotalPackets
     );
   }
 
-  get showStatisticsRowsAndCharts(): boolean {
-    const rows = this.settings;
-    return rows?.showETH || rows?.showIPv4 || rows?.showIPv6 || rows?.showTCP;
-  }
-
-  get showInformationRate(): boolean {
-    const ir = this.settings;
-    return ir?.showMinValue || ir?.showMaxValue || ir?.showCurrentValue;
-  }
-
-  showProtocolRow(protocolName: string): boolean {
-    const rows = this.settings;
+  showStatisticsRowsAndCharts(settings: Settings): boolean {
     return (
-      (rows?.showIPv4 && protocolName === 'IPv4') ||
-      (rows?.showIPv6 && protocolName === 'IPv6') ||
-      (rows?.showTCP && protocolName === 'TCP')
+      settings.showETH ||
+      Object.values(settings.protocols).some(v => v === true)
+    );
+  }
+
+  showInformationRate(settings: Settings): boolean {
+    return (
+      settings.showMinValue ||
+      settings.showMaxValue ||
+      settings.showCurrentValue
     );
   }
 }

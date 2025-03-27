@@ -1,15 +1,11 @@
-export type Settings = SettingsDto;
-
-export interface SettingsDto {
+export interface Settings {
   showTotalPackets: boolean;
   showPacketsPerSec: boolean;
   showTotalBytes: boolean;
   showBytesPerSec: boolean;
 
   showETH: boolean;
-  showIPv4: boolean;
-  showIPv6: boolean;
-  showTCP: boolean;
+  protocols: { [key: string]: boolean };
 
   showMinValue: boolean;
   showMaxValue: boolean;
