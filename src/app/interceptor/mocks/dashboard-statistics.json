@@ -9,7 +9,7 @@
           "total-bytes": 123456789
         },
         {
-          "name": "TCP",
+          "name": "UDP",
           "total-packets": 321312,
           "total-bytes": 32143245
         },

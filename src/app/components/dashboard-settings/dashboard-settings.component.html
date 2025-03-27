@@ -1,0 +1,45 @@
+@if(form) {
+<div class="dialog" [formGroup]="form">
+  <h2 mat-dialog-title class="dialog__header">Settings</h2>
+  <mat-dialog-content class="dialog__content">
+    <div class="dialog__content__statistics__columns">
+      <div class="dialog__content__statistics__columns-title">
+        Statistics columns
+      </div>
+      <div class="dialog__content__statistics__columns-content">
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showTotalPackets">Total packets</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showPacketsPerSec">Packets per seconds</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showTotalBytes">Total bytes</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showBytesPerSec">Bytes per second</mat-slide-toggle>
+      </div>
+    </div>
+    <div class="dialog__content__statistics__rows">
+      <div class="dialog__content__statistics__rows-title">
+        Statistics rows & charts
+      </div>
+      <div class="dialog__content__statistics__rows-content">
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showETH">ETH</mat-slide-toggle>
+          @for (entry of Object.entries(form.controls.protocols.controls); track $index) {
+            <mat-slide-toggle [hideIcon]="true" [formControl]="entry[1]">{{
+                entry[0]
+              }}</mat-slide-toggle>
+          }
+      </div>
+    </div>
+    <div class="dialog__content__statistics__ir">
+      <div class="dialog__content__statistics__ir-title">
+        Information Rate
+      </div>
+      <div class="dialog__content__statistics__ir-content">
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showMinValue">Min value</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showMaxValue">Max value</mat-slide-toggle>
+        <mat-slide-toggle [hideIcon]="true" [formControl]="form.controls.showCurrentValue">Current value</mat-slide-toggle>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="dialog__actions">
+    <app-button secondary class="cancel-button" (click)="onCancel()">CANCEL</app-button>
+    <app-button class="save-button" (click)="onSubmit()">SAVE</app-button>
+  </mat-dialog-actions>
+</div>
+}

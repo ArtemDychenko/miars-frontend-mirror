@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, tap } from 'rxjs';
+import { map, mergeMap, Observable, tap } from 'rxjs';
 import {
   Configuration,
   ConfigurationDto,
@@ -9,7 +9,7 @@ import {
 } from '../models/configuration';
 import { ApiResponse } from '../models/api-response';
 
-export const CONFIGURATION_API_URL = '/api/configurations';
+export const CONFIGURATION_API_URL = '/api/configuration';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +21,30 @@ export class ConfigurationApi {
     return this.httpClient
       .get<ApiResponse<ConfigurationDto[]>>(CONFIGURATION_API_URL)
       .pipe(map(dto => dto.data.map(dtoToConfiguration)));
+  }
+
+  fetchAppliedConfiguration(): Observable<Configuration> {
+    return this.httpClient
+      .get<ApiResponse<ConfigurationDto[]>>(CONFIGURATION_API_URL)
+      .pipe(
+        map(dto => dto.data),
+
+        map(configurations => {
+          const appliedConfiguration = configurations.find(
+            dto => dto.is_applied
+          );
+
+          return appliedConfiguration!.id;
+        }),
+
+        mergeMap(appliedConfigId => {
+          return this.httpClient
+            .get<
+              ApiResponse<ConfigurationDto>
+            >(`${CONFIGURATION_API_URL}/${appliedConfigId}`)
+            .pipe(map(dto => dtoToConfiguration(dto.data)));
+        })
+      );
   }
 
   find(configName: string): Observable<Configuration> {

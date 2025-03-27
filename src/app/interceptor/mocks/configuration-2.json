@@ -2,7 +2,7 @@
   "data": {
     "id": "2def",
     "name": "Everything",
-    "is_applied": true,
+    "is_applied": false,
     "mac_source": [],
     "mac_destination": [],
     "frame_ranges": [],

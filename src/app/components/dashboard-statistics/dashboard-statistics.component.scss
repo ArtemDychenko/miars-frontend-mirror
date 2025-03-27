@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: row;
     gap: map.get(vars.$spacing, 'md');
+
     ::ng-deep * {
       height: 50px;
     }
@@ -73,6 +74,7 @@
 
         margin-top: map.get(vars.$spacing, 'lg');
         width: 100%;
+
 
         tbody td {
           border-top: 1px solid map.get(vars.$grey, 30);

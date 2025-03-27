@@ -1,3 +1,4 @@
+@let settings = settings$ | async;
 <app-page-wrapper>
   <div title>Monitoring and Analysis</div>
 
@@ -14,15 +15,25 @@
           Statistics
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-dashboard-statistics />
+
+      @if (settings) {
+        <app-dashboard-statistics [settings]="settings" />
+      }
     </mat-expansion-panel>
+
     <mat-expansion-panel class="accordion__panel">
       <mat-expansion-panel-header class="accordion__panel-header">
         <mat-panel-title class="accordion__panel-title">
           Charts
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-dashboard-charts [protocols]="['ipv4']" />
+
+      @if (settings) {
+        <app-dashboard-charts [settings]="settings" />
+      }
     </mat-expansion-panel>
   </mat-accordion>
+
+  <!--@todo: find other way to fix scrolling to the top of the page-->
+  <p-skeleton height="300px" />
 </app-page-wrapper>

@@ -3,7 +3,7 @@
     {
       "id": "1abc",
       "name": "Custom",
-      "is_applied": false,
+      "is_applied": true,
       "mac_source": [
         "01:23:45:67:89:00",
         "01:23:45:67:89:11",
@@ -20,12 +20,12 @@
         [128, 255],
         [1024, 1518]
       ],
-      "protocols": ["IPv4", "IP6", "UDP"]
+      "protocols": ["IPv4", "IPv6", "UDP"]
     },
     {
       "id": "2def",
       "name": "Everything",
-      "is_applied": true,
+      "is_applied": false,
       "mac_source": [],
       "mac_destination": [],
       "frame_ranges": [],

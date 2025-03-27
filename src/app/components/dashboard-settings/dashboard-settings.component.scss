@@ -1,0 +1,64 @@
+@use '../../../vars';
+@use 'sass:map';
+
+.dialog {
+  background-color: map.get(vars.$grey, 0);
+  &__header {
+    border-bottom: 1px solid map.get(vars.$grey, 30);
+    font-family: Monoton, cursive;
+
+    font-size: map.get(vars.$text, 'xxl');
+    padding: map.get(vars.$spacing, 'lg') 0 map.get(vars.$spacing, 'lg') map.get(vars.$spacing, 'xl');
+  }
+
+  &__content {
+    font-weight: 500;
+
+    &__statistics {
+      &__columns,
+      &__rows,
+      &__ir {
+
+        &-title {
+          font-size: map.get(vars.$text, 'xl');
+          padding: map.get(vars.$spacing, 'xxl') 0 map.get(vars.$spacing, 'sm') 0;
+        }
+        &-content {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+
+          border-radius: map.get(vars.$radius, 'xs');
+          background-color: map.get(vars.$grey, 10);
+          padding: map.get(vars.$spacing, 'sm') 0 map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'xxl');
+        }
+      }
+    }
+
+    ::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mdc-switch__shadow {
+      background-color: map.get(vars.$grey, 10);
+    }
+
+    ::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mdc-switch__track::after {
+      background-color: vars.$textPrimary !important;
+    }
+
+    ::ng-deep .mdc-switch__track::before {
+      background-color: map.get(vars.$grey, 30) !important;
+    }
+
+  }
+  &__actions {
+    border-radius: map.get(vars.$radius, 'xs');
+    padding: map.get(vars.$spacing, 'xxl') map.get(vars.$spacing, 'xl') map.get(vars.$spacing, 'xl') map.get(vars.$spacing, 'xl');
+    display: flex;
+    justify-content: space-between;
+
+    ::ng-deep app-button {
+      button {
+        width: 450px;
+      }
+      margin: map.get(vars.$spacing, 'md') 0 0 0;
+    }
+  }
+}
+

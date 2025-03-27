@@ -1,16 +1,17 @@
 <mat-tab-group>
-  <mat-tab label="Frames">
-    <app-dashboard-chart-frames />
-  </mat-tab>
-  <mat-tab label="Information Rate">
-    <app-dashboard-chart-information-rate />
-  </mat-tab>
+  @if (settings().showETH) {
+    <mat-tab label="Frames">
+      <app-dashboard-chart-frames />
+    </mat-tab>
+  }
+  @if (settings().showCurrentValue) {
+    <mat-tab label="Information Rate">
+      <app-dashboard-chart-information-rate />
+    </mat-tab>
+  }
   @for (protocol of protocols(); track $index) {
     <mat-tab [label]="protocol">
       <app-dashboard-chart-protocol [protocolName]="protocol" />
     </mat-tab>
   }
 </mat-tab-group>
-
-<!--@todo: find other way to fix scrolling to the top of the page-->
-<p-skeleton height="300px" />
