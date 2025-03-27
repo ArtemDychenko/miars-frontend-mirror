@@ -42,7 +42,9 @@ export class DashboardChartProtocolComponent {
   protocolHistory = signal<ChartProtocol[]>([]);
   data = computed(() => {
     const protocols = this.protocolHistory();
-    if (!protocols) return;
+
+    if (!protocols.length) return;
+
     return this.#chartService.getProtocolChartDataConfig(
       protocols,
       this.recordsInterval()
@@ -69,11 +71,11 @@ export class DashboardChartProtocolComponent {
           ),
           shareReplay(1)
         )
-        .subscribe(ir => {
+        .subscribe(cp => {
           this.protocolHistory.update(protocols => {
             if (protocols.length < this.recordsLimit())
-              return [...protocols, ir];
-            return [...protocols.splice(1), ir];
+              return [...protocols, cp];
+            return [...protocols.splice(1), cp];
           });
         });
     });

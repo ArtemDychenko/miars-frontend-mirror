@@ -2,18 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
+  input,
 } from '@angular/core';
 import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 import { AsyncPipe } from '@angular/common';
 import { DashboardApi } from '../../api/dashboard.api';
 
-import { interval, Observable, shareReplay, switchMap } from 'rxjs';
+import { interval, shareReplay, switchMap } from 'rxjs';
 import { ProtocolStatistics } from '../../models/dashboard-statistics';
 import { TimePipe } from '../../pipes/time.pipe';
 import { DecimalPipe } from '../../pipes/decimal.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SettingsService } from '../../service/settings.service';
 import { Settings } from '../../models/settings';
 
 @Component({
@@ -31,8 +30,7 @@ import { Settings } from '../../models/settings';
 })
 export class DashboardStatisticsComponent {
   dashboardApi = inject(DashboardApi);
-  settingsService = inject(SettingsService);
-  settings$: Observable<Settings> = this.settingsService.settings$;
+  settings = input.required<Settings>();
 
   dashboardStatistics = interval(1000).pipe(
     switchMap(() => this.dashboardApi.fetchStatistics()),
@@ -62,10 +60,7 @@ export class DashboardStatisticsComponent {
   }
 
   showStatisticsRowsAndCharts(settings: Settings): boolean {
-    return (
-      settings.showETH ||
-      Object.values(settings.protocols).some(v => v === true)
-    );
+    return settings.showETH || Object.values(settings.protocols).some(v => v);
   }
 
   showInformationRate(settings: Settings): boolean {

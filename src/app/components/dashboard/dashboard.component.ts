@@ -14,7 +14,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DashboardSettingsComponent } from '../dashboard-settings/dashboard-settings.component';
 import { ConfigurationApi } from '../../api/configuration.api';
 import { SettingsService } from '../../service/settings.service';
-import { map, Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,6 +26,8 @@ import { map, Observable } from 'rxjs';
     MatFabButton,
     DashboardStatisticsComponent,
     DashboardChartsComponent,
+    AsyncPipe,
+    Skeleton,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -35,6 +38,7 @@ export class DashboardComponent implements OnInit {
 
   configurationApi = inject(ConfigurationApi);
   settingsService = inject(SettingsService);
+  settings$ = this.settingsService.settings$;
 
   ngOnInit() {
     this.configurationApi.fetchAppliedConfiguration().subscribe(config => {

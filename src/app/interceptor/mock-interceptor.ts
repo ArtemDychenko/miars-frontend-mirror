@@ -16,7 +16,7 @@ export const MockInterceptor: HttpInterceptorFn = (req, next) => {
       body = getRandomFrameRecord();
     } else if (url === DASHBOARD_API_URL + '/information-rate/current') {
       body = getRandomInformationRateRecord();
-    } else if (url === DASHBOARD_API_URL + '/ipv4/current') {
+    } else if (url === DASHBOARD_API_URL + '/IPv4/current') {
       body = getRandomProtocolRecord();
     }
 

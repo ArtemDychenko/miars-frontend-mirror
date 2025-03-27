@@ -1,6 +1,6 @@
 import { ApiResponse } from '../models/api-response';
 import { ChartFrames } from '../models/chart-frames';
-import { map, Observable, tap } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import { ChartInformationRate } from '../models/chart-information-rate';
 import { ChartProtocol } from '../models/chart-protocol';
 import { inject, Injectable } from '@angular/core';
@@ -88,6 +88,9 @@ export class DashboardApi {
       .get<
         ApiResponse<ChartProtocol>
       >(`${DASHBOARD_API_URL}/${protocolName}/current`)
-      .pipe(map(response => response.data));
+      .pipe(
+        map((response): ChartProtocol => response.data),
+        filter(d => d.packets !== undefined && d.bytes !== undefined) // for some reason, the HTTP client returns object of type Settings instead of ChartProtocol
+      );
   }
 }

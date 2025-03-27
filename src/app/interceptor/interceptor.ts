@@ -40,11 +40,11 @@ export const urls = [
     json: () => irHistorical,
   },
   {
-    url: '/api/statistics/ipv4/current',
+    url: '/api/statistics/IPv4/current',
     json: () => ipv4Current,
   },
   {
-    url: '/api/statistics/ipv4/historical',
+    url: '/api/statistics/IPv4/historical',
     json: () => ipv4Historical,
   },
   {
