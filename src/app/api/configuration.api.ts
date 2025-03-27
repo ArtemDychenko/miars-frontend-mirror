@@ -34,10 +34,7 @@ export class ConfigurationApi {
             dto => dto.is_applied
           );
 
-          if (!appliedConfiguration) {
-            throw new Error('No applied configuration found');
-          }
-          return appliedConfiguration.id;
+          return appliedConfiguration!.id;
         }),
 
         mergeMap(appliedConfigId => {

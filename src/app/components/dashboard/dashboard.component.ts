@@ -44,8 +44,6 @@ export class DashboardComponent implements OnInit {
     this.configurationApi.fetchAppliedConfiguration().subscribe(config => {
       if (config) {
         this.settingsService.initSettings(config.protocols);
-      } else {
-        console.error('Failed to fetch configuration');
       }
     });
   }

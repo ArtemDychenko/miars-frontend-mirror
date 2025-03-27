@@ -39,26 +39,32 @@ export class DashboardSettingsComponent implements OnInit {
   dialogRef = inject(MatDialogRef<DashboardSettingsComponent>);
 
   settingsService = inject(SettingsService);
-  form!: SettingsForm;
+  form: SettingsForm | null = null;
 
   ngOnInit() {
     this.settingsService.settings$.subscribe(settings => {
       const protocols = Object.keys(settings.protocols);
       this.form = this.settingsFormBuilder.createDefaultForm(protocols);
 
-      this.initializeForm();
+      if (this.form) {
+        this.initializeForm();
+      }
     });
   }
 
   initializeForm() {
     const currentSettings = this.settingsService.getSettings();
-    this.form.patchValue(currentSettings);
+    if (this.form) {
+      this.form.patchValue(currentSettings);
+    }
   }
 
   onSubmit() {
-    const settings: Settings = this.settingsFormBuilder.toValue(this.form);
-    this.settingsService.updateSettings(settings);
-    this.dialogRef.close();
+    if (this.form) {
+      const settings: Settings = this.settingsFormBuilder.toValue(this.form);
+      this.settingsService.updateSettings(settings);
+      this.dialogRef.close();
+    }
   }
 
   onCancel() {
