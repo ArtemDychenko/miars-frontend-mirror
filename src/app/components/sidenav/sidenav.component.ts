@@ -37,7 +37,7 @@ export class SidenavComponent {
     afterNextRender(() => {
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
-          this.currentPage.set(event.url);
+          this.currentPage.set(event.urlAfterRedirects);
         }
       });
       this.drawer()?.open();

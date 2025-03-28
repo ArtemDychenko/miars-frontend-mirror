@@ -15,7 +15,6 @@ import { DashboardSettingsComponent } from '../dashboard-settings/dashboard-sett
 import { ConfigurationApi } from '../../api/configuration.api';
 import { SettingsService } from '../../service/settings.service';
 import { AsyncPipe } from '@angular/common';
-import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,7 +26,6 @@ import { Skeleton } from 'primeng/skeleton';
     DashboardStatisticsComponent,
     DashboardChartsComponent,
     AsyncPipe,
-    Skeleton,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

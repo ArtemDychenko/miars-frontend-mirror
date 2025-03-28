@@ -1,11 +1,12 @@
 @use '../../../vars';
 @use 'sass:map';
 
-:host {
+.page-wrapper {
   display: block;
   min-height: calc(100vh - 2 * vars.$headerHeight);
 
-  margin: map.get(vars.$spacing, 'xl');
+  margin: map.get(vars.$spacing, 'xl') map.get(vars.$spacing, 'xl')
+    map.get(vars.$spacing, 'none');
   background-color: map.get(vars.$grey, 0);
   border-radius: map.get(vars.$radius, 'xs');
 
@@ -27,4 +28,9 @@
       padding: map.get(vars.$spacing, 'xxl');
     }
   }
+}
+
+.copyright {
+  margin: map.get(vars.$spacing, 'sm') map.get(vars.$spacing, 'xl');
+  text-align: right;
 }
