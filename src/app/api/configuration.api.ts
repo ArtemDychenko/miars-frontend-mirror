@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, mergeMap, Observable, tap } from 'rxjs';
+import { map, mergeMap, Observable } from 'rxjs';
 import {
   Configuration,
   ConfigurationDto,
@@ -9,7 +9,7 @@ import {
 } from '../models/configuration';
 import { ApiResponse } from '../models/api-response';
 
-export const CONFIGURATION_API_URL = '/api/configuration';
+export const CONFIGURATION_API_URL = '/api/configurations';
 
 @Injectable({
   providedIn: 'root',
@@ -47,11 +47,19 @@ export class ConfigurationApi {
       );
   }
 
-  find(configName: string): Observable<Configuration> {
+  find(configId: string): Observable<Configuration> {
     return this.httpClient
       .get<
         ApiResponse<ConfigurationDto>
-      >(`${CONFIGURATION_API_URL}/${configName}`)
+      >(`${CONFIGURATION_API_URL}/${configId}`)
+      .pipe(map(dto => dtoToConfiguration(dto.data)));
+  }
+
+  add(configuration: Configuration): Observable<Configuration> {
+    return this.httpClient
+      .post<
+        ApiResponse<ConfigurationDto>
+      >(CONFIGURATION_API_URL, configurationToDto(configuration))
       .pipe(map(dto => dtoToConfiguration(dto.data)));
   }
 
@@ -59,13 +67,13 @@ export class ConfigurationApi {
     return this.httpClient
       .put<
         ApiResponse<ConfigurationDto>
-      >(CONFIGURATION_API_URL, configurationToDto(configuration))
+      >(`${CONFIGURATION_API_URL}/${configuration.id}`, configurationToDto(configuration))
       .pipe(map(dto => dtoToConfiguration(dto.data)));
   }
 
   apply(configurationId: string): Observable<Configuration> {
     return this.httpClient
-      .put<
+      .post<
         ApiResponse<ConfigurationDto>
       >(`${CONFIGURATION_API_URL}/${configurationId}/apply`, {})
       .pipe(map(dto => dtoToConfiguration(dto.data)));
