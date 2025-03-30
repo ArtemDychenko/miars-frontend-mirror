@@ -1,12 +1,11 @@
 services:
   miars-ng:
     build: .
+    network_mode: "host"
     volumes:
       - .:/app
       - node_modules:/app/node_modules
-    ports:
-      - "4200:4200"
-    command: ["npm", "run", "start", "--", "--host", "0.0.0.0", "--poll=2000", "--proxy-config", "proxy.conf.json"]
+    command: ["npm", "run", "start", "--", "--host", "0.0.0.0", "--poll=2000", "--proxy-config", "src/proxy.conf.json"]
 
 volumes:
   node_modules:
