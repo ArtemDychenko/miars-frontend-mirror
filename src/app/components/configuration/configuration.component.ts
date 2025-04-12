@@ -55,16 +55,16 @@ export class ConfigurationComponent implements OnInit {
 
   pageMode = signal<ConfigurationPageMode>(ConfigurationPageMode.READ);
   configurationOptions = signal<Partial<Configuration>[]>([]);
-  chosenConfiguration = signal<string | undefined>(undefined);
+  chosenConfigurationId = signal<string | undefined>(undefined);
   isLoading = signal<boolean>(true);
   configuration = signal<Configuration | undefined>(undefined);
 
   constructor() {
     effect(() => {
       this.isLoading.set(true);
-      const chosenConfiguration = this.chosenConfiguration();
-      if (chosenConfiguration) {
-        this.configurationApi.find(chosenConfiguration).subscribe(config => {
+      const chosenConfigurationId = this.chosenConfigurationId();
+      if (chosenConfigurationId) {
+        this.configurationApi.find(chosenConfigurationId).subscribe(config => {
           this.isLoading.set(false);
           this.configuration.set(config);
         });
@@ -77,13 +77,24 @@ export class ConfigurationComponent implements OnInit {
   }
 
   onDeleteConfiguration() {
-    this.configurationApi.delete(this.chosenConfiguration()!).subscribe(() => {
+    const configId = this.chosenConfigurationId();
+    if (!configId) return;
+
+    this.isLoading.set(true);
+    this.configurationApi.delete(configId).subscribe(() => {
       this.updateConfigurationOptions();
+      this.isLoading.set(false);
+
+      // no applied config -> set default view
+      this.configuration.set(undefined);
     });
   }
 
   onApplyConfiguration() {
-    this.configurationApi.apply(this.chosenConfiguration()!).subscribe(() => {
+    const configId = this.chosenConfigurationId();
+    if (!configId) return;
+
+    this.configurationApi.apply(configId).subscribe(() => {
       this.fetchConfigurationOptions().subscribe(configurations =>
         this.configurationOptions.set(configurations)
       );
@@ -91,13 +102,32 @@ export class ConfigurationComponent implements OnInit {
   }
 
   onChangeConfiguration(configId: string) {
-    this.chosenConfiguration.set(configId);
+    this.chosenConfigurationId.set(configId);
+  }
+
+  onAddConfiguration(configuration: Configuration) {
+    this.isLoading.set(true);
+
+    this.configurationApi.add(configuration).subscribe(config => {
+      this.configuration.set(config);
+      this.configurationOptions.update(configs => [...configs, config]);
+      this.chosenConfigurationId.set(config.id);
+
+      this.isLoading.set(false);
+      this.pageMode.set(ConfigurationPageMode.READ);
+    });
   }
 
   onSubmitConfiguration(configuration: Configuration) {
-    console.log('Submitting configuration', configuration);
-    this.configurationApi.save(configuration);
-    this.pageMode.set(ConfigurationPageMode.READ);
+    this.isLoading.set(true);
+
+    this.configurationApi.save(configuration).subscribe(config => {
+      this.configuration.set(config);
+      this.updateConfigurationOptions();
+
+      this.isLoading.set(false);
+      this.pageMode.set(ConfigurationPageMode.READ);
+    });
   }
 
   private fetchConfigurationOptions(): Observable<Partial<Configuration>[]> {
@@ -120,7 +150,7 @@ export class ConfigurationComponent implements OnInit {
     this.fetchConfigurationOptions().subscribe(configurations => {
       const appliedConfiguration = configurations.find(c => c.is_applied);
       if (appliedConfiguration) {
-        this.chosenConfiguration.set(appliedConfiguration.id);
+        this.chosenConfigurationId.set(appliedConfiguration.id);
       }
       this.configurationOptions.set(configurations);
     });

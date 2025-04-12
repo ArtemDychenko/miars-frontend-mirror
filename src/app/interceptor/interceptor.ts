@@ -1,6 +1,3 @@
-import * as configurationList from './mocks/configurations.json';
-import * as configuration1 from './mocks/configuration-1.json';
-import * as configuration2 from './mocks/configuration-2.json';
 import * as framesCurrent from './mocks/frames-current.json';
 import * as framesHistorical from './mocks/frames-historical.json';
 import * as irCurrent from './mocks/ir-current.json';
@@ -11,18 +8,6 @@ import * as dashboardStats from './mocks/dashboard-statistics.json';
 import * as dashboardStats2 from './mocks/dashboard-statistics-2.json';
 
 export const urls = [
-  {
-    url: '/api/configuration/1abc',
-    json: () => configuration1,
-  },
-  {
-    url: '/api/configuration/2def',
-    json: () => configuration2,
-  },
-  {
-    url: '/api/configuration',
-    json: () => configurationList,
-  },
   {
     url: '/api/statistics/frames/current',
     json: () => framesCurrent,

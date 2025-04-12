@@ -15,7 +15,7 @@
     <mat-form-field>
       <mat-label>Configuration</mat-label>
       <mat-select
-        [value]="chosenConfiguration()"
+        [value]="chosenConfigurationId()"
         (valueChange)="onChangeConfiguration($event)">
         @for (config of configurationOptions(); track $index) {
           <mat-option [value]="config.id">{{ config.name }}</mat-option>
@@ -56,7 +56,7 @@
       @case (ConfigurationPageMode.CREATE) {
         <app-configuration-form
           (cancel)="pageMode.set(ConfigurationPageMode.READ)"
-          (submit)="onSubmitConfiguration($event)" />
+          (submit)="onAddConfiguration($event)" />
       }
       @case (ConfigurationPageMode.EDIT) {
         <app-configuration-form
@@ -70,23 +70,25 @@
             <ng-container *ngTemplateOutlet="configurationSelect" />
 
             <div class="configuration__header-actions">
-              <button mat-fab extended (click)="onDeleteConfiguration()">
-                <mat-icon>delete</mat-icon>
-                Delete
-              </button>
-              @if (!configuration()?.is_applied) {
-                <button mat-fab extended (click)="onApplyConfiguration()">
-                  <mat-icon>save</mat-icon>
-                  Apply
+              @if (configuration()?.id) {
+                @if (!configuration()?.is_applied) {
+                  <button mat-fab extended (click)="onDeleteConfiguration()">
+                    <mat-icon>delete</mat-icon>
+                    Delete
+                  </button>
+                  <button mat-fab extended (click)="onApplyConfiguration()">
+                    <mat-icon>save</mat-icon>
+                    Apply
+                  </button>
+                }
+                <button
+                  mat-fab
+                  extended
+                  (click)="pageMode.set(ConfigurationPageMode.EDIT)">
+                  <mat-icon>edit_square</mat-icon>
+                  Edit
                 </button>
               }
-              <button
-                mat-fab
-                extended
-                (click)="pageMode.set(ConfigurationPageMode.EDIT)">
-                <mat-icon>edit_square</mat-icon>
-                Edit
-              </button>
             </div>
           </div>
           <div mac-source class="configuration__mac">
