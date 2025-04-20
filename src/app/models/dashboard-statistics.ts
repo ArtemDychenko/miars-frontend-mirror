@@ -6,8 +6,8 @@ export interface ProtocolStatistics {
 
 export interface ProtocolStatisticsDto {
   name: string;
-  'total-packets': number;
-  'total-bytes': number;
+  total_packets: number;
+  total_bytes: number;
 }
 
 export interface InformationRate {
@@ -17,9 +17,9 @@ export interface InformationRate {
 }
 
 export interface DashboardStatisticsDto {
-  'total-time': number;
+  total_time: number;
   protocols: ProtocolStatisticsDto[];
-  'information-rate': InformationRate;
+  information_rate: InformationRate;
 }
 
 export interface DashboardStatistics {
@@ -32,16 +32,16 @@ export function dtoToDashboardStatistics(
   dto: DashboardStatisticsDto
 ): DashboardStatistics {
   return {
-    total_time: new Date(dto['total-time'] * 1000),
+    total_time: new Date(dto.total_time * 1000),
     protocols: dto.protocols.map((protocol: ProtocolStatisticsDto) => ({
       name: protocol.name,
-      total_packets: protocol['total-packets'],
-      total_bytes: protocol['total-bytes'],
+      total_packets: protocol.total_packets,
+      total_bytes: protocol.total_bytes,
     })),
     information_rate: {
-      min: dto['information-rate'].min,
-      max: dto['information-rate'].max,
-      current: dto['information-rate'].current,
+      min: dto.information_rate.min,
+      max: dto.information_rate.max,
+      current: dto.information_rate.current,
     },
   };
 }

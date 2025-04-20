@@ -1,11 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  interval,
-  shareReplay,
-  Subject,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Settings } from '../models/settings';
 import { SettingsFormBuilder } from '../components/dashboard-settings/dashboard-settings.builder';
 
